@@ -1,6 +1,6 @@
 package domain;
 
-import javax.annotation.Resource;
+
 
 /**
  * Õ≈π∫»Ø
