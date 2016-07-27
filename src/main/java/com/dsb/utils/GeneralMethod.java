@@ -21,7 +21,7 @@ public class GeneralMethod {
 	 * @param json
 	 * @return 是否成功传入bean中
 	 */
-	public static Boolean Request2TicketInfo(GroupTicket groupTicket,
+	/*public static Boolean Request2TicketInfo(GroupTicket groupTicket,
 			HttpServletRequest request) {
 		GroupTicket.sku sku = groupTicket.getSku();
 		GroupTicket.date_info dateInfo = groupTicket.getDataInfo();
@@ -74,6 +74,6 @@ public class GeneralMethod {
 			return false;
 		}
 
-	}
+	}*/
 	
 }
