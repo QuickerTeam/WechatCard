@@ -13,7 +13,6 @@ import com.dsb.domain.GroupTicket;
 public class CreateTicket {
 	@RequestMapping(value = "/GroupTicket_input")
 	public String groupTicketInput() {// 创建团购券页面
-
 		return "hello";
 	}
 
