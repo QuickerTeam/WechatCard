@@ -1,0 +1,145 @@
+			<div class="container">
+				<div class="row">
+					<span class="groupBuying col-md-12">代金券</span>
+					 <form class="inputGroupView col-md-11" role = "form">            <!-- 团购券-->
+					 		<div class="remind">
+						 	    <div class="input-group">
+		        					<span class="input-group-addon">券名</span>
+		         					<input type="text" class="form-control onlyForm" id="cardTitle" placeholder="不超过9个字"><i class="icon"></i><!-- <i class="icon-remove warnning icon" title="字数超过九个字"></i> -->
+		         					<!-- <i class="icon-ok icon"></i> -->
+		     					</div>
+
+	     					 </div>
+
+	     					 <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">卡券总数</span>
+		         					<input type="text" class="form-control onlyForm" id="cardNumber" placeholder="上限100000000"><i class="icon"></i>
+		     					 </div>
+	     					 </div>
+	     					  <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">启用金额</span>
+		         					<input type="text" class="form-control onlyForm" id="leastCost" placeholder="上限100000000"><i class="icon"></i>
+		     					 </div>
+	     					 </div>
+	     					  <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">减免金额</span>
+		         					<input type="text" class="form-control onlyForm" id="reduceCost" placeholder="上限100000000"><i class="icon"></i>
+		     					 </div>
+	     					 </div>
+	     					 <div class="remind">
+		     					  <div class="input-group">
+		        					<span class="input-group-addon">卡券使用提醒</span>
+		         					<input type="text" class="form-control onlyForm" id="useView" placeholder="不超过16个字"><i class="icon"></i>
+		     					 </div>
+	     					 </div>
+	     					 	 <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">客服电话</span>
+		         					<input type="text" class="form-control onlyForm" id="serverTel" placeholder="选题"><i class="notMust icon">*选填</i>
+		     					 </div>
+	     					 </div>
+	     					 <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">具体优惠信息</span>
+		         					<input type="text" class="form-control onlyForm" id="favourView" placeholder="不超过18个字"><i class="icon"></i>
+		     					 </div>
+	     					 </div>
+	     					 <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">个人领券限额</span>
+		         					<input type="text" class="form-control onlyForm" id="numberPlace" placeholder="50"><i class="notMust icon">*选填</i>
+		     					 </div>
+	     					 </div>
+	     					 <div class="chooseTimeType">
+	     					 	<span>选择时间模式</span>
+	     					 	<button class="btn btn-info" type="button" title="点击切换" id="changeType">切换</button>
+	     					 </div>
+	     					 <div class="showType">
+	     					 	<ul class="typeView">
+	     					 		<li class="typeOne" >
+				     					  <div class="inputviews">
+					     					 <div class="input-group">
+					        					<span class="input-group-addon">卡券使用开始时间</span>
+					         					<input type="text" class="form-control formTime" id="starTimeY"  placeholder="number">
+					         					<span class="input-group-addon">年</span>
+					         					<input type="text" class="form-control formTime" id="starTimeM"  placeholder="number">
+					         					<span class="input-group-addon">月</span>
+					         					<input type="text" class="form-control formTime" id="starTimeD"  placeholder="number">
+					         					<span class="input-group-addon">日</span>
+					     					 </div>
+				     					 </div>
+				     					 <div class="inputviews">
+					     					 <div class="input-group">
+					        					<span class="input-group-addon">卡券使用结束时间</span>
+					         					<input type="text" class="form-control formTime" id="endTimeY" placeholder="number">
+					         					<span class="input-group-addon">年</span>
+					         					<input type="text" class="form-control formTime" id="endTimeM" placeholder="number">
+					         					<span class="input-group-addon">月</span>
+					         					<input type="text" class="form-control formTime" id="endTimeD" placeholder="number">
+					         					<span class="input-group-addon">日</span>
+					     					 </div>
+				     					 </div>
+				     				</li>
+				     				<li class="typeTwo" 卡券有效期为持续时长>
+				     					 <div class="inputviews">
+					     					 <div class="input-group" id="rangeTime">
+					        					<span class="input-group-addon">卡券使用持续时长</span>
+					         					<input type="text" class="form-control" id="timeRange" placeholder="number">
+					         					<span class="input-group-addon">天</span>
+					     					 </div>
+				     					 </div>
+				     				</li>
+				     			</ul>
+				     		</div>
+	     					 <div class="stag">
+								<span class="upView">上传商家图标</span>
+								<div class="addimg">
+									<i class="icon-plus-sign"></i>
+								</div>
+								<i class="icon"></i>
+								<input type="file" name="" id="upimg"/>
+							</div>	
+
+
+
+
+
+							<div class="remind">
+								<span class="upView">选择卡片背景颜色</span>
+								<div id="chooseColor"></div>
+								<table class="colorTable">
+									<tr>
+										<td class="colorView Color010" title="#63b359"></td>
+										<td class="colorView Color020" title="#2c9f67"></td>
+										<td class="colorView Color030" title="#509fc9"></td>
+										<td class="colorView Color040" title="#5885cf"></td>
+										<td class="colorView Color050" title="#9062c0"></td>
+										<td class="colorView Color060" title="#d09a45"></td>
+										<td class="colorView Color070" title="#e4b138"></td>
+									</tr>
+									<tr>
+										<td class="colorView Color080" title="#ee903c"></td>
+										<td class="colorView Color081" title="#f08500"></td>
+										<td class="colorView Color082" title="#a9d92d"></td>
+										<td class="colorView Color090" title="#dd6549"></td>
+										<td class="colorView Color100" title="#cc463d"></td>
+										<td class="colorView Color101" title="#cf3e36"></td>
+										<td class="colorView Color102" title="#5E6671s"></td>
+									</tr>
+								</table>
+							</div>
+
+							<div class="form-group">
+    							<label for="name">卡券使用说明</label>
+    							<p>
+    								<textarea class="form-control" rows="3" id="groupDescription"></textarea>
+    								<i class="icon"></i>
+    							</p>
+  							</div>
+	     					 <button class="btn btn-primary col-md-1 col-md-offset-7" id="upCard">创建卡券</button>
+					 </form>
+				 </div>
+			</div>
