@@ -6,26 +6,25 @@ import java.util.Date;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.dsb.domain.GroupTicket;
 
 @Controller
 @RequestMapping(value = "/CreateTicket")
 public class CreateTicket {
 	@RequestMapping(value = "/GroupTicket_input")
-	// ´´½¨ÍÅ¹ºÈ¯Ò³Ãæ
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Å¹ï¿½È¯Ò³ï¿½ï¿½
 	public String groupTicketInput() {
 
 		return "";
 	}
 
 	@RequestMapping(value = "/GroupTicket_input")
-	// ´´½¨ÍÅ¹ºÈ¯
+	// ï¿½ï¿½ï¿½ï¿½ï¿½Å¹ï¿½È¯
 	public String groupTicketSave(JSONObject json) {
 		GroupTicket groupTicket = new GroupTicket();
 		GroupTicket.sku sku = groupTicket.getSku();
 		GroupTicket.date_info dateInfo = groupTicket.getDataInfo();
-		try {// ³¢ÊÔ¹¹ÔìÍÅ¹ºÈ¯
+		try {// ï¿½ï¿½ï¿½Ô¹ï¿½ï¿½ï¿½ï¿½Å¹ï¿½È¯
 			groupTicket.setLogo_url(json.getString("logo_url"));
 			groupTicket.setCode_type(json.getString("code_type"));
 			groupTicket.setBrand_name(json.getString("brand_name"));
@@ -39,9 +38,9 @@ public class CreateTicket {
 			if (dateInfo.getType() == "DATE_TYPE_FIX_TIME_RANGE ") {
 				String str = "" + json.getInt("begin_time_year")
 						+ json.getInt("begin_time_month")
-						+ json.getInt("begin_time_day");// strÀ´¼ÇÂ¼Ê±¼ä£¬Ö®ºó×ª»»³ÉÃë
+						+ json.getInt("begin_time_day");// strï¿½ï¿½ï¿½ï¿½Â¼Ê±ï¿½ä£¬Ö®ï¿½ï¿½×ªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-				millionSeconds = sdf.parse(str).getTime()/1000;
+//				millionSeconds = sdf.parse(str).getTime()/1000;
 			}
 		} catch (Exception e) {
 			// TODO: handle exception
