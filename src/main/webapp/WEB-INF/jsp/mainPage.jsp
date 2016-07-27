@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*" %>
+<%@ page import="com.dsb.utils.*" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -13,21 +14,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>learn Bootsrap</title>
-	<link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="./cssbootsrap-theme.css">
-	<link rel="stylesheet" type="text/css" href="./css/main.css">
-	<link rel="stylesheet" type="text/css" href="./css/cssreset.css">
-	<link rel="stylesheet" type="text/css" href="./css/font-awesome.css">
-	<link rel="stylesheet" type="text/css" href="./css/font-awesome-ie7.css">
-	<script type="text/javascript" src = "./js/jquery.js"></script>
-	<script type="text/javascript" src = "./js/bootsrap.js"></script>
+	<link rel="stylesheet" type="text/css" href="　<%= StaticConstant.cssFilePath %>bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>cssbootsrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>main.css">
+	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>cssreset.css">
+	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>font-awesome.css">
+	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>font-awesome-ie7.css">
+	<script type="text/javascript" src = "<%@ StaticConstant.jsFilePath %>jquery.js"></script>
+	<script type="text/javascript" src = "<%@ StaticConstant.jsFilePath %>bootsrap.js"></script>
 </head>
 <body>
 		<p class="suup smaview">åå»ºæå</p>
 		<p class="errup smaview" ></p>
 		<header>
 			<div class="container">
-				<img src="./img/logo.png">
+				<img src="<%@ StaticConstant.imgFilePath %>/logo.png">
 				<span class="view">è¢é¼ å¸®å¡å¸åéå¹³å°</span>
 			</div>
 		</header>
@@ -194,6 +195,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<footer></footer>
 	</div>
-	<script type="text/javascript" src="./js/main.js"></script>
+	<script type="text/javascript" src="<%@ StaticConstant.jsFilePath %>main.js"></script>
 </body>
 </html>
