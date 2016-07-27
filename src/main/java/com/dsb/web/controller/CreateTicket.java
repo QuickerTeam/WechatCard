@@ -12,19 +12,17 @@ import com.dsb.domain.GroupTicket;
 @RequestMapping(value = "/CreateTicket")
 public class CreateTicket {
 	@RequestMapping(value = "/GroupTicket_input")
-	// ´´½¨ÍÅ¹ºÈ¯Ò³Ãæ
-	public String groupTicketInput() {
+	public String groupTicketInput() {// åˆ›å»ºå›¢è´­åˆ¸é¡µé¢
 
-		return "";
+		return "hello";
 	}
 
-	@RequestMapping(value = "/GroupTicket_input")
-	// ´´½¨ÍÅ¹ºÈ¯
-	public String groupTicketSave(JSONObject json) {
+	@RequestMapping(value = "/GroupTicket_save")
+	public String groupTicketSave(JSONObject json) {// åˆ›å»ºå›¢è´­åˆ¸
 		GroupTicket groupTicket = new GroupTicket();
 		GroupTicket.sku sku = groupTicket.getSku();
 		GroupTicket.date_info dateInfo = groupTicket.getDataInfo();
-		try {// ³¢ÊÔ¹¹ÔìÍÅ¹ºÈ¯
+		try {// å°è¯•æ„é€ å›¢è´­åˆ¸
 			groupTicket.setLogo_url(json.getString("logo_url"));
 			groupTicket.setCode_type(json.getString("code_type"));
 			groupTicket.setBrand_name(json.getString("brand_name"));
@@ -35,35 +33,35 @@ public class CreateTicket {
 			groupTicket.setDescription(json.getString("description"));
 			sku.setQuantity(json.getInt("quantity"));
 			dateInfo.setType(json.getString("type"));
-			if (dateInfo.getType() == "DATE_TYPE_FIX_TIME_RANGE ") {// °´Ê±¼ä¶Î¼ÆËã½ØÖ¹ÈÕÆÚ
+			if (dateInfo.getType() == "DATE_TYPE_FIX_TIME_RANGE ") {// æŒ‰æ—¶é—´æ®µè®¡ç®—æˆªæ­¢æ—¥æœŸ
 				String str = "" + json.getInt("begin_time_year")
 						+ json.getInt("begin_time_month")
-						+ json.getInt("begin_time_day");// strÀ´¼ÇÂ¼Ê±¼ä£¬Ö®ºó×ª»»³ÉÃë
+						+ json.getInt("begin_time_day");// stræ¥è®°å½•æ—¶é—´ï¼Œä¹‹åè½¬æ¢æˆç§’
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 				dateInfo.setBegin_time(sdf.parse(str).getTime() / 1000 + "");
 				str = "" + json.getInt("end_time_year")
 						+ json.getInt("end_time_month")
-						+ json.getInt("end_time_day");// strÀ´¼ÇÂ¼Ê±¼ä£¬Ö®ºó×ª»»³ÉÃë
+						+ json.getInt("end_time_day");// stræ¥è®°å½•æ—¶é—´ï¼Œä¹‹åè½¬æ¢æˆç§’
 				dateInfo.setEnd_time(sdf.parse(str).getTime() / 1000 + "");
 			} else {
 				dateInfo.setFixed_term(json.getInt("fixed_term"));
 			}
-			try {//ÊÇ·ñÓĞ¿Í·şµç»°
+			try {// æ˜¯å¦æœ‰å®¢æœç”µè¯
 				groupTicket.setServicePhone(json.getString("service_phone"));
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
-			try {//ÊÇ·ñÓĞÁìÈ¯ÊıÁ¿ÏŞÖÆ
+			try {// æ˜¯å¦æœ‰é¢†åˆ¸æ•°é‡é™åˆ¶
 				groupTicket.setGet_limit(json.getInt("get_limit"));
 			} catch (Exception e) {
 				// TODO: handle exception
 			}
-			System.out.println("groupTicket="+groupTicket);
-			return "";//ÌîĞ´³É¹¦µÄjsp
+			System.out.println("groupTicket=" + groupTicket);
+			return "hello";// å¡«å†™æˆåŠŸçš„jsp
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out.print("error while creat groupTicket.");
-			return "";//error
+			return "hello";// error
 		}
 	}
 }

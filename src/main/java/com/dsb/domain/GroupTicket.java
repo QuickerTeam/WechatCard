@@ -1,22 +1,22 @@
 package com.dsb.domain;
 
 /**
- * ÍÅ¹ºÈ¯
+ * å›¢è´­åˆ¸
  * 
  * @author Time
  * 
  */
 public class GroupTicket {
-	private String card_type = "GROUPON";// ÍÅ¹ºÈ¯ÀàĞÍ
-	private String dealDetail = "deal_detail\n²âÊÔ×ÖÊı²âÊÔ\n²âÊÔ×ÖÊı²âÊÔ×ÖÊı²âÊÔ";// ÔİÊ±²»Ìî
-	private String logo_url;// ·şÎñÆ÷·µ»ØµÄlogourl
-	private String code_type;// codeÀàĞÍ£¬¶şÎ¬Âë¡¢codeµÈ
-	private String brand_name;// ÉÌ»§Ãû×Ö
-	private String title;// ¿¨È¯Ãû
-	private String sub_title;// È¯Ãû
-	private String color;// È¯ÑÕÉ«
-	private String notice;// ¿¨È¯Ê¹ÓÃÌáĞÑ
-	private String description;// ¿¨È¯Ê¹ÓÃËµÃ÷
+	private String card_type = "GROUPON";// å›¢è´­åˆ¸ç±»å‹
+	private String dealDetail = "deal_detail\næµ‹è¯•å­—æ•°æµ‹è¯•\næµ‹è¯•å­—æ•°æµ‹è¯•å­—æ•°æµ‹è¯•";// æš‚æ—¶ä¸å¡«
+	private String logo_url;// æœåŠ¡å™¨è¿”å›çš„logourl
+	private String code_type;// codeç±»å‹ï¼ŒäºŒç»´ç ã€codeç­‰
+	private String brand_name;// å•†æˆ·åå­—
+	private String title;// å¡åˆ¸å
+	private String sub_title;// åˆ¸å
+	private String color;// åˆ¸é¢œè‰²
+	private String notice;// å¡åˆ¸ä½¿ç”¨æé†’
+	private String description;// å¡åˆ¸ä½¿ç”¨è¯´æ˜
 	private sku sku = new sku();
 	private date_info date_info = new date_info();
 
@@ -28,9 +28,9 @@ public class GroupTicket {
 		return date_info;
 	}
 
-	public class sku {// ÓÃÀ´±£´æquantity¿â´æ
+	public class sku {// ç”¨æ¥ä¿å­˜quantityåº“å­˜
 
-		private int quantity;// ¿â´æ
+		private int quantity;// åº“å­˜
 
 		public int getQuantity() {
 			return quantity;
@@ -41,12 +41,12 @@ public class GroupTicket {
 		}
 	}
 
-	public class date_info {// ËùÓĞÈÕÆÚĞÅÏ¢
-		private String type;// ÓĞĞ§ÈÕÆÚÀàĞÍ(Ê±¼ä¶Î»¹ÊÇµ¹¼ÆÊ±)
-		// µ±ÓĞĞ§ÆÚÀàĞÍÎªÊ±¼ä¶ÎÊ±£¬ÓÃÇ°Á½¸öÊı¾İ¡£·ñÔòÓÃ×îºóÒ»¸öÊı¾İ
-		private String begin_time;// ÆğÊ¼ÈÕÆÚ
-		private String end_time;// ½ØÖ¹ÈÕÆÚ
-		private int fixed_term;// ÓĞĞ§ÆÚÌìÊı
+	public class date_info {// æ‰€æœ‰æ—¥æœŸä¿¡æ¯
+		private String type;// æœ‰æ•ˆæ—¥æœŸç±»å‹(æ—¶é—´æ®µè¿˜æ˜¯å€’è®¡æ—¶)
+		// å½“æœ‰æ•ˆæœŸç±»å‹ä¸ºæ—¶é—´æ®µæ—¶ï¼Œç”¨å‰ä¸¤ä¸ªæ•°æ®ã€‚å¦åˆ™ç”¨æœ€åä¸€ä¸ªæ•°æ®
+		private String begin_time;// èµ·å§‹æ—¥æœŸ
+		private String end_time;// æˆªæ­¢æ—¥æœŸ
+		private int fixed_term;// æœ‰æ•ˆæœŸå¤©æ•°
 
 		public String getType() {
 			return type;
@@ -81,10 +81,10 @@ public class GroupTicket {
 		}
 	}
 
-	// ÒÔÏÂÎª·Ç±ØÌî
-	private String servicePhone;// ¿Í·şµç»°
-	private String source = "´üÊó°ï";
-	private int get_limit;// Ã¿ÈË¿ÉÁìÈ¯µÄÊıÁ¿ÏŞÖÆ
+	// ä»¥ä¸‹ä¸ºéå¿…å¡«
+	private String servicePhone;// å®¢æœç”µè¯
+	private String source = "è¢‹é¼ å¸®";
+	private int get_limit;// æ¯äººå¯é¢†åˆ¸çš„æ•°é‡é™åˆ¶
 
 	public String getDealDetail() {
 		return dealDetail;
