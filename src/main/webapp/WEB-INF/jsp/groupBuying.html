@@ -1,6 +1,6 @@
-			<div class="container">
+<div class="container">
 				<div class="row">
-					<span class="groupBuying col-md-12">礼品券</span>
+					<span class="groupBuying col-md-12">团购券</span>
 					 <form class="inputGroupView col-md-11" role = "form">            <!-- 团购券-->
 					 		<div class="remind">
 						 	    <div class="input-group">
@@ -39,12 +39,6 @@
 		     					 <div class="input-group">
 		        					<span class="input-group-addon">个人领券限额</span>
 		         					<input type="text" class="form-control onlyForm" id="numberPlace" placeholder="50"><i class="notMust icon">*选填</i>
-		     					 </div>
-	     					 </div>
-	     					  <div class="remind">
-		     					 <div class="input-group">
-		        					<span class="input-group-addon">礼品</span>
-		         					<input type="text" class="form-control onlyForm" id="gift" placeholder="礼品名称"><i class="icon"></i>
 		     					 </div>
 	     					 </div>
 	     					 <div class="chooseTimeType">
@@ -133,15 +127,23 @@
     								<i class="icon"></i>
     							</p>
   							</div>
+							<div class="form-group">
+    							<label for="name">团购详情</label>
+    							<p>
+    								<textarea class="form-control" rows="3" id="groupDetail"></textarea>
+    								<i class="icon"></i>
+    							</p>
+  							</div>
 	     					 <button class="btn btn-primary col-md-1 col-md-offset-7" id="upCard">创建卡券</button>
 					 </form>
 				 </div>
 			</div>
-			<script type="text/javascript"">
+			<script type="text/javascript">
 				
 			  var cardType = "groupBuying";
 			  var ismoreCard = false;
-			  var checkOk = trualert("gift");
+			  var checkOk = true;  //为treu代表表单检验通过
+			  alert("groupBying");
 				$("#upimg").val(null);     // 初始化上传图片的value
 				$("#moreCard").click(function(event) {
 					if(ismoreCard == false){
@@ -176,7 +178,7 @@
 			        // When loaded, set image data as background of div
 			        checkOk = true;
 			        
-			  		  reader.onloadend = function(){
+			  		reader.onloadend = function(){
 			  		$(".addimg").empty();
 					$("<img src='"+this.result+"' class = 'imgview'>").appendTo($(".addimg"));  
 			        };
@@ -203,6 +205,7 @@
 			  $(".addimg").click(function(event) {               
 			  	$("#upimg").trigger("click");
 			  });
+
 
 			  $("#chooseColor").on('click',  function(event) {        //显示选择颜色的色版
 			  	event.preventDefault();
@@ -470,15 +473,15 @@
 			            };
 			        
 			            break;
-			    case "gift":               //礼品详细信息验证
-			           if ($(this).val().length>40) {
-			              if (nextElement.hasClass('icon-ok')) {
+			    case "groupDetail":               //团购券具体信息验证
+			           if ($(this).val()>1024) {
+			             if (nextElement.hasClass('icon-ok')) {
 			                nextElement.removeClass('icon-ok');
 			              };
 			              if (nextElement.hasClass('icon-remove')) {
 			                nextElement.removeClass('icon-remove');
 			              };
-			              nextElement.addClass('icon-remove').attr({title: "字数不能超过40"});
+			              nextElement.addClass('icon-remove').attr({title: "输入字数不能超过1024"});
 			              checkOk = false;
 			            }else if ($(this).val().length == 0) {
 			              if (nextElement.hasClass('icon-ok')) {
@@ -488,7 +491,7 @@
 			                nextElement.removeClass('icon-remove');
 			              };
 			              nextElement.addClass('icon-remove').attr({title: "输入不能为空"});
-			              checkOk = false;
+			             checkOk = false;
 			            }else{
 			              if (nextElement.hasClass('icon-remove')) {
 			                nextElement.removeClass('icon-remove');
@@ -560,7 +563,7 @@
 			         return;
 			       });
 			      };
-			 }
+			 };
 
 
 			   if (checkOk == false) {
@@ -577,9 +580,10 @@
 			      var notice = $("#useView").val(); //卡券使用提醒
 			      var description = $("#groupDescription").text();//卡券使用说明
 			      var dataTypee = isChange;//使用时间类型
-			            var gift = $("#gift").val();   //礼品券专有字段
-			            var formData = new FormData();
-				  		formData.append('logo_url', $("upimg")[0].files[0]);
+			          //团购券 
+			      var deal_detail = $("#groupDetail").text();//团购票专有详细信息
+			      var formData = new FormData();
+				  formData.append('logo_url', $("upimg")[0].files[0]);
 
 				  		$.ajax({
 				  			url: '/path/to/file',
@@ -592,83 +596,84 @@
 				  		})
 				  		.done(function() {
 				  			if (XX == true) {
-				  				
-				            	if (dataType == "0") {
-			                var beginTimeYear = $("#starTimeY").val();
-			                var beginTimeMonth = $("#starTimeM").val();
-			                var beginTimeDay = $("#starTimeD").val();
-			                var endTimeYear = $("#endTimeY").val();
-			                var endTimeMonth = $("#endTimeM").val();
-			                var endTimeDay = $("#endTimeD").val();
-			                $.ajax({
-			                  url: '/path/to/file',
-			                  type: 'post',
-			                  dataType: 'json',
-			                  data: {
-			                    "title": title, 
-			                    "card_color": card_color, 
-			                    "left_card_amount":left_card_amount,
-			                    "card_type":card_type,
-			                    "sub_title":sub_title,
-			                    "notice":notice,
-			                    "description":description,
-			                    "gift":gift,
-			                    "dataType":dataType,
-			                    "beginTimeYear":beginTimeYear,
-			                    "beginTimeMonth":beginTimeMonth,
-			                    "beginTimeDay":beginTimeDay,
-			                    "endTimeYear":endTimeYear,
-			                    "endTimeMonth":endTimeMonth,
-			                    "endTimeDay":endTimeDay},
-			                })
-			                .done(function() {
-			                   $(".suup").slideDown('slow', function() {
-			                    $(this).delay(1000).slideUp('slow');
-			          
-			                   });
-			      return false;
-			                })
-			                .fail(function() {
-			                  console.log("error");
-			                })
-			                .always(function() {
-			                  console.log("complete");
-			                });
-			                
-			              }else{
-			                var fixdTerm = $("#fixdTerm").val();
-			                $.ajax({
-			                  url: '/path/to/file',
-			                  type: 'post',
-			                  dataType: 'json',
-			                  data: {
-			                    "title": title, 
-			                    "card_color": card_color, 
-			                    "left_card_amount":left_card_amount,
-			                    "card_type":card_type,
-			                    "gift":gift,
-			                    "sub_title":sub_title,
-			                    " notice":notice,
-			                    "description":description,
-			                    " dataType":dataType,
-			                    "fixdTerm":fixdTerm},
-			                })
-			                .done(function() {
-			                   $(".suup").slideDown('slow', function() {
-			                   $(this).delay(1000).slideUp('slow');
-			          
-			                   });
-			                   return false;
-			                })
-			                .fail(function() {
-			                  console.log("error");
-			                })
-			                .always(function() {
-			                  console.log("complete");
-			                });
-			              }
+				  				if (dataType == "0") {
+						                var beginTimeYear = $("#starTimeY").val();
+						                var beginTimeMonth = $("#starTimeM").val();
+						                var beginTimeDay = $("#starTimeD").val();
+						                var endTimeYear = $("#endTimeY").val();
+						                var endTimeMonth = $("#endTimeM").val();
+						                var endTimeDay = $("#endTimeD").val();
+
+						               
 
 
+						                $.ajax({
+						                  url: '/path/to/file',
+						                  type: 'post',
+						                  dataType: 'json',
+						                  data: {
+						                    "title": title, 
+						                    "card_color": card_color, 
+						                    "left_card_amount":left_card_amount,
+						                    "card_type":card_type,
+						                    "deal_detail":deal_detail,
+						                    "sub_title":sub_title,
+						                    "notice":notice,
+						                    "description":description,
+						                    "dataType":dataType,
+						                    "beginTimeYear":beginTimeYear,
+						                    "beginTimeMonth":beginTimeMonth,
+						                    "beginTimeDay":beginTimeDay,
+						                    "endTimeYear":endTimeYear,
+						                    "endTimeMonth":endTimeMonth,
+						                    "endTimeDay":endTimeDay},
+						                })
+						                .done(function() {
+						                   $(".suup").slideDown('slow', function() {
+						                    $(this).delay(1000).slideUp('slow');
+						          
+						                   });
+						      			return false;
+						                })
+						                .fail(function() {
+						                  console.log("error");
+						                })
+						                .always(function() {
+						                  console.log("complete");
+						                });
+						                
+						              }else{
+						                var fixdTerm = $("#fixdTerm").val();
+						                $.ajax({
+						                  url: '/path/to/file',
+						                  type: 'post',
+						                  dataType: 'json',
+						                  data: {
+						                    "title": title, 
+						                    "card_color": card_color, 
+						                    "left_card_amount":left_card_amount,
+						                    "card_type":card_type,
+						                    "deal_detail":deal_detail,
+						                    "sub_title":sub_title,
+						                   " notice":notice,
+						                    "description":description,
+						                   " dataType":dataType,
+						                    "fixdTerm":fixdTerm},
+						                })
+						                .done(function() {
+						                   $(".suup").slideDown('slow', function() {
+						                   $(this).delay(1000).slideUp('slow');
+						          
+						                   });
+						                   return false;
+						                })
+						                .fail(function() {
+						                  console.log("error");
+						                })
+						                .always(function() {
+						                  console.log("complete");
+						                });
+				  			}
 				  		}else{
 				  			console.log("error");
 				  		}
@@ -679,13 +684,16 @@
 				  		.always(function() {
 				  			console.log("complete");
 				  		});
+				  		
 
-			            
+
 			              
-			     
+			              
+			         
 			   }
 			 
 			 });
+			 
 
 
 

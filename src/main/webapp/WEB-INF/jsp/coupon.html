@@ -137,3 +137,556 @@
 					 </form>
 				 </div>
 			</div>
+			<script type="text/javascript" >
+				
+				  var cardType = "groupBuying";
+				  var ismoreCard = false;
+				  var checkOk = true;  //为treu代表表单检验通过
+					$("#upimg").val(null);     // 初始化上传图片的value
+					$("#moreCard").click(function(event) {
+						if(ismoreCard == false){
+							$(".cardView").slideDown('400');
+							$(".fontSign").removeClass('icon-double-angle-left').addClass('icon-double-angle-down');
+							ismoreCard = true;
+						}else{
+							$(".cardView").slideUp('400');
+							$(".fontSign").removeClass('icon-double-angle-down').addClass('icon-double-angle-left');
+							ismoreCard = false;
+						}
+					});
+
+
+				$("#upimg").on("change", function(){                  //上传图片同时预览上传的图片
+				    // Get a reference to the fileList
+				    var files = !!this.files ? this.files : [];
+				    var nextElement = $(".addimg").nextAll("i");
+				 
+				    // If no files were selected, or no FileReader support, return
+				    if (!files.length || !window.FileReader) return;
+				 
+				    // Only proceed if the selected file is an image
+				    if (/^image/.test( files[0].type)){                     //验证图片是否合格
+				 
+				        // Create a new instance of the FileReader
+				        var reader = new FileReader();
+				 
+				        // Read the local file as  DataURL
+				        reader.readAsDataURL(files[0]);
+				 
+				        // When loaded, set image data as background of div
+				        checkOk = true;
+				        
+				  		  reader.onloadend = function(){
+				  		$(".addimg").empty();
+						$("<img src='"+this.result+"' class = 'imgview'>").appendTo($(".addimg"));  
+				        };
+				        if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				            };
+				        if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				            };
+				        nextElement.addClass('icon-ok').attr({title: ""});
+				    }else{
+				    	  if (nextElement.hasClass('icon-ok')) {
+				              nextElement.removeClass('icon-ok');
+				          };
+				        if (nextElement.hasClass('icon-remove')) {
+				              nextElement.removeClass('icon-remove');
+				          };
+				          nextElement.addClass('icon-remove').attr({title: "请选择图片上传"});
+				          checkOk = true;
+				    }
+				 
+				});
+
+				  $(".addimg").click(function(event) {               
+				  	$("#upimg").trigger("click");
+				  });
+
+				  $("#chooseColor").on('click',  function(event) {        //显示选择颜色的色版
+				  	event.preventDefault();
+				  	$(".colorTable").css({display:"inline-block"});
+				  });
+
+				  $(".colorView").on('click', function(event) {             //隐藏色板
+				  	event.preventDefault();
+				  	var color = $(this).attr("title");
+				  	$("#chooseColor").css({
+				  		backgroundColor: color
+				  	});
+				  	$(".colorTable").hide("400");
+				  });
+
+
+				  $(".form-control").blur(function(event) {    //表单验证
+				  	var idname = $(this).attr("id");  
+				  	var nextElement = $(this).nextAll("i");
+				  	switch(idname){
+				  		case "cardTitle":                          //验证卡券是否合格
+				  					if ($(this).val().length>9) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				  						nextElement.addClass('icon-remove').attr({title: "字数不能超过9"});
+				              checkOk = false;
+				  					}else if ($(this).val().length == 0) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				  						nextElement.addClass('icon-remove').attr({title: "字数不能超过0"});
+				              checkOk = false;
+				  					}else{
+				  						if (nextElement.hasClass('icon-remove')) {
+				  							nextElement.removeClass('icon-remove');
+				  						};
+				  						if (nextElement.hasClass('icon-ok')) {
+				  							nextElement.removeClass('icon-ok');
+				  						};
+				  						nextElement.addClass('icon-ok').attr({title: ""});
+				              checkOk = true;
+				  					};
+				  					break;
+				  		case "cardNumber":                          //验证卡券发行数量
+				  						if ($(this).val()>100000000) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				  						nextElement.addClass('icon-remove').attr({title: "卡券数量过多"});
+				              checkOk = false;
+				  					}else if ($(this).val().length == 0) {
+				                if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				  						nextElement.addClass('icon-remove').attr({title: "字数输入能为空"});
+				              checkOk = false;
+				  					}else if (isNaN($(this).val()) || $(this).val()<0) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				  						nextElement.addClass('icon-remove').attr({title: "请输入正整数"});
+				              checkOk = false;
+				  					}else{
+				  						if (nextElement.hasClass('icon-remove')) {
+				  							nextElement.removeClass('icon-remove');
+				  						};
+				  						if (nextElement.hasClass('icon-ok')) {
+				  							nextElement.removeClass('icon-ok');
+				  						};
+				  						nextElement.addClass('icon-ok').attr({title: ""});
+				              checkOk = true;
+				  					};
+				  					break;
+				 case "useView":                                  //验证卡券使用提醒
+				 	            if ($(this).val().length>16) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "字数不能超过16"});
+				              checkOk = false;
+				            }else if ($(this).val().length == 0) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "输入不能为空"});
+				              checkOk = false;
+				            }else{
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              if(nextElement.hasClass("notMust")){
+				                nextElement.removeClass('notMust');
+				              };
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              nextElement.addClass('icon-ok').attr({title: ""});
+				              checkOk = true;
+				            };
+				            break;  
+				  case "serverTel":                     //验证卡券客服电话
+				             var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
+				             if (!isPhone.test($(this).val())) {
+				              nextElement.empty();
+				               if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "输入号码无效"});
+				              checkOk = false;
+				            }else if ($(this).val().length == 0) {
+				              nextElement.empty();
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('notMust').attr({title: ""}).text('*选填');
+				              checkOk = false;
+				            }else{
+				              nextElement.empty();
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if(nextElement.hasClass("notMust")){
+				                nextElement.removeClass('notMust');
+				              };
+				              nextElement.addClass('icon-ok').attr({title: ""});
+				              checkOk = true;
+				            };
+				            break;
+				    case "favourView":                      //具体优惠信息
+				             if ($(this).val().length>18) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "字数不能超过18"});
+				              checkOk = false;
+				            }else if ($(this).val().length == 0) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "输入不能为空"});
+				              checkOk = false;
+				            }else{
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              nextElement.addClass('icon-ok').attr({title: ""});
+				              checkOk = true;
+				            };
+				            break;
+				    case "numberPlace":                         //单人可领卡券数量验证
+				             if (isNaN($(this).val())) {
+				              nextElement.empty();
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "请输入正整数"});
+				              checkOk = true;
+				             }else{
+				             if ($(this).val()>50) {
+				              nextElement.empty();
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "输入数量不能超过50"});
+				              checkOk = false;
+				            }else if ($(this).val().length == 0) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('notMust').attr({title: ""}).text('*选填');
+				             checkOk = false;
+				            }else{
+				              nextElement.empty();
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if(nextElement.hasClass("notMust")){
+				                nextElement.removeClass('notMust');
+				              };
+				              nextElement.addClass('icon-ok').attr({title: ""});
+				              checkOk  =true;
+				            };
+				          };
+				            break;
+				    case "groupDescription":
+				    if ($(this).val()>1024) {
+				             if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "输入字数不能超过1024"});
+				              checkOk = false;
+				            }else if ($(this).val().length == 0) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "输入不能为空"});
+				             checkOk = false;
+				            }else{
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              nextElement.addClass('icon-ok').attr({title: ""});
+				              checkOk = true;
+				            };
+				        
+				            break;
+				    case "defaultDetail":               //优惠券使用详情
+				           if ($(this).val()>1024) {
+				             if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "输入字数不能超过1024"});
+				              checkOk = false;
+				            }else if ($(this).val().length == 0) {
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              nextElement.addClass('icon-remove').attr({title: "输入不能为空"});
+				             checkOk = false;
+				            }else{
+				              if (nextElement.hasClass('icon-remove')) {
+				                nextElement.removeClass('icon-remove');
+				              };
+				              if (nextElement.hasClass('icon-ok')) {
+				                nextElement.removeClass('icon-ok');
+				              };
+				              nextElement.addClass('icon-ok').attr({title: ""});
+				              checkOk = true;
+				            };
+				        
+				            break;
+				    default:
+				            break;
+				  	};
+				  	
+				  });
+
+				var isChange = "0";    // 表示采用的时间类型，0表示使用时间区间，1表示采用时间长短
+				$("#changeType").on('click', function(event) {             //切换时间类型
+				  event.preventDefault();
+				  if (isChange == "0") {
+				  $(".typeView").animate({"top":"-54px"}, "400");
+				  isChange = "1";
+				}else{
+				 $(".typeView").animate({"top":"0px"}, "400");
+				  isChange = "0";
+				} 
+				});
+
+				 $("#upCard").on('click', function(event) {      //发送创建卡券的
+				   event.preventDefault();
+				   if (isChange == 0) {                     //根据客户选择的卡券有效期的时间类型进行不同的检验
+				      var sY = $("#starTimeY").val();
+				      var sM = $("#starTimeM").val();
+				      var sD = $("#starTimeD").val();
+				      var eY = $("#endTimeY").val();
+				      var eM = $("#endTimeM").val();
+				      var eD = $("#endTimeD").val(); 
+				      if (sY || sM || sD || eY || eM || eD) {
+				       $(".errup").text("输入时间不能为空");
+				       $(".errup").slideDown('slow', function() {
+				         $(this).delay(1000).slideUp('slow');
+				         checkOk = false;
+				         return;
+				      });
+				     }else if (sY > eY || ((sY <= eY)&&(sM > eM)) ||  ((sY <= eY) && (sM <= eM) && (sD > eD))) {
+				       $(".errup").text("开始时间不能晚于结束时间");
+				       $(".errup").slideDown('slow', function() {
+				         $(this).delay(1000).slideUp('slow');
+				         checkOk = false;
+				         return;
+				      });
+				     }else if (isNaN(sY) ||isNaN(sM)||isNaN(sD)||isNaN(eY)||isNaN(eM)||isNaN(eD) || (sM>12) || (sD >31) || (eM >12) || (eD > 31)) {
+				        $(".errup").text("输入的时间格式不正确");
+				        $(".errup").slideDown('slow', function() {
+				         $(this).delay(1000).slideUp('slow');
+				         checkOk = false;
+				         return;
+				       });
+				   }
+				 }else{
+				      timeRange = $("#timeRange").val();
+				      if (isNaN(timeRange)) {
+				         $(".errup").text("输入的时间不能为负");
+				        $(".errup").slideDown('slow', function() {
+				         $(this).delay(1000).slideUp('slow');
+				         checkOk = false;
+				         return;
+				       });
+				      };
+				 }
+
+
+				   if (checkOk == false) {
+				       $(".errup").text(" 创建卡券失败，请检查填写信息是否有误");
+				       $(".errup").slideDown('slow', function() {
+				         $(this).delay(1000).slideUp('slow');
+				         return;
+				   });
+				   }else{
+					    var title = $(".cardTitle").val();
+					    var card_color =  $("#chooseColor").css(backgroundColor);   //卡券颜色
+					    var left_card_amount = $("#cardNumber").val(); //可获取的库存
+					    var sub_title = $("#favourView").val(); //卡券具体优惠信息
+					    var notice = $("#useView").val(); //卡券使用提醒
+					    var description = $("#groupDescription").text();//卡券使用说明
+					    var dataTypee = isChange;//使用时间类型
+					    var default_detail = $("#defaultDetail").text();   //优惠券专有字段
+
+				        var formData = new FormData();
+				  		formData.append('logo_url', $("upimg")[0].files[0]);
+
+				  		$.ajax({
+				  			url: '/path/to/file',
+				  			type: 'POST',
+				  			dataType: 'json',
+				  			cache: false,
+    						data: formData,
+   						 	processData: false,
+    						contentType: false
+				  		})
+				  		.done(function() {
+				  			if (XX == true) {
+				  				
+				            	if (dataType == "0") {
+					                var beginTimeYear = $("#starTimeY").val();
+					                var beginTimeMonth = $("#starTimeM").val();
+					                var beginTimeDay = $("#starTimeD").val();
+					                var endTimeYear = $("#endTimeY").val();
+					                var endTimeMonth = $("#endTimeM").val();
+					                var endTimeDay = $("#endTimeD").val();
+					                $.ajax({
+					                  url: '/path/to/file',
+					                  type: 'post',
+					                  dataType: 'json',
+					                  data: {
+					                    "title": title, 
+					                    "card_color": card_color, 
+					                    "left_card_amount":left_card_amount,
+					                    "card_type":card_type,
+					                    "sub_title":sub_title,
+					                    "notice":notice,
+					                    "description":description,
+					                    "default_detail":default_detail,
+					                    "dataType":dataType,
+					                    "beginTimeYear":beginTimeYear,
+					                    "beginTimeMonth":beginTimeMonth,
+					                    "beginTimeDay":beginTimeDay,
+					                    "endTimeYear":endTimeYear,
+					                    "endTimeMonth":endTimeMonth,
+					                    "endTimeDay":endTimeDay},
+					                })
+					                .done(function() {
+					                   $(".suup").slideDown('slow', function() {
+					                    $(this).delay(1000).slideUp('slow');
+					          
+					                   });
+					      			return false;
+					                })
+					                .fail(function() {
+					                  console.log("error");
+					                })
+					                .always(function() {
+					                  console.log("complete");
+					                });
+					                
+					              }else{
+					                var fixdTerm = $("#fixdTerm").val();
+					                $.ajax({
+					                  url: '/path/to/file',
+					                  type: 'post',
+					                  dataType: 'json',
+					                  data: {
+					                    "title": title, 
+					                    "card_color": card_color, 
+					                    "left_card_amount":left_card_amount,
+					                    "card_type":card_type,
+					                    "default_detail":default_detail,
+					                    "sub_title":sub_title,
+					                    " notice":notice,
+					                    "description":description,
+					                    " dataType":dataType,
+					                    "fixdTerm":fixdTerm},
+					                })
+					                .done(function() {
+					                   $(".suup").slideDown('slow', function() {
+					                   $(this).delay(1000).slideUp('slow');
+					          
+					                   });
+					                   return false;
+					                })
+					                .fail(function() {
+					                  console.log("error");
+					                })
+					                .always(function() {
+					                  console.log("complete");
+					                });
+				              }
+				  		}else{
+				  			console.log("error");
+				  		}
+				  		})
+				  		.fail(function() {
+				  			console.log("error");
+				  		})
+				  		.always(function() {
+				  			console.log("complete");
+				  		});
+
+
+
+
+
+				   }
+				 
+				 });
+
+
+
+			</script>
