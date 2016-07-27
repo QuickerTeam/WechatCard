@@ -181,4 +181,18 @@ public class GroupTicket {
 	public void setGet_limit(int get_limit) {
 		this.get_limit = get_limit;
 	}
+
+	/**
+	 * @return the card_type
+	 */
+	public String getCard_type() {
+		return card_type;
+	}
+
+	/**
+	 * @param card_type the card_type to set
+	 */
+	public void setCard_type(String card_type) {
+		this.card_type = card_type;
+	}
 }
