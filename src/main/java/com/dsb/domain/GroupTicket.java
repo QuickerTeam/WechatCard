@@ -44,7 +44,7 @@ public class GroupTicket {
 	public class date_info {// 所有日期信息
 		private String type;// 有效日期类型(时间段还是倒计时)
 		// 当有效期类型为时间段时，用前两个数据。否则用最后一个数据
-		private String begin_timestamp;// 起始日期
+		private String begin_time;// 起始日期
 		private String end_time;// 截止日期
 		private int fixed_term;// 有效期天数
 
@@ -56,12 +56,12 @@ public class GroupTicket {
 			this.type = type;
 		}
 
-		public String getBegin_timestamp() {
-			return begin_timestamp;
+		public String getBegin_time() {
+			return begin_time;
 		}
 
-		public void setBegin_timestamp(String begin_timestamp) {
-			this.begin_timestamp = begin_timestamp;
+		public void setBegin_time(String begin_time) {
+			this.begin_time = begin_time;
 		}
 
 		public String getEnd_time() {
@@ -84,7 +84,7 @@ public class GroupTicket {
 	// 以下为非必填
 	private String servicePhone;// 客服电话
 	private String source = "袋鼠帮";
-	private String get_limit;// 每人可领券的数量限制
+	private int get_limit;// 每人可领券的数量限制
 
 	public String getDealDetail() {
 		return dealDetail;
@@ -174,11 +174,11 @@ public class GroupTicket {
 		this.source = source;
 	}
 
-	public String getGet_limit() {
+	public int getGet_limit() {
 		return get_limit;
 	}
 
-	public void setGet_limit(String get_limit) {
+	public void setGet_limit(int get_limit) {
 		this.get_limit = get_limit;
 	}
 }
