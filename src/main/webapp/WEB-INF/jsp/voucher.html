@@ -716,19 +716,19 @@
 
 	});
 
-	var isChange = "0"; // 表示采用的时间类型，0表示使用时间区间，1表示采用时间长短
+	var isChange = 0; // 表示采用的时间类型，0表示使用时间区间，1表示采用时间长短
 	$("#changeType").on('click', function(event) { //切换时间类型
 		event.preventDefault();
-		if (isChange == "0") {
+		if (isChange == 0) {
 			$(".typeView").animate({
 				"top" : "-54px"
 			}, "400");
-			isChange = "1";
+			isChange = 1;
 		} else {
 			$(".typeView").animate({
 				"top" : "0px"
 			}, "400");
-			isChange = "0";
+			isChange = 0;
 		}
 	});
 
