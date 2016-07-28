@@ -93,7 +93,8 @@
 								<input type="text" class="form-control formTime" id="endTimeD"
 									placeholder="number"> <span class="input-group-addon">日</span>
 							</div>
-						</div></li>
+						</div>
+					</li>
 					<li class="typeTwo" 卡券有效期为持续时长>
 						<div class="inputviews">
 							<div class="input-group" id="rangeTime">
@@ -101,7 +102,8 @@
 									type="text" class="form-control" id="timeRange"
 									placeholder="number"> <span class="input-group-addon">天</span>
 							</div>
-						</div></li>
+						</div>
+					</li>
 				</ul>
 			</div>
 			<div class="stag">
@@ -843,7 +845,6 @@
 								}).done(function() {
 									$(".suup").slideDown('slow', function() {
 										$(this).delay(1000).slideUp('slow');
-
 									});
 									return false;
 								}).fail(function() {
@@ -895,4 +896,235 @@
 				}
 
 			});
+	$("#upCard")
+			.on(
+					'click',
+					function(event) { //发送创建卡券的
+						event.preventDefault();
+						if (isChange == 0) { //根据客户选择的卡券有效期的时间类型进行不同的检验
+							var sY = $("#starTimeY").val();
+							var sM = $("#starTimeM").val();
+							var sD = $("#starTimeD").val();
+							var eY = $("#endTimeY").val();
+							var eM = $("#endTimeM").val();
+							var eD = $("#endTimeD").val();
+							if (sY || sM || sD || eY || eM || eD) {
+								$(".errup").text("输入时间不能为空");
+								$(".errup").slideDown('slow', function() {
+									$(this).delay(1000).slideUp('slow');
+									checkOk = false;
+									return;
+								});
+							} else if (sY > eY || ((sY <= eY) && (sM > eM))
+									|| ((sY <= eY) && (sM <= eM) && (sD > eD))) {
+								$(".errup").text("开始时间不能晚于结束时间");
+								$(".errup").slideDown('slow', function() {
+									$(this).delay(1000).slideUp('slow');
+									checkOk = false;
+									return;
+								});
+							} else if (isNaN(sY) || isNaN(sM) || isNaN(sD)
+									|| isNaN(eY) || isNaN(eM) || isNaN(eD)
+									|| (sM > 12) || (sD > 31) || (eM > 12)
+									|| (eD > 31)) {
+								$(".errup").text("输入的时间格式不正确");
+								$(".errup").slideDown('slow', function() {
+									$(this).delay(1000).slideUp('slow');
+									checkOk = false;
+									return;
+								});
+							}
+						} else {
+							timeRange = $("#timeRange").val();
+							if (isNaN(timeRange)) {
+								$(".errup").text("输入的时间不能为负");
+								$(".errup").slideDown('slow', function() {
+									$(this).delay(1000).slideUp('slow');
+									checkOk = false;
+									return;
+								});
+							}
+							;
+						}
+
+						if (checkOk == false) {
+							$(".errup").text(" 创建卡券失败，请检查填写信息是否有误");
+							$(".errup").slideDown('slow', function() {
+								$(this).delay(1000).slideUp('slow');
+								return;
+							});
+						} else {
+							var title = $(".cardTitle").val();
+							var card_color = $("#chooseColor").css(
+									backgroundColor); //卡券颜色
+							var left_card_amount = $("#cardNumber").val(); //可获取的库存
+							var sub_title = $("#favourView").val(); //卡券具体优惠信息
+							var notice = $("#useView").val(); //卡券使用提醒
+							var description = $("#groupDescription").text();//卡券使用说明
+							var dataTypee = isChange;//使用时间类型
+
+							//代金券
+							var least_cost = $("#leastCost").val(); //代金券专用属性
+							var reduce_cost = $("#reduceCost").val();
+
+							var formData = new FormData();
+							formData.append('logo_url', $("upimg")[0].files[0]);
+
+							$
+									.ajax(
+											{
+												url : '/WechatCard/CreateTicket/CashTickett_save',
+												type : 'POST',
+												dataType : 'json',
+												cache : false,
+												data : formData,
+												processData : false,
+												contentType : false
+											})
+									.done(
+											function(data) {
+												if (data.code == true) {
+													if (dataType == "0") {
+														var beginTimeYear = $(
+																"#starTimeY")
+																.val();
+														var beginTimeMonth = $(
+																"#starTimeM")
+																.val();
+														var beginTimeDay = $(
+																"#starTimeD")
+																.val();
+														var endTimeYear = $(
+																"#endTimeY")
+																.val();
+														var endTimeMonth = $(
+																"#endTimeM")
+																.val();
+														var endTimeDay = $(
+																"#endTimeD")
+																.val();
+														$
+																.ajax(
+																		{
+																			url : '/WechatCard/CreateTicket/CashTickett_save',
+																			type : 'post',
+																			dataType : 'json',
+																			data : {
+																				"title" : title,
+																				"card_color" : card_color,
+																				"left_card_amount" : left_card_amount,
+																				"card_type" : card_type,
+																				"sub_title" : sub_title,
+																				"notice" : notice,
+																				"description" : description,
+																				"least_cost" : least_cost,
+																				"reduce_cost" : reduce_cost,
+																				"dataType" : dataType,
+																				"beginTimeYear" : beginTimeYear,
+																				"beginTimeMonth" : beginTimeMonth,
+																				"beginTimeDay" : beginTimeDay,
+																				"endTimeYear" : endTimeYear,
+																				"endTimeMonth" : endTimeMonth,
+																				"endTimeDay" : endTimeDay
+																			},
+																		})
+																.done(
+																		function(
+																				data) {
+																			if (data.code == true) {
+																				$(
+																						".suup")
+																						.slideDown(
+																								'slow',
+																								function() {
+																									$(
+																											this)
+																											.delay(
+																													1000)
+																											.slideUp(
+																													'slow');
+
+																								});
+																				return false;
+																			}
+																		})
+																.fail(
+																		function() {
+																			console
+																					.log("error");
+																		})
+																.always(
+																		function() {
+																			console
+																					.log("complete");
+																		});
+
+													} else {
+														var fixdTerm = $(
+																"#fixdTerm")
+																.val();
+														$
+																.ajax(
+																		{
+																			url : '/WechatCard/CreateTicket/CashTickett_save',
+																			type : 'post',
+																			dataType : 'json',
+																			data : {
+																				"title" : title,
+																				"card_color" : card_color,
+																				"left_card_amount" : left_card_amount,
+																				"card_type" : card_type,
+																				"least_cost" : least_cost,
+																				"reduce_cost" : reduce_cost,
+																				"sub_title" : sub_title,
+																				" notice" : notice,
+																				"description" : description,
+																				" dataType" : dataType,
+																				"fixdTerm" : fixdTerm
+																			},
+																		})
+																.done(
+																		function(
+																				data) {
+																			if (data.code == true) {
+																				$(
+																						".suup")
+																						.slideDown(
+																								'slow',
+																								function() {
+																									$(
+																											this)
+																											.delay(
+																													1000)
+																											.slideUp(
+																													'slow');
+
+																								});
+																				return false;
+																			}
+																		})
+																.fail(
+																		function() {
+																			console
+																					.log("error");
+																		})
+																.always(
+																		function() {
+																			console
+																					.log("complete");
+																		});
+													}
+
+												} else {
+													console.log("error");
+												}
+											}).fail(function() {
+										console.log("error");
+									}).always(function() {
+										console.log("complete");
+									});
+
+						}
+
+					});
 </script>

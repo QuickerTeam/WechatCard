@@ -582,7 +582,7 @@
 				  		formData.append('logo_url', $("upimg")[0].files[0]);
 
 				  		$.ajax({
-				  			url: '/path/to/file',
+				  			url: '/WechatCard/CreateTicket/GiftTicket_save',
 				  			type: 'POST',
 				  			dataType: 'json',
 				  			cache: false,
@@ -590,8 +590,8 @@
    						 	processData: false,
     						contentType: false
 				  		})
-				  		.done(function() {
-				  			if (XX == true) {
+				  		.done(function(data) {
+				  			if (data.code == true) {
 				  				
 				            	if (dataType == "0") {
 			                var beginTimeYear = $("#starTimeY").val();
@@ -601,7 +601,7 @@
 			                var endTimeMonth = $("#endTimeM").val();
 			                var endTimeDay = $("#endTimeD").val();
 			                $.ajax({
-			                  url: '/path/to/file',
+			                  url: '/WechatCard/CreateTicket/GiftTicket_save',
 			                  type: 'post',
 			                  dataType: 'json',
 			                  data: {
@@ -621,11 +621,13 @@
 			                    "endTimeMonth":endTimeMonth,
 			                    "endTimeDay":endTimeDay},
 			                })
-			                .done(function() {
+			                .done(function(data) {
+			                if(data.code == true){
 			                   $(".suup").slideDown('slow', function() {
 			                    $(this).delay(1000).slideUp('slow');
 			          
 			                   });
+			                   }
 			      return false;
 			                })
 			                .fail(function() {
@@ -638,7 +640,7 @@
 			              }else{
 			                var fixdTerm = $("#fixdTerm").val();
 			                $.ajax({
-			                  url: '/path/to/file',
+			                  url: '/WechatCard/CreateTicket/GiftTicket_save',
 			                  type: 'post',
 			                  dataType: 'json',
 			                  data: {
@@ -653,11 +655,13 @@
 			                    " dataType":dataType,
 			                    "fixdTerm":fixdTerm},
 			                })
-			                .done(function() {
+			                .done(function(data) {
+			                if(data.code == true){
 			                   $(".suup").slideDown('slow', function() {
 			                   $(this).delay(1000).slideUp('slow');
 			          
 			                   });
+			                   }
 			                   return false;
 			                })
 			                .fail(function() {
