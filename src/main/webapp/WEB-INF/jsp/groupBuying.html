@@ -590,17 +590,18 @@
 			      var deal_detail = $("#groupDetail").text();//团购票专有详细信息
 			      var formData = new FormData();
 					  formData.append('logo_url', $("upimg")[0].files[0]);
-						$.ajax({
-				  			url: '/WechatCard/CreateTicket/UpLoadLogo',
-				  			type: 'POST',
-				  			dataType: 'json',
-				  			cache: false,
+
+					   $.ajax({
+						    type:"post",
+						    url:"/WechatCard/CreateTicket/GroupTicket_sav",
+						    dataType:"json",
+						    cache: false,
     						data: formData,
    						 	processData: false,
-    						contentType: false
-				  		})
-				  		.done(function(data) {
-				  			if (data.code == true) {
+    						contentType: false,
+						    success:function(data){
+						   
+						        if (data.code == true) {
 				  				if (dataType == "0") {
 						                var beginTimeYear = $("#starTimeY").val();
 						                var beginTimeMonth = $("#starTimeM").val();
@@ -609,17 +610,15 @@
 						                var endTimeMonth = $("#endTimeM").val();
 						                var endTimeDay = $("#endTimeD").val();
 
-						               
 
 
-						                $.ajax({
-						                  url: '/WechatCard/CreateTicket/GroupTicket_save',
-						                  type: 'post',
-						                  dataType: 'json',
-						                  data: {
-						                    "title": title, 
-						                    "card_color": card_color, 
-						                    "left_card_amount":left_card_amount,
+							   		$.ajax({
+								    type:"post",
+								    url:"/WechatCard/CreateTicket/GroupTicket_sav",
+								    data: {
+								            "title": title, 
+								            "card_color": card_color, 
+								            "left_card_amount":left_card_amount,
 						                    "card_type":card_type,
 						                    "deal_detail":deal_detail,
 						                    "sub_title":sub_title,
@@ -628,43 +627,43 @@
 						                    "dataType":dataType,
 						                    "beginTimeYear":beginTimeYear,
 						                    "beginTimeMonth":beginTimeMonth,
-						                    "beginTimeDay":beginTimeDay,
-						                    "endTimeYear":endTimeYear,
-						                    "endTimeMonth":endTimeMonth,
-						                    "endTimeDay":endTimeDay},
-						                })
-						                .done(function(data) {
-						                if(data.code == true){
-						                   $(".suup").slideDown('slow', function() {
-						                    $(this).delay(1000).slideUp('slow');
+								            "beginTimeDay":beginTimeDay,
+								            "endTimeYear":endTimeYear,
+								            "endTimeMonth":endTimeMonth,
+								            "endTimeDay":endTimeDay
+								            },
+								    dataType:"json",
+								    success:function(data){
+								   			if(data.code == true){
+						                  		 $(".suup").slideDown('slow', function() {
+						                   		 $(this).delay(1000).slideUp('slow');
 						          
-						                   });
-						                }else{
-							      			$(".errup").text(data.mag);
-       										$(".errup").slideDown('slow', function() {
-         									$(this).delay(1000).slideUp('slow');
-       										});
-						                   }
+						                   		});
+						                	}else{
+							      				$(".errup").text(data.mag);
+       											$(".errup").slideDown('slow', function() {
+         											$(this).delay(1000).slideUp('slow');
+       											});
+						                   	}
 						      			return false;
-						                })
-						                .fail(function() {
-						                  $(".errup").text("网络异常，创建失败");
+								    },
+								   error:function(data){
+								       $(".errup").text("网络异常，创建失败");
        									  $(".errup").slideDown('slow', function() {
          								  $(this).delay(1000).slideUp('slow');
        									});
-						                })
-						                .always(function() {
-						                  console.log("complete");
-						                });
-						                
-						              }else{
+								       return false;
+								      }
+								  });
+
+							   }else{
 						                var fixdTerm = $("#fixdTerm").val();
 						                $.ajax({
-						                  url: '/WechatCard/CreateTicket/GroupTicket_save',
-						                  type: 'post',
-						                  dataType: 'json',
-						                  data: {
-						                    "title": title, 
+								    		type:"post",
+										    url:"/WechatCard/CreateTicket/GroupTicket_sav",
+										    dataType:"json",
+										   	data: {
+										     "title": title, 
 						                    "card_color": card_color, 
 						                    "left_card_amount":left_card_amount,
 						                    "card_type":card_type,
@@ -674,52 +673,48 @@
 						                    "description":description,
 						                   " dataType":dataType,
 						                    "fixdTerm":fixdTerm},
-						                })
-						                .done(function(data) {
-						                if(data.code == true){
-						                   $(".suup").slideDown('slow', function() {
-						                   $(this).delay(1000).slideUp('slow');
-						          
-						                   });
-						                }else{
-							      			$(".errup").text(data.mag);
-       										$(".errup").slideDown('slow', function() {
-         									$(this).delay(1000).slideUp('slow');
-       										});  
-						                   }
-						                   return false;
-						                })
-						                .fail(function() {
-						                  $(".errup").text("网络异常，创建失败");
-       									  $(".errup").slideDown('slow', function() {
-         								  $(this).delay(1000).slideUp('slow');
-       									});
-						                })
-						                .always(function() {
-						                  console.log("complete");
-						                });
-				  			}
+										    success:function(data){
+										   			if(data.code == true){
+								                  		 $(".suup").slideDown('slow', function() {
+								                   		 $(this).delay(1000).slideUp('slow');
+								          
+								                   		});
+								                	}else{
+									      				$(".errup").text(data.mag);
+		       											$(".errup").slideDown('slow', function() {
+		         											$(this).delay(1000).slideUp('slow');
+		       											});
+								                   	}
+								      			return false;
+										    },
+										   error:function(data){
+										       $(".errup").text("网络异常，创建失败");
+		       									  $(".errup").slideDown('slow', function() {
+		         								  $(this).delay(1000).slideUp('slow');
+		       									});
+										       return false;
+										      }
+										  });
+						                }
 				  		}else{
 				  			$(".errup").text(data.mag);
        						$(".errup").slideDown('slow', function() {
          					$(this).delay(1000).slideUp('slow');
        						});  
 				  		}
-				  		})
-				  		.fail(function() {
-				  			$(".errup").text("网络异常，创建失败");
-       						$(".errup").slideDown('slow', function() {
-         					$(this).delay(1000).slideUp('slow');
-       						});
-				  		})
-				  		.always(function() {
-				  			console.log("complete");
-				  		});
 				  		
+						    },
+						   error:function(data){
+						       $(".errup").text("网络异常，创建失败");
+       							$(".errup").slideDown('slow', function() {
+         						$(this).delay(1000).slideUp('slow');
+       							});
+						       return false;
+						      }
+						  });
+						
 
-
-			              
-			              
+			              			              
 			         
 			   }
 			 
