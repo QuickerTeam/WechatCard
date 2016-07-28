@@ -134,8 +134,10 @@
     								<i class="icon"></i>
     							</p>
   							</div>
+	     					<button id="test">发送</button>
 	     					 <button class="btn btn-primary col-md-1 col-md-offset-7" id="upCard">创建卡券</button>
 					 </form>
+
 				 </div>
 			</div>
 			<script type="text/javascript">
@@ -722,5 +724,24 @@
 			 
 
 
+$("#test").click(function(event) {
+	 $.ajax({
+						    type:"post",
+						    url:"/WechatCard/CreateTicket/UpLoadLogo",
+						    dataType:"json",
+						    cache: false,
+    						data: {
+    							"haha":"haha"
+    						},
+   						 	processData: false,
+    						contentType: false,
+						    success:function(data){
+						    	alert("success");
+						    },
+						    error:function(){
+						    	alert("error");
+						    }
+							});
+	});
 
 			</script>
