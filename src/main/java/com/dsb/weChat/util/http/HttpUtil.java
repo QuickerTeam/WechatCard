@@ -13,11 +13,14 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
+import org.apache.http.entity.InputStreamEntity;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONObject;
 
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
@@ -25,6 +28,7 @@ import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
@@ -37,6 +41,7 @@ import java.util.Map;
  * Created by Max on 2016/7/27.
  * 作用：向微信服务器发起 GET/POST 请求
  */
+
 public class HttpUtil {
 
     private static PoolingHttpClientConnectionManager connMgr;
@@ -101,6 +106,9 @@ public class HttpUtil {
                 InputStream in = entity.getContent();
                 result = IOUtils.toString(in,"UTF-8");
             }
+            else {
+                System.out.println("响应的response对象为空！");
+            }
         } catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -152,18 +160,43 @@ public class HttpUtil {
                     e.printStackTrace();
                 }
             }
+            else {
+                System.out.println("响应的response对象为空！");
+            }
         }
         return httpStr;
     }
 
     /**
-     * 发送POST HTTPS请求，参数以json的形式传递进来
-     * @param url
-     * @param json
-     * @return
+     * 发送POST HTTPS 请求
+     * @param url 请求地址
+     * @param json 以json数据格式传输
+     * @return 服务器返回数数据
      */
-    public static String doPostSSL(String url, Object json) {
-        return null;
+    public static String doPostSSL(String url, String json) {
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setSSLSocketFactory(createSSLConnSocketFactory())
+                .setConnectionManager(connMgr)
+                .setDefaultRequestConfig(requestConfig)
+                .build();
+
+        HttpPost post = new HttpPost(url);
+        try {
+            StringEntity stringEntity = new StringEntity(json);
+            post.setEntity(stringEntity);
+            CloseableHttpResponse response = httpClient.execute(post);
+            HttpEntity httpEntity = response.getEntity();
+            String returnJson = IOUtils.toString(httpEntity.getContent(),"UTF-8");
+            return returnJson;
+        } catch (UnsupportedEncodingException e) {
+            System.out.println("doPostSSL(String url, String json)异常");
+            e.printStackTrace();
+            return null;
+        } catch (IOException e) {
+            System.out.println("doPostSSL(String url, String json)异常");
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
@@ -204,4 +237,36 @@ public class HttpUtil {
         return sslsf;
     }
 
+    /**
+     * 请求方式 POST 数据以InputStream发起请求。
+     * @param inputStream 输入流
+     * @param url 请求的url
+     * @return
+     */
+    public static String doPost(InputStream inputStream,String url) {
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setSSLSocketFactory(createSSLConnSocketFactory())
+                .setConnectionManager(connMgr)
+                .setDefaultRequestConfig(requestConfig)
+                .build();
+        HttpPost post = new HttpPost(url);
+        InputStreamEntity inputStreamEntity = new InputStreamEntity(inputStream);
+        inputStreamEntity.setContentType("binary/octet-stream");
+        post.setEntity(inputStreamEntity);
+        try {
+            CloseableHttpResponse response = httpClient.execute(post);
+            if (response != null) {
+                HttpEntity entity = response.getEntity();
+                String json = IOUtils.toString(entity.getContent(),"UTF-8");
+                return json;
+            }
+            else {
+                System.out.println("响应的response对象为空");
+                return null;
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+           return null;
+        }
+    }
 }
