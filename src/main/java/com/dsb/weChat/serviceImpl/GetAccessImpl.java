@@ -19,20 +19,6 @@ import java.util.Map;
 
 public class GetAccessImpl implements GetAccess{
 
-    CloseableHttpClient client;
-    HttpGet get;
-    CloseableHttpResponse response;
-    RequestConfig requestConfig;
-    HttpEntity entity;
-
-    public GetAccessImpl() {
-        client = HttpClients.createDefault();
-        requestConfig = RequestConfig.custom()
-                .setSocketTimeout(15000)
-                .setConnectTimeout(15000)
-                .setConnectionRequestTimeout(15000)
-                .build();
-    }
     /**
      *
      * @param appId  第三方用户唯一凭证
