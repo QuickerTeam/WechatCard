@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project-module
   type="WEB"
-  name="WechatCard"
+  name="WechatCard Maven Webapp"
   id="myeclipse.1469518646701"
   context-root="/WechatCard"
   j2ee-spec="6.0"
-  archive="WechatCard.war">
+  archive="WechatCard Maven Webapp.war">
   <attributes>
     <attribute name="webrootdir" value="src/main/webapp" />
   </attributes>

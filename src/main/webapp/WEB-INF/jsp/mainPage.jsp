@@ -20,8 +20,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>cssreset.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>font-awesome.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>font-awesome-ie7.css">
-	<script type="text/javascript" src = "<%@ StaticConstant.jsFilePath %>jquery.js"></script>
-	<script type="text/javascript" src = "<%@ StaticConstant.jsFilePath %>bootsrap.js"></script>
+	<script type="text/javascript" src = "<%= StaticConstant.jsFilePath %>jquery.js"></script>
+	<script type="text/javascript" src = "<%= StaticConstant.jsFilePath %>bootsrap.js"></script>
 </head>
 <body>
 		<p class="suup smaview">åå»ºæå</p>
@@ -195,6 +195,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		</div>
 		<footer></footer>
 	</div>
-	<script type="text/javascript" src="<%@ StaticConstant.jsFilePath %>main.js"></script>
+	<script type="text/javascript" src="<%= StaticConstant.jsFilePath %>main.js"></script>
 </body>
 </html>

@@ -18,18 +18,18 @@ import com.dsb.weChat.service.GetAccess;
 import com.dsb.weChat.serviceImpl.CardCreateServiceImpl;
 import com.dsb.weChat.serviceImpl.GetAccessImpl;
 
-@Controller
-@RequestMapping(value = "/CreateTicket")
+
 /**
  * 创建券
  * @author Time
  *
  */
+@Controller
+@RequestMapping(value = "/CreateTicket")
 public class CreateTicket extends HttpServlet {
 	private static final long serialVersionUID = -2094822104804129409L;
 	private ServletInputStream logo;
 	private String logo_url;
-
 	@RequestMapping(value = "/UpLoadLogo")
 	public String getLogo(HttpServletRequest request) {// 上传logo
 		try {
@@ -38,9 +38,9 @@ public class CreateTicket extends HttpServlet {
 			// TODO 获取logo出错
 			e.printStackTrace();
 		}
-		return "";
+		return "mainPage";
 	}
-
+	
 	@RequestMapping(value = "/GroupTicket_input")
 	public String groupTicketInput() {// 创建团购券页面
 		return "mainPage";
