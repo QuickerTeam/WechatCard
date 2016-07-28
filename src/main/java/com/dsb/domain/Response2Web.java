@@ -1,12 +1,12 @@
 package com.dsb.domain;
 
 public class Response2Web {
-	private String code;
+	private Boolean code;
 	private String msg;
-	public String getCode() {
+	public Boolean getCode() {
 		return code;
 	}
-	public void setCode(String code) {
+	public void setCode(Boolean code) {
 		this.code = code;
 	}
 	public String getMsg() {
