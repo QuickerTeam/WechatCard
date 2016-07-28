@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.io.*,java.util.*" %>
@@ -15,20 +14,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>learn Bootsrap</title>
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>cssbootsrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>bootstrap-theme.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>main.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>cssreset.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>font-awesome.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>font-awesome-ie7.css">
 	<script type="text/javascript" src = "<%= StaticConstant.jsFilePath %>jquery.js"></script>
-	<script type="text/javascript" src = "<%= StaticConstant.jsFilePath %>bootsrap.js"></script>
+	<script type="text/javascript" src = "<%= StaticConstant.jsFilePath %>bootstrap.js"></script>
 </head>
 <body>
 		<p class="suup smaview">创建成功</p>
 		<p class="errup smaview" ></p>
 		<header>
 			<div class="container">
+
+				
+
 				<img src="<%= StaticConstant.imgFilePath %>logo.png">
+
 				<span class="view">袋鼠帮卡券发送平台</span>
 			</div>
 		</header>
@@ -52,22 +55,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<p class="suup smaview">创建成功</p>
 		<p class="errup smaview" ></p>
 		<div class="sbody">
-			<div class="container">
-				<div>
-					<span>选择核销卡券类型</span>
-					<div>
-						<img src="">
-						<span></span>
-					</div>
-				</div>
-				<div class="input-group">
-		        	<span class="input-group-addon">输入卡券号</span>
-		         	<input type="text" class="form-control onlyForm" id="cardNumber" placeholder="上限100000000"><i class="icon"></i>
-		     	</div>
-			</div>
+			
 		</div>
 		<footer></footer>
+
 	</div>
+
 	<script type="text/javascript" src="<%= StaticConstant.jsFilePath %>main.js"></script>
 </body>
 </html>

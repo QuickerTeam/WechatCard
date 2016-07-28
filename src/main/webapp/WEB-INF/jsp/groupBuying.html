@@ -143,6 +143,7 @@
 			  var cardType = "groupBuying";
 			  var ismoreCard = false;
 			  var checkOk = true;  //为treu代表表单检验通过
+			  
 				$("#upimg").val(null);     // 初始化上传图片的value
 				$("#moreCard").click(function(event) {
 					if(ismoreCard == false){
@@ -517,7 +518,7 @@
 			  isChange = 1;
 			}else{
 			 $(".typeView").animate({"top":"0px"}, "400");
-			  isChange = 0;
+			  isChange = 1;
 			} 
 			});
 
@@ -530,7 +531,8 @@
 			      var eY = $("#endTimeY").val();
 			      var eM = $("#endTimeM").val();
 			      var eD = $("#endTimeD").val(); 
-			      if (sY || sM || sD || eY || eM || eD) {
+
+			      if (sY == "" || sM == "" || sD == "" || eY == "" || eM == "" || eD == "") {
 			       $(".errup").text("输入时间不能为空");
 			       $(".errup").slideDown('slow', function() {
 			         $(this).delay(1000).slideUp('slow');
@@ -576,6 +578,7 @@
 			         return;
 			   });
 			   }else{
+			   	alert("checkOk = true");
 			      var title = $(".cardTitle").val();
 			      var card_color =  $("#chooseColor").css(backgroundColor);   //卡券颜色
 			      var left_card_amount = $("#cardNumber").val(); //可获取的库存
@@ -588,7 +591,7 @@
 			      var formData = new FormData();
 					  formData.append('logo_url', $("upimg")[0].files[0]);
 						$.ajax({
-				  			url: '/WechatCard/CreateTicket//UpLoadLogo',
+				  			url: '/WechatCard/CreateTicket/UpLoadLogo',
 				  			type: 'POST',
 				  			dataType: 'json',
 				  			cache: false,

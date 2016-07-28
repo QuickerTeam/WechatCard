@@ -35,6 +35,7 @@ public class CreateTicket extends HttpServlet {
 	@RequestMapping(value = "/UpLoadLogo")
 	@ResponseBody
 	public Response2Web getLogo(HttpServletRequest request) {// 上传logo
+		System.out.println("/UpLoadLogo");
 		Response2Web response =new Response2Web();
 		try {
 			logo = request.getInputStream();
@@ -50,6 +51,7 @@ public class CreateTicket extends HttpServlet {
 	
 	@RequestMapping(value = "/GroupTicket_input")
 	public String groupTicketInput() {// 创建团购券页面
+		System.out.println("/GroupTicket_input");
 		return "mainPage";
 	}
 
@@ -57,6 +59,7 @@ public class CreateTicket extends HttpServlet {
 	@ResponseBody
 	public Response2Web groupTicketSave(GroupTicket groupTicket) throws AccessTokenException{// 创建团购券
 		// 获取access_token
+		System.out.println("/GroupTicket_save");
 		Response2Web response =new Response2Web();
 		GetAccess getAccess =new GetAccessImpl();
 		JSONObject accessTokenJson =new JSONObject(getAccess.getAccessToken(
