@@ -24,25 +24,34 @@ $(".card").on('click', function(event) {
 
   switch(cardType){
     case "groupBuying":
-      $(".sbody").load("/WechatCard/src/main/webapp/WEB-INF/jsp/groupBuying.html");
+
+      
+
+      $(".sbody").load("/WechatCard/jsp/groupBuying.html");
+
       $(this).addClass('thisCard');
 
       break;
 
     case "voucher":
-      $(".sbody").load("/WechatCard/src/main/webapp/WEB-INF/jsp/voucher.html");
+
+      $(".sbody").load("/WechatCard/jsp/voucher.html");
       $(this).addClass('thisCard');
       break;
+   
+   
+   
     case "countCard":
-      $(".sbody").load("/WechatCard/src/main/webapp/WEB-INF/jsp/discount.html");
+      $(".sbody").load("/WechatCard/jsp/discount.html");
       $(this).addClass('thisCard');
       break;
     case "giftCard":
-      $(".sbody").load("/WechatCard/src/main/webapp/WEB-INF/jsp/giftCard.html");
+      $(".sbody").load("/WechatCard/jsp/giftCard.html");
       $(this).addClass('thisCard');
       break;
     case "coupon":
-      $(".sbody").load("/WechatCard/src/main/webapp/WEB-INF/jsp/coupon.html");
+      $(".sbody").load("/WechatCard/jsp/coupon.html");
+
       $(this).addClass('thisCard');
       break;
     default:break;

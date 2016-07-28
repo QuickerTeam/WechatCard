@@ -15,13 +15,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>learn Bootsrap</title>
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>bootstrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>cssbootsrap-theme.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>main.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>cssreset.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>font-awesome.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>font-awesome-ie7.css">
 	<script type="text/javascript" src = "<%= StaticConstant.jsFilePath %>jquery.js"></script>
-	<script type="text/javascript" src = "<%= StaticConstant.jsFilePath %>bootstrap.js"></script>
+	<script type="text/javascript" src = "<%= StaticConstant.jsFilePath %>bootsrap.js"></script>
 </head>
 <body>
 		<p class="suup smaview">创建成功</p>

@@ -507,15 +507,15 @@
 				  	
 				  });
 
-				var isChange = "0";    // 表示采用的时间类型，0表示使用时间区间，1表示采用时间长短
+				var isChange = 0;    // 表示采用的时间类型，0表示使用时间区间，1表示采用时间长短
 				$("#changeType").on('click', function(event) {             //切换时间类型
 				  event.preventDefault();
-				  if (isChange == "0") {
+				  if (isChange == 0) {
 				  $(".typeView").animate({"top":"-54px"}, "400");
-				  isChange = "1";
+				  isChange = 1;
 				}else{
 				 $(".typeView").animate({"top":"0px"}, "400");
-				  isChange = "0";
+				  isChange = 0;
 				} 
 				});
 
@@ -549,6 +549,8 @@
 				         checkOk = false;
 				         return;
 				       });
+				   }else{
+				   	checkOk = true;
 				   }
 				 }else{
 				      timeRange = $("#timeRange").val();
@@ -559,7 +561,9 @@
 				         checkOk = false;
 				         return;
 				       });
-				      };
+				      }else{
+				      	checkOk = true;
+				      }
 				 }
 
 
@@ -625,15 +629,23 @@
 					                .done(function(data) {
 					                if(data.code == true){
 					                   $(".suup").slideDown('slow', function() {
-					                    $(this).delay(1000).slideUp('slow');
+					                    	$(this).delay(1000).slideUp('slow');
 					          
 					                   });
-					                   
-					      			return false;
+					                }else{
+							      		$(".errup").text(data.mag);
+       									$(".errup").slideDown('slow', function() {
+         									$(this).delay(1000).slideUp('slow');
+       									});   
+					      			
 					      			}
+					      			return false;
 					                })
 					                .fail(function() {
-					                  console.log("error");
+					                  $(".errup").text("网络异常，创建失败");
+       									  $(".errup").slideDown('slow', function() {
+         								  $(this).delay(1000).slideUp('slow');
+       									});
 					                })
 					                .always(function() {
 					                  console.log("complete");
@@ -663,18 +675,30 @@
 					                   $(this).delay(1000).slideUp('slow');
 					          
 					                   });
+					                }else{
+							      		$(".errup").text(data.mag);
+       									$(".errup").slideDown('slow', function() {
+         									$(this).delay(1000).slideUp('slow');
+       									});   
+       								}
 					                   return false;
-					                   }
+					                   
 					                })
 					                .fail(function() {
-					                  console.log("error");
+					                 $(".errup").text("网络异常，创建失败");
+       									  $(".errup").slideDown('slow', function() {
+         								  $(this).delay(1000).slideUp('slow');
+       									});
 					                })
 					                .always(function() {
 					                  console.log("complete");
 					                });
 				              }
 				  		}else{
-				  			console.log("error");
+				  			$(".errup").text(data.mag);
+       						$(".errup").slideDown('slow', function() {
+         					$(this).delay(1000).slideUp('slow');
+       						});  
 				  		}
 				  		})
 				  		.fail(function() {
