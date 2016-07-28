@@ -1,0 +1,692 @@
+			<div class="container">
+				<div class="row">
+					<span class="groupBuying col-md-12">礼品券</span>
+					 <form class="inputGroupView col-md-11" role = "form">            <!-- 团购券-->
+					 		<div class="remind">
+						 	    <div class="input-group">
+		        					<span class="input-group-addon">券名</span>
+		         					<input type="text" class="form-control onlyForm" id="cardTitle" placeholder="不超过9个字"><i class="icon"></i><!-- <i class="icon-remove warnning icon" title="字数超过九个字"></i> -->
+		         					<!-- <i class="icon-ok icon"></i> -->
+		     					</div>
+
+	     					 </div>
+
+	     					 <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">卡券总数</span>
+		         					<input type="text" class="form-control onlyForm" id="cardNumber" placeholder="上限100000000"><i class="icon"></i>
+		     					 </div>
+	     					 </div>
+	     					 <div class="remind">
+		     					  <div class="input-group">
+		        					<span class="input-group-addon">卡券使用提醒</span>
+		         					<input type="text" class="form-control onlyForm" id="useView" placeholder="不超过16个字"><i class="icon"></i>
+		     					 </div>
+	     					 </div>
+	     					 	 <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">客服电话</span>
+		         					<input type="text" class="form-control onlyForm" id="serverTel" placeholder="选题"><i class="notMust icon">*选填</i>
+		     					 </div>
+	     					 </div>
+	     					 <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">具体优惠信息</span>
+		         					<input type="text" class="form-control onlyForm" id="favourView" placeholder="不超过18个字"><i class="icon"></i>
+		     					 </div>
+	     					 </div>
+	     					 <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">个人领券限额</span>
+		         					<input type="text" class="form-control onlyForm" id="numberPlace" placeholder="50"><i class="notMust icon">*选填</i>
+		     					 </div>
+	     					 </div>
+	     					  <div class="remind">
+		     					 <div class="input-group">
+		        					<span class="input-group-addon">礼品</span>
+		         					<input type="text" class="form-control onlyForm" id="gift" placeholder="礼品名称"><i class="icon"></i>
+		     					 </div>
+	     					 </div>
+	     					 <div class="chooseTimeType">
+	     					 	<span>选择时间模式</span>
+	     					 	<button class="btn btn-info" type="button" title="点击切换" id="changeType">切换</button>
+	     					 </div>
+	     					 <div class="showType">
+	     					 	<ul class="typeView">
+	     					 		<li class="typeOne" >
+				     					  <div class="inputviews">
+					     					 <div class="input-group">
+					        					<span class="input-group-addon">卡券使用开始时间</span>
+					         					<input type="text" class="form-control formTime" id="starTimeY"  placeholder="number">
+					         					<span class="input-group-addon">年</span>
+					         					<input type="text" class="form-control formTime" id="starTimeM"  placeholder="number">
+					         					<span class="input-group-addon">月</span>
+					         					<input type="text" class="form-control formTime" id="starTimeD"  placeholder="number">
+					         					<span class="input-group-addon">日</span>
+					     					 </div>
+				     					 </div>
+				     					 <div class="inputviews">
+					     					 <div class="input-group">
+					        					<span class="input-group-addon">卡券使用结束时间</span>
+					         					<input type="text" class="form-control formTime" id="endTimeY" placeholder="number">
+					         					<span class="input-group-addon">年</span>
+					         					<input type="text" class="form-control formTime" id="endTimeM" placeholder="number">
+					         					<span class="input-group-addon">月</span>
+					         					<input type="text" class="form-control formTime" id="endTimeD" placeholder="number">
+					         					<span class="input-group-addon">日</span>
+					     					 </div>
+				     					 </div>
+				     				</li>
+				     				<li class="typeTwo" 卡券有效期为持续时长>
+				     					 <div class="inputviews">
+					     					 <div class="input-group" id="rangeTime">
+					        					<span class="input-group-addon">卡券使用持续时长</span>
+					         					<input type="text" class="form-control" id="timeRange" placeholder="number">
+					         					<span class="input-group-addon">天</span>
+					     					 </div>
+				     					 </div>
+				     				</li>
+				     			</ul>
+				     		</div>
+	     					 <div class="stag">
+								<span class="upView">上传商家图标</span>
+								<div class="addimg">
+									<i class="icon-plus-sign"></i>
+								</div>
+								<i class="icon"></i>
+								<input type="file" name="" id="upimg"/>
+							</div>	
+
+
+
+
+
+							<div class="remind">
+								<span class="upView">选择卡片背景颜色</span>
+								<div id="chooseColor"></div>
+								<table class="colorTable">
+									<tr>
+										<td class="colorView Color010" title="#63b359"></td>
+										<td class="colorView Color020" title="#2c9f67"></td>
+										<td class="colorView Color030" title="#509fc9"></td>
+										<td class="colorView Color040" title="#5885cf"></td>
+										<td class="colorView Color050" title="#9062c0"></td>
+										<td class="colorView Color060" title="#d09a45"></td>
+										<td class="colorView Color070" title="#e4b138"></td>
+									</tr>
+									<tr>
+										<td class="colorView Color080" title="#ee903c"></td>
+										<td class="colorView Color081" title="#f08500"></td>
+										<td class="colorView Color082" title="#a9d92d"></td>
+										<td class="colorView Color090" title="#dd6549"></td>
+										<td class="colorView Color100" title="#cc463d"></td>
+										<td class="colorView Color101" title="#cf3e36"></td>
+										<td class="colorView Color102" title="#5E6671s"></td>
+									</tr>
+								</table>
+							</div>
+
+							<div class="form-group">
+    							<label for="name">卡券使用说明</label>
+    							<p>
+    								<textarea class="form-control" rows="3" id="groupDescription"></textarea>
+    								<i class="icon"></i>
+    							</p>
+  							</div>
+	     					 <button class="btn btn-primary col-md-1 col-md-offset-7" id="upCard">创建卡券</button>
+					 </form>
+				 </div>
+			</div>
+			<script type="text/javascript"">
+				
+			  var cardType = "groupBuying";
+			  var ismoreCard = false;
+			  var checkOk = trualert("gift");
+				$("#upimg").val(null);     // 初始化上传图片的value
+				$("#moreCard").click(function(event) {
+					if(ismoreCard == false){
+						$(".cardView").slideDown('400');
+						$(".fontSign").removeClass('icon-double-angle-left').addClass('icon-double-angle-down');
+						ismoreCard = true;
+					}else{
+						$(".cardView").slideUp('400');
+						$(".fontSign").removeClass('icon-double-angle-down').addClass('icon-double-angle-left');
+						ismoreCard = false;
+					}
+				});
+
+
+			$("#upimg").on("change", function(){                  //上传图片同时预览上传的图片
+			    // Get a reference to the fileList
+			    var files = !!this.files ? this.files : [];
+			    var nextElement = $(".addimg").nextAll("i");
+			 
+			    // If no files were selected, or no FileReader support, return
+			    if (!files.length || !window.FileReader) return;
+			 
+			    // Only proceed if the selected file is an image
+			    if (/^image/.test( files[0].type)){                     //验证图片是否合格
+			 
+			        // Create a new instance of the FileReader
+			        var reader = new FileReader();
+			 
+			        // Read the local file as  DataURL
+			        reader.readAsDataURL(files[0]);
+			 
+			        // When loaded, set image data as background of div
+			        checkOk = true;
+			        
+			  		  reader.onloadend = function(){
+			  		$(".addimg").empty();
+					$("<img src='"+this.result+"' class = 'imgview'>").appendTo($(".addimg"));  
+			        };
+			        if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			            };
+			        if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			            };
+			        nextElement.addClass('icon-ok').attr({title: ""});
+			    }else{
+			    	  if (nextElement.hasClass('icon-ok')) {
+			              nextElement.removeClass('icon-ok');
+			          };
+			        if (nextElement.hasClass('icon-remove')) {
+			              nextElement.removeClass('icon-remove');
+			          };
+			          nextElement.addClass('icon-remove').attr({title: "请选择图片上传"});
+			          checkOk = true;
+			    }
+			 
+			});
+
+			  $(".addimg").click(function(event) {               
+			  	$("#upimg").trigger("click");
+			  });
+
+			  $("#chooseColor").on('click',  function(event) {        //显示选择颜色的色版
+			  	event.preventDefault();
+			  	$(".colorTable").css({display:"inline-block"});
+			  });
+
+			  $(".colorView").on('click', function(event) {             //隐藏色板
+			  	event.preventDefault();
+			  	var color = $(this).attr("title");
+			  	$("#chooseColor").css({
+			  		backgroundColor: color
+			  	});
+			  	$(".colorTable").hide("400");
+			  });
+
+
+			  $(".form-control").blur(function(event) {    //表单验证
+			  	var idname = $(this).attr("id");  
+			  	var nextElement = $(this).nextAll("i");
+			  	switch(idname){
+			  		case "cardTitle":                          //验证卡券是否合格
+			  					if ($(this).val().length>9) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			  						nextElement.addClass('icon-remove').attr({title: "字数不能超过9"});
+			              checkOk = false;
+			  					}else if ($(this).val().length == 0) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			  						nextElement.addClass('icon-remove').attr({title: "字数不能超过0"});
+			              checkOk = false;
+			  					}else{
+			  						if (nextElement.hasClass('icon-remove')) {
+			  							nextElement.removeClass('icon-remove');
+			  						};
+			  						if (nextElement.hasClass('icon-ok')) {
+			  							nextElement.removeClass('icon-ok');
+			  						};
+			  						nextElement.addClass('icon-ok').attr({title: ""});
+			              checkOk = true;
+			  					};
+			  					break;
+			  		case "cardNumber":                          //验证卡券发行数量
+			  						if ($(this).val()>100000000) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			  						nextElement.addClass('icon-remove').attr({title: "卡券数量过多"});
+			              checkOk = false;
+			  					}else if ($(this).val().length == 0) {
+			                if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			  						nextElement.addClass('icon-remove').attr({title: "字数输入能为空"});
+			              checkOk = false;
+			  					}else if (isNaN($(this).val()) || $(this).val()<0) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			  						nextElement.addClass('icon-remove').attr({title: "请输入正整数"});
+			              checkOk = false;
+			  					}else{
+			  						if (nextElement.hasClass('icon-remove')) {
+			  							nextElement.removeClass('icon-remove');
+			  						};
+			  						if (nextElement.hasClass('icon-ok')) {
+			  							nextElement.removeClass('icon-ok');
+			  						};
+			  						nextElement.addClass('icon-ok').attr({title: ""});
+			              checkOk = true;
+			  					};
+			  					break;
+			 case "useView":                                  //验证卡券使用提醒
+			 	            if ($(this).val().length>16) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "字数不能超过16"});
+			              checkOk = false;
+			            }else if ($(this).val().length == 0) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "输入不能为空"});
+			              checkOk = false;
+			            }else{
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              if(nextElement.hasClass("notMust")){
+			                nextElement.removeClass('notMust');
+			              };
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              nextElement.addClass('icon-ok').attr({title: ""});
+			              checkOk = true;
+			            };
+			            break;  
+			  case "serverTel":                     //验证卡券客服电话
+			             var isPhone = /^([0-9]{3,4}-)?[0-9]{7,8}$/;
+			             if (!isPhone.test($(this).val())) {
+			              nextElement.empty();
+			               if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "输入号码无效"});
+			              checkOk = false;
+			            }else if ($(this).val().length == 0) {
+			              nextElement.empty();
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('notMust').attr({title: ""}).text('*选填');
+			              checkOk = false;
+			            }else{
+			              nextElement.empty();
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if(nextElement.hasClass("notMust")){
+			                nextElement.removeClass('notMust');
+			              };
+			              nextElement.addClass('icon-ok').attr({title: ""});
+			              checkOk = true;
+			            };
+			            break;
+			    case "favourView":                      //具体优惠信息
+			             if ($(this).val().length>18) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "字数不能超过18"});
+			              checkOk = false;
+			            }else if ($(this).val().length == 0) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "输入不能为空"});
+			              checkOk = false;
+			            }else{
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              nextElement.addClass('icon-ok').attr({title: ""});
+			              checkOk = true;
+			            };
+			            break;
+			    case "numberPlace":                         //单人可领卡券数量验证
+			             if (isNaN($(this).val())) {
+			              nextElement.empty();
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "请输入正整数"});
+			              checkOk = true;
+			             }else{
+			             if ($(this).val()>50) {
+			              nextElement.empty();
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "输入数量不能超过50"});
+			              checkOk = false;
+			            }else if ($(this).val().length == 0) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('notMust').attr({title: ""}).text('*选填');
+			             checkOk = false;
+			            }else{
+			              nextElement.empty();
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if(nextElement.hasClass("notMust")){
+			                nextElement.removeClass('notMust');
+			              };
+			              nextElement.addClass('icon-ok').attr({title: ""});
+			              checkOk  =true;
+			            };
+			          };
+			            break;
+			    case "groupDescription":
+			    if ($(this).val()>1024) {
+			             if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "输入字数不能超过1024"});
+			              checkOk = false;
+			            }else if ($(this).val().length == 0) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "输入不能为空"});
+			             checkOk = false;
+			            }else{
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              nextElement.addClass('icon-ok').attr({title: ""});
+			              checkOk = true;
+			            };
+			        
+			            break;
+			    case "gift":               //礼品详细信息验证
+			           if ($(this).val().length>40) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "字数不能超过40"});
+			              checkOk = false;
+			            }else if ($(this).val().length == 0) {
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              nextElement.addClass('icon-remove').attr({title: "输入不能为空"});
+			              checkOk = false;
+			            }else{
+			              if (nextElement.hasClass('icon-remove')) {
+			                nextElement.removeClass('icon-remove');
+			              };
+			              if (nextElement.hasClass('icon-ok')) {
+			                nextElement.removeClass('icon-ok');
+			              };
+			              nextElement.addClass('icon-ok').attr({title: ""});
+			              checkOk = true;
+			            };
+			        
+			            break;
+			    default:
+			            break;
+			  	};
+			  	
+			  });
+
+			var isChange = "0";    // 表示采用的时间类型，0表示使用时间区间，1表示采用时间长短
+			$("#changeType").on('click', function(event) {             //切换时间类型
+			  event.preventDefault();
+			  if (isChange == "0") {
+			  $(".typeView").animate({"top":"-54px"}, "400");
+			  isChange = "1";
+			}else{
+			 $(".typeView").animate({"top":"0px"}, "400");
+			  isChange = "0";
+			} 
+			});
+
+			 $("#upCard").on('click', function(event) {      //发送创建卡券的
+			   event.preventDefault();
+			   if (isChange == 0) {                     //根据客户选择的卡券有效期的时间类型进行不同的检验
+			      var sY = $("#starTimeY").val();
+			      var sM = $("#starTimeM").val();
+			      var sD = $("#starTimeD").val();
+			      var eY = $("#endTimeY").val();
+			      var eM = $("#endTimeM").val();
+			      var eD = $("#endTimeD").val(); 
+			      if (sY || sM || sD || eY || eM || eD) {
+			       $(".errup").text("输入时间不能为空");
+			       $(".errup").slideDown('slow', function() {
+			         $(this).delay(1000).slideUp('slow');
+			         checkOk = false;
+			         return;
+			      });
+			     }else if (sY > eY || ((sY <= eY)&&(sM > eM)) ||  ((sY <= eY) && (sM <= eM) && (sD > eD))) {
+			       $(".errup").text("开始时间不能晚于结束时间");
+			       $(".errup").slideDown('slow', function() {
+			         $(this).delay(1000).slideUp('slow');
+			         checkOk = false;
+			         return;
+			      });
+			     }else if (isNaN(sY) ||isNaN(sM)||isNaN(sD)||isNaN(eY)||isNaN(eM)||isNaN(eD) || (sM>12) || (sD >31) || (eM >12) || (eD > 31)) {
+			        $(".errup").text("输入的时间格式不正确");
+			        $(".errup").slideDown('slow', function() {
+			         $(this).delay(1000).slideUp('slow');
+			         checkOk = false;
+			         return;
+			       });
+			   }
+			 }else{
+			      timeRange = $("#timeRange").val();
+			      if (isNaN(timeRange)) {
+			         $(".errup").text("输入的时间不能为负");
+			        $(".errup").slideDown('slow', function() {
+			         $(this).delay(1000).slideUp('slow');
+			         checkOk = false;
+			         return;
+			       });
+			      };
+			 }
+
+
+			   if (checkOk == false) {
+			       $(".errup").text(" 创建卡券失败，请检查填写信息是否有误");
+			       $(".errup").slideDown('slow', function() {
+			         $(this).delay(1000).slideUp('slow');
+			         return;
+			   });
+			   }else{
+			      var title = $(".cardTitle").val();
+			      var card_color =  $("#chooseColor").css(backgroundColor);   //卡券颜色
+			      var left_card_amount = $("#cardNumber").val(); //可获取的库存
+			      var sub_title = $("#favourView").val(); //卡券具体优惠信息
+			      var notice = $("#useView").val(); //卡券使用提醒
+			      var description = $("#groupDescription").text();//卡券使用说明
+			      var dataTypee = isChange;//使用时间类型
+			            var gift = $("#gift").val();   //礼品券专有字段
+			            var formData = new FormData();
+				  		formData.append('logo_url', $("upimg")[0].files[0]);
+
+				  		$.ajax({
+				  			url: '/path/to/file',
+				  			type: 'POST',
+				  			dataType: 'json',
+				  			cache: false,
+    						data: formData,
+   						 	processData: false,
+    						contentType: false
+				  		})
+				  		.done(function() {
+				  			if (XX == true) {
+				  				
+				            	if (dataType == "0") {
+			                var beginTimeYear = $("#starTimeY").val();
+			                var beginTimeMonth = $("#starTimeM").val();
+			                var beginTimeDay = $("#starTimeD").val();
+			                var endTimeYear = $("#endTimeY").val();
+			                var endTimeMonth = $("#endTimeM").val();
+			                var endTimeDay = $("#endTimeD").val();
+			                $.ajax({
+			                  url: '/path/to/file',
+			                  type: 'post',
+			                  dataType: 'json',
+			                  data: {
+			                    "title": title, 
+			                    "card_color": card_color, 
+			                    "left_card_amount":left_card_amount,
+			                    "card_type":card_type,
+			                    "sub_title":sub_title,
+			                    "notice":notice,
+			                    "description":description,
+			                    "gift":gift,
+			                    "dataType":dataType,
+			                    "beginTimeYear":beginTimeYear,
+			                    "beginTimeMonth":beginTimeMonth,
+			                    "beginTimeDay":beginTimeDay,
+			                    "endTimeYear":endTimeYear,
+			                    "endTimeMonth":endTimeMonth,
+			                    "endTimeDay":endTimeDay},
+			                })
+			                .done(function() {
+			                   $(".suup").slideDown('slow', function() {
+			                    $(this).delay(1000).slideUp('slow');
+			          
+			                   });
+			      return false;
+			                })
+			                .fail(function() {
+			                  console.log("error");
+			                })
+			                .always(function() {
+			                  console.log("complete");
+			                });
+			                
+			              }else{
+			                var fixdTerm = $("#fixdTerm").val();
+			                $.ajax({
+			                  url: '/path/to/file',
+			                  type: 'post',
+			                  dataType: 'json',
+			                  data: {
+			                    "title": title, 
+			                    "card_color": card_color, 
+			                    "left_card_amount":left_card_amount,
+			                    "card_type":card_type,
+			                    "gift":gift,
+			                    "sub_title":sub_title,
+			                    " notice":notice,
+			                    "description":description,
+			                    " dataType":dataType,
+			                    "fixdTerm":fixdTerm},
+			                })
+			                .done(function() {
+			                   $(".suup").slideDown('slow', function() {
+			                   $(this).delay(1000).slideUp('slow');
+			          
+			                   });
+			                   return false;
+			                })
+			                .fail(function() {
+			                  console.log("error");
+			                })
+			                .always(function() {
+			                  console.log("complete");
+			                });
+			              }
+
+
+				  		}else{
+				  			console.log("error");
+				  		}
+				  		})
+				  		.fail(function() {
+				  			console.log("error");
+				  		})
+				  		.always(function() {
+				  			console.log("complete");
+				  		});
+
+			            
+			              
+			     
+			   }
+			 
+			 });
+
+
+
+			</script>
