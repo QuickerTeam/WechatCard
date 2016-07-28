@@ -1,66 +1,69 @@
 package com.dsb.web.controller;
 
-import java.text.SimpleDateFormat;
+import java.io.IOException;
+
+import javax.servlet.ServletInputStream;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dsb.domain.GroupTicket;
+import com.dsb.exception.AccessTokenException;
+import com.dsb.utils.StaticConstant;
+import com.dsb.weChat.service.CardCreateService;
+import com.dsb.weChat.service.GetAccess;
+import com.dsb.weChat.serviceImpl.CardCreateServiceImpl;
+import com.dsb.weChat.serviceImpl.GetAccessImpl;
 
 @Controller
 @RequestMapping(value = "/CreateTicket")
-public class CreateTicket {
+public class CreateTicket extends HttpServlet {
+	private ServletInputStream logo;
+	private String logo_url;
+
+	@RequestMapping(value = "/UpLoadLogo")
+	public String getLogo(HttpServletRequest request) {// 上传logo
+		try {
+			logo = request.getInputStream();
+		} catch (IOException e) {
+			// TODO 获取logo出错
+			e.printStackTrace();
+		}
+		return "";
+	}
+
 	@RequestMapping(value = "/GroupTicket_input")
 	public String groupTicketInput() {// 创建团购券页面
-		return "hello";
+		return "mainPage";
 	}
 
 	@RequestMapping(value = "/GroupTicket_save")
-	public String groupTicketSave(JSONObject json) {// 创建团购券
-		GroupTicket groupTicket = new GroupTicket();
-		GroupTicket.sku sku = groupTicket.getSku();
-		GroupTicket.date_info dateInfo = groupTicket.getDataInfo();
-		try {// 尝试构造团购券
-			groupTicket.setLogo_url(json.getString("logo_url"));
-			groupTicket.setCode_type(json.getString("code_type"));
-			groupTicket.setBrand_name(json.getString("brand_name"));
-			groupTicket.setTitle(json.getString("title"));
-			groupTicket.setSub_title(json.getString("sub_title"));
-			groupTicket.setColor(json.getString("color"));
-			groupTicket.setNotice(json.getString("notice"));
-			groupTicket.setDescription(json.getString("description"));
-			sku.setQuantity(json.getInt("quantity"));
-			dateInfo.setType(json.getString("type"));
-			if (dateInfo.getType() == "DATE_TYPE_FIX_TIME_RANGE ") {// 按时间段计算截止日期
-				String str = "" + json.getInt("begin_time_year")
-						+ json.getInt("begin_time_month")
-						+ json.getInt("begin_time_day");// str来记录时间，之后转换成秒
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-				dateInfo.setBegin_time(sdf.parse(str).getTime() / 1000 + "");
-				str = "" + json.getInt("end_time_year")
-						+ json.getInt("end_time_month")
-						+ json.getInt("end_time_day");// str来记录时间，之后转换成秒
-				dateInfo.setEnd_time(sdf.parse(str).getTime() / 1000 + "");
-			} else {
-				dateInfo.setFixed_term(json.getInt("fixed_term"));
+	public String groupTicketSave(GroupTicket groupTicket) throws AccessTokenException{// 创建团购券
+		// 获取access_token
+		GetAccess getAccess =new GetAccessImpl();
+		JSONObject accessTokenJson =new JSONObject(getAccess.getAccessToken(
+				StaticConstant.appid, StaticConstant.secret)); 
+		if (accessTokenJson != null) {// 获取到json
+			StaticConstant.accessToken = accessTokenJson.optString(
+					"access_token", "");
+			if (StaticConstant.accessToken.equals("")){
+				throw new AccessTokenException();// 无法获取到access_token
 			}
-			try {// 是否有客服电话
-				groupTicket.setServicePhone(json.getString("service_phone"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			try {// 是否有领券数量限制
-				groupTicket.setGet_limit(json.getInt("get_limit"));
-			} catch (Exception e) {
-				// TODO: handle exception
-			}
-			System.out.println("groupTicket=" + groupTicket);
-			return "hello";// 填写成功的jsp
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.out.print("error while creat groupTicket.");
-			return "hello";// error
 		}
+		//获取logo_url
+		CardCreateService cardCreateService =new CardCreateServiceImpl();
+		JSONObject json =new JSONObject(cardCreateService.uploadCardLogo(logo,
+				StaticConstant.accessToken)); 
+		logo_url=json.getString("url");
+		groupTicket.setLogo_url(logo_url);
+		
+		return "";
+		/*
+		 * if (GeneralMethod.Request2TicketInfo(groupTicket, request)) {// 创建成功
+		 * return ""; } else {// 创建失败(bug页面) return ""; }
+		 */
 	}
 }
