@@ -592,6 +592,7 @@
 			      var deal_detail = $("#groupDetail").text();//团购票专有详细信息
 			      var formData = new FormData();
 					  formData.append('logo_url', $("upimg")[0].files[0]);
+				  var isReseve = false;		  
 
 					   $.ajax({
 						    type:"post",
@@ -602,8 +603,19 @@
    						 	processData: false,
     						contentType: false,
 						    success:function(data){
-						   
-						        if (data.code == true) {
+						   		isReseve =data.code;
+						       
+				  		
+						    },
+						   error:function(data){
+						       $(".errup").text("网络异常，创建失败");
+       							$(".errup").slideDown('slow', function() {
+         						$(this).delay(1000).slideUp('slow');
+       							});
+						       return false;
+						      }
+						  });
+					    if (isReseve == true) {
 				  				if (dataType == "0") {
 						                var beginTimeYear = $("#starTimeY").val();
 						                var beginTimeMonth = $("#starTimeM").val();
@@ -615,9 +627,9 @@
 
 
 							   		$.ajax({
-								    type:"post",
-								    url:"/WechatCard/CreateTicket/GroupTicket_sav",
-								    data: {
+								  	  	type:"post",
+								    	url:"/WechatCard/CreateTicket/GroupTicket_sav",
+								    	data: {
 								            "title": title, 
 								            "card_color": card_color, 
 								            "left_card_amount":left_card_amount,
@@ -704,16 +716,6 @@
          					$(this).delay(1000).slideUp('slow');
        						});  
 				  		}
-				  		
-						    },
-						   error:function(data){
-						       $(".errup").text("网络异常，创建失败");
-       							$(".errup").slideDown('slow', function() {
-         						$(this).delay(1000).slideUp('slow');
-       							});
-						       return false;
-						      }
-						  });
 						
 
 			              			              
