@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	<title>learn Bootsrap</title>
-	<link rel="stylesheet" type="text/css" href="　<%= StaticConstant.cssFilePath %>bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>cssbootsrap-theme.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>main.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>cssreset.css">
@@ -28,7 +28,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		<p class="errup smaview" ></p>
 		<header>
 			<div class="container">
+<<<<<<< HEAD
 				<img src="<%= StaticConstant.imgFilePath %>>logo.png">
+=======
+				<img src="<%= StaticConstant.imgFilePath %>logo.png">
+>>>>>>> 53d53cc5a45503e6cc554f4d049f171063069c12
 				<span class="view">袋鼠帮卡券发送平台</span>
 			</div>
 		</header>
@@ -67,6 +71,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</div>
 		</div>
 		<footer></footer>
+<<<<<<< HEAD
+=======
+	</div>
+>>>>>>> 53d53cc5a45503e6cc554f4d049f171063069c12
 	<script type="text/javascript" src="<%= StaticConstant.jsFilePath %>main.js"></script>
 </body>
 </html>

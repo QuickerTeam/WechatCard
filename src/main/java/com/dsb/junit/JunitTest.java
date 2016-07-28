@@ -3,6 +3,7 @@ package com.dsb.junit;
 
 import org.json.JSONObject;
 import org.junit.Test;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dsb.exception.AccessTokenException;
 import com.dsb.utils.StaticConstant;
@@ -32,15 +33,6 @@ public class JunitTest {
 	public void test2() {
 		System.out.println("aaaaaaaaa");
 	}
-
 	
-	public static void main(){
-		JunitTest j = new JunitTest();
-		try {
-			j.test1();
-		} catch (AccessTokenException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 }
