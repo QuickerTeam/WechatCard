@@ -1,5 +1,6 @@
 package com.dsb.web.controller;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.servlet.ServletInputStream;
@@ -10,6 +11,8 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.dsb.domain.GroupTicket;
 import com.dsb.domain.Response2Web;
@@ -29,22 +32,27 @@ import com.dsb.weChat.serviceImpl.GetAccessImpl;
 @RequestMapping(value = "/CreateTicket")
 public class CreateTicket extends HttpServlet {
 	private static final long serialVersionUID = -2094822104804129409L;
-	private ServletInputStream logo;
+	private File logoFile;
 	private String logo_url;
 	private String responseJson;
 
 	@RequestMapping(value = "/UpLoadLogo")
 	@ResponseBody
-	public String getLogo(HttpServletRequest request) {// 上传logo
-		System.out.println("/UpLoadLogo");
+	public String getLogo(HttpServletRequest request) throws IllegalStateException {// 上传logo
+		MultipartHttpServletRequest re = (MultipartHttpServletRequest)request;
+		MultipartFile multipartFile = re.getFile("logo_url");
+		String fileName = multipartFile.getOriginalFilename();
+		String filePath = "/WechatCard/src/main/webapp/WEB-INF/card_logo/" + fileName;
+		logoFile = new File(filePath);
 		Response2Web response = new Response2Web();
+		
 		try {
-			logo = request.getInputStream();
+			multipartFile.transferTo(logoFile);
 			response.setCode(true);
+			
 		} catch (IOException e) {
-			// TODO 获取logo出错
+			// TODO Auto-generated catch block
 			response.setCode(false);
-			response.setMsg("logo error");
 			e.printStackTrace();
 		}
 		JSONObject j = new JSONObject(response);
@@ -84,7 +92,7 @@ public class CreateTicket extends HttpServlet {
 		}
 		// 获取logo_url
 		CreateCardService cardCreateService = new CreateCardServiceImpl();
-		if (logo == null) {
+		if (logoFile == null) {
 			response.setCode(false);
 			response.setMsg("logo未获取到");
 			// response转换成json字符串
@@ -94,7 +102,7 @@ public class CreateTicket extends HttpServlet {
 			return responseJson;
 		}
 		System.out.println("3");
-		JSONObject json = new JSONObject(cardCreateService.uploadCardLogo(logo,
+		JSONObject json = new JSONObject(cardCreateService.uploadCardLogo(logoFile,
 				StaticConstant.accessToken));
 		System.out.println("00json="+json);
 		logo_url = json.getString("url");
