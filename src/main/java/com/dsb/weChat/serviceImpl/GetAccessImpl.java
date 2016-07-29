@@ -16,24 +16,8 @@ import java.util.Map;
 /**
  * Created by Max on 2016/7/27.
  */
+
 public class GetAccessImpl implements GetAccess{
-
-    CloseableHttpClient client;
-    HttpGet get;
-    CloseableHttpResponse response;
-    RequestConfig requestConfig;
-    HttpEntity entity;
-
-    public GetAccessImpl() {
-        client = HttpClients.createDefault();
-        requestConfig = RequestConfig.custom()
-                .setSocketTimeout(15000)
-                .setConnectTimeout(15000)
-                .setConnectionRequestTimeout(15000)
-                .build();
-    }
-
-
 
     /**
      *
@@ -52,12 +36,5 @@ public class GetAccessImpl implements GetAccess{
         String json = HttpUtil.doGetSSL(url,params);
         System.out.println("获取到的access_token为： " + json);
         return json;
-    }
-
-    public static void main(String[] args) {
-        GetAccessImpl getAccess = new GetAccessImpl();
-        String appID = "wxa6e1bbd8c3101e94";
-        String secret = "b46bd37e33f913a528141e32286e27be";
-        getAccess.getAccessToken(appID,secret);
     }
 }

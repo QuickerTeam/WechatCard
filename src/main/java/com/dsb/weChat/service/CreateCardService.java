@@ -5,7 +5,7 @@ import java.io.InputStream;
 /**
  * Created by Max on 2016/7/27.
  */
-public interface CardCreateService {
+public interface CreateCardService {
 
     //创建卡券第一步：上传卡券logo，得到url
     String uploadCardLogo(InputStream inputStream, String access_token);
