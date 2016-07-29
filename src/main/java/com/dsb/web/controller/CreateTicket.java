@@ -58,6 +58,7 @@ public class CreateTicket extends HttpServlet {
 			response.setCode(false);
 			e.printStackTrace();
 		}
+		//返回给前端信息
 		JSONObject j = new JSONObject(response);
 		String json = j.toString();
 		return json;

@@ -8,7 +8,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPost; 
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustStrategy;
@@ -28,6 +28,7 @@ import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -216,7 +217,7 @@ public class HttpUtil {
                 .build();
         HttpPost post = new HttpPost(url);
         FileEntity fileEntity = new FileEntity(file,"binary/octet-stream");
-        fileEntity.setContentType("image/jpg");
+        post.setHeader("Content-Type", "multipart/form-data;boundary=------------7da2e536604c8");
         post.setEntity(fileEntity);
         try {
             CloseableHttpResponse response = httpClient.execute(post);
@@ -273,5 +274,19 @@ public class HttpUtil {
         }
         return sslsf;
     }
+    
+//    public static String doPostTest(File file,String url) {
+//    	HttpClient httpClient = new  HttpClient();  
+//    	PostMethod postMethod = new PostMethod(url);
+//    	try {
+//			FilePart filePart = new FilePart("img",file);
+//			Part[] parts = {filePart};
+//			MultipartRequestEntity mre = new MultipartRequestEntity(parts,  
+//					postMethod.getParams());  
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//    }
 
 }
