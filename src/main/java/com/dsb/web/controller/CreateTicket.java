@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.dsb.domain.GroupTicket;
 import com.dsb.domain.Response2Web;
 import com.dsb.utils.StaticConstant;
-import com.dsb.weChat.service.CardCreateService;
+import com.dsb.weChat.service.CreateCardService;
 import com.dsb.weChat.service.GetAccess;
-import com.dsb.weChat.serviceImpl.CardCreateServiceImpl;
+import com.dsb.weChat.serviceImpl.CreateCardServiceImpl;
 import com.dsb.weChat.serviceImpl.GetAccessImpl;
 
 /**
@@ -83,7 +83,7 @@ public class CreateTicket extends HttpServlet {
 			}
 		}
 		// 获取logo_url
-		CardCreateService cardCreateService = new CardCreateServiceImpl();
+		CreateCardService cardCreateService = new CreateCardServiceImpl();
 		if (logo == null) {
 			response.setCode(false);
 			response.setMsg("logo未获取到");

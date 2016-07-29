@@ -23,7 +23,7 @@ public class CheckCardServiceImpl implements CheckCardService{
      */
     @Override
     public String queryCardStage(String access_token, String code, String card_id, boolean check_consume) {
-        String url = "https://api.weixin.qq.com/card/code/get?access_token" + access_token;
+        String url = "https://api.weixin.qq.com/card/code/get?access_token=" + access_token;
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("code",code);
         jsonObject.put("card_id",card_id);
