@@ -216,6 +216,7 @@ public class HttpUtil {
                 .build();
         HttpPost post = new HttpPost(url);
         FileEntity fileEntity = new FileEntity(file,"binary/octet-stream");
+        fileEntity.setContentType("image/jpg");
         post.setEntity(fileEntity);
         try {
             CloseableHttpResponse response = httpClient.execute(post);
