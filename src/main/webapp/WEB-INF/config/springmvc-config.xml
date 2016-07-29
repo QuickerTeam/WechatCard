@@ -10,14 +10,27 @@
     http://www.springframework.org/schema/mvc   
     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-	<context:component-scan base-package="com.dsb.web.controller"></context:component-scan>
-	<mvc:annotation-driven />
-	<mvc:resources location="/WEB-INF/" mapping="/**" />
+	<context:component-scan base-package="com"></context:component-scan>
+
+	<mvc:annotation-driven/>
+	<mvc:resources location="/WEB-INF/css/"
+		mapping="/WEB-INF/css/**" />
+	<mvc:resources location="/html/"
+		mapping="/WEB-INF/html/*.html" />
 
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/jsp/"></property>
 		<property name="suffix" value=".jsp"></property>
 	</bean>
+
+	<!--文件上传-->
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<property name="maxUploadSize" value="10485760" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="resolveLazily" value="true" />
+	</bean>
+
 
 </beans>
