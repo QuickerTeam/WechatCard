@@ -13,6 +13,7 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
+import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -26,6 +27,7 @@ import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLException;
 import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocket;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -199,6 +201,40 @@ public class HttpUtil {
         }
     }
 
+
+    /**
+     *
+     * @param file 上传的文件
+     * @param url 请求的地址
+     * @return
+     */
+    public static String doPostSSL(File file,String url) {
+        CloseableHttpClient httpClient = HttpClients.custom()
+                .setSSLSocketFactory(createSSLConnSocketFactory())
+                .setConnectionManager(connMgr)
+                .setDefaultRequestConfig(requestConfig)
+                .build();
+        HttpPost post = new HttpPost(url);
+        FileEntity fileEntity = new FileEntity(file,"binary/octet-stream");
+        post.setEntity(fileEntity);
+        try {
+            CloseableHttpResponse response = httpClient.execute(post);
+            if (response != null) {
+                HttpEntity entity = response.getEntity();
+                String json = IOUtils.toString(entity.getContent(),"UTF-8");
+                return json;
+            }
+            else {
+                System.out.println("响应的response对象为空");
+                return null;
+            }
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
+
     /**
      *建立SLL（HTTPS请求）连接
      * @return
@@ -237,36 +273,4 @@ public class HttpUtil {
         return sslsf;
     }
 
-    /**
-     * 请求方式 POST 数据以InputStream发起请求。
-     * @param inputStream 输入流
-     * @param url 请求的url
-     * @return
-     */
-    public static String doPost(InputStream inputStream,String url) {
-        CloseableHttpClient httpClient = HttpClients.custom()
-                .setSSLSocketFactory(createSSLConnSocketFactory())
-                .setConnectionManager(connMgr)
-                .setDefaultRequestConfig(requestConfig)
-                .build();
-        HttpPost post = new HttpPost(url);
-        InputStreamEntity inputStreamEntity = new InputStreamEntity(inputStream);
-        inputStreamEntity.setContentType("binary/octet-stream");
-        post.setEntity(inputStreamEntity);
-        try {
-            CloseableHttpResponse response = httpClient.execute(post);
-            if (response != null) {
-                HttpEntity entity = response.getEntity();
-                String json = IOUtils.toString(entity.getContent(),"UTF-8");
-                return json;
-            }
-            else {
-                System.out.println("响应的response对象为空");
-                return null;
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-           return null;
-        }
-    }
 }
