@@ -3,7 +3,6 @@ package com.dsb.web.controller;
 import java.io.File;
 import java.io.IOException;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
@@ -32,25 +31,26 @@ import com.dsb.weChat.serviceImpl.GetAccessImpl;
 @RequestMapping(value = "/CreateTicket")
 public class CreateTicket extends HttpServlet {
 	private static final long serialVersionUID = -2094822104804129409L;
-	private File logoFile;//商户上传的logo
-	private String logo_url;//服务器返回的商户logoURL
-	private String responseJson;//用于给前端返回信息
+	private File logoFile;// 商户上传的logo
+	private String logo_url;// 服务器返回的商户logoURL
+	private String responseJson;// 用于给前端返回信息
 
 	@RequestMapping(value = "/UpLoadLogo")
 	@ResponseBody
 	public String getLogo(HttpServletRequest request)
 			throws IllegalStateException {// 上传logo
 		System.out.println("/UpLoadLogo");
-		//获取图片
+		// 获取图片
 		MultipartHttpServletRequest re = (MultipartHttpServletRequest) request;
 		MultipartFile multipartFile = re.getFile("logo_url");
 		String fileName = multipartFile.getOriginalFilename();
-		String filePath = request.getSession().getServletContext().getRealPath("/") + "upload\\"  
-                        + fileName;
+		String filePath = request.getSession().getServletContext()
+				.getRealPath("/")
+				+ "upload\\" + fileName;
 		Response2Web response = new Response2Web();
 		System.out.println(filePath);
 		logoFile = new File(filePath);
-		try {//将文件储存到本地
+		try {// 将文件储存到本地
 			multipartFile.transferTo(logoFile);
 			response.setCode(true);
 		} catch (IOException e) {
@@ -58,7 +58,7 @@ public class CreateTicket extends HttpServlet {
 			response.setCode(false);
 			e.printStackTrace();
 		}
-		//返回给前端信息
+		// 返回给前端信息
 		JSONObject j = new JSONObject(response);
 		String json = j.toString();
 		return json;
@@ -106,12 +106,12 @@ public class CreateTicket extends HttpServlet {
 		}
 		System.out.println("3");
 		System.out.println(logoFile.exists());
-		JSONObject json = new JSONObject(cardCreateService.uploadCardLogo(
-				logoFile, StaticConstant.accessToken));
-		System.out.println("00json=" + json);
-		logo_url = json.getString("url");
-		System.out.println("json=" + json);
-		groupTicket.setLogo_url(logo_url);
+		// JSONObject json = new JSONObject(cardCreateService.uploadCardLogo(
+		// logoFile, StaticConstant.accessToken));
+		// System.out.println("00json=" + json);
+		// logo_url = json.getString("url");
+		// System.out.println("json=" + json);
+		// groupTicket.setLogo_url(logo_url);
 		System.out.println("4");
 		response.setCode(true);
 		// response转换成json字符串
