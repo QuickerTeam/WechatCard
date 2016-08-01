@@ -12,7 +12,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-	<title>learn Bootsrap</title>
+	<title>learn Bootstrap</title>
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>bootstrap-theme.css">
 	<link rel="stylesheet" type="text/css" href="<%= StaticConstant.cssFilePath %>main.css">
