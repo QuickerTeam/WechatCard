@@ -34,6 +34,7 @@ public class CreateTicket extends HttpServlet {
 	private File logoFile;
 	private String logo_url;
 	private String responseJson;
+	private JSONObject groupTicketJson;// 用于返回给微信创建卡券
 
 	@RequestMapping(value = "/UpLoadLogo")
 	@ResponseBody
@@ -71,8 +72,10 @@ public class CreateTicket extends HttpServlet {
 
 	@RequestMapping(value = "/GroupTicket_save")
 	@ResponseBody
-	public String groupTicketSave(GroupTicket groupTicket) {// 创建团购券
+	public String groupTicketSave(GroupTicket groupTicket,HttpServletRequest requst) {// 创建团购券
 		// 获取access_token
+		System.out.println("description="+requst.getParameter("description"));
+		System.out.println("deal_detail="+requst.getParameter("deal_detail"));
 		System.out.println("/GroupTicket_save");
 		Response2Web response = new Response2Web();
 		GetAccess getAccess = new GetAccessImpl();
@@ -83,7 +86,6 @@ public class CreateTicket extends HttpServlet {
 			StaticConstant.accessToken = accessTokenJson.optString(
 					"access_token", "");
 			if (StaticConstant.accessToken.equals("")) {
-
 				response.setCode(false);
 				response.setMsg("accessToken error");
 				// response转换成json字符串
@@ -107,15 +109,24 @@ public class CreateTicket extends HttpServlet {
 		}
 		// 获取logo的url
 		JSONObject json = new JSONObject(cardCreateService.uploadCardLogo(
-				logoFile, StaticConstant.accessToken));
+				StaticConstant.accessToken, logoFile));
 		logo_url = json.getString("url");
-		System.out.println("json=" + json);
+		System.out.println("json===" + json);
 		// 将url封装到bean中
 		groupTicket.setLogo_url(logo_url);
-		//json接收是否成功的消息
-		json = new JSONObject(cardCreateService.createCard(groupTicket,
-				StaticConstant.accessToken));
-		response.setCode(true);
+		// json接收是否成功的消息
+		groupTicketJson = new JSONObject(groupTicket);
+		System.out.println("00000" + groupTicketJson.toString());
+		json = new JSONObject(cardCreateService.createCard(
+				StaticConstant.accessToken, groupTicketJson.toString()));
+		System.out.println(groupTicketJson.toString());
+		if (json.getInt("errcode")==0) {// 创建成功
+			System.out.println("创建卡券成功");
+			response.setCode(true);
+		} else {
+			System.out.println("创建卡券失败 errcode="+json.getInt("errcode"));
+			response.setCode(false);
+		}
 		// response转换成json字符串
 		JSONObject j = new JSONObject(response);
 		responseJson = j.toString();

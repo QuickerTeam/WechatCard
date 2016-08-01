@@ -8,7 +8,7 @@ package com.dsb.domain;
  */
 public class GroupTicket {
 	private String card_type = "GROUPON";// 团购券类型
-	private String dealDetail = "deal_detail\n测试字数测试\n测试字数测试字数测试";// 暂时不填
+	private String deal_detail;// 暂时不填
 	private String logo_url;// 服务器返回的logourl
 	private String code_type;// code类型，二维码、code等
 	private String brand_name;// 商户名字
@@ -87,11 +87,11 @@ public class GroupTicket {
 	private String get_limit;// 每人可领券的数量限制
 
 	public String getDealDetail() {
-		return dealDetail;
+		return deal_detail;
 	}
 
 	public void setDealDetail(String dealDetail) {
-		this.dealDetail = dealDetail;
+		this.deal_detail = dealDetail;
 	}
 
 	public String getLogo_url() {
