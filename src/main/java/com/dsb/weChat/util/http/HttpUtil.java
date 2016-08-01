@@ -213,7 +213,7 @@ public class HttpUtil {
      *
      * @param file 上传的文件
      * @param url 请求的地址
-     * @return
+     * @return 返回上传图片logo的url
      */
     public static String doPostSSL(File file,String url){
         CloseableHttpClient httpClient = HttpClients.custom()
