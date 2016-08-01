@@ -100,22 +100,22 @@
 								<div id="chooseColor"></div>
 								<table class="colorTable">
 									<tr>
-										<td class="colorView Color010" title="#63b359"></td>
-										<td class="colorView Color020" title="#2c9f67"></td>
-										<td class="colorView Color030" title="#509fc9"></td>
-										<td class="colorView Color040" title="#5885cf"></td>
-										<td class="colorView Color050" title="#9062c0"></td>
-										<td class="colorView Color060" title="#d09a45"></td>
-										<td class="colorView Color070" title="#e4b138"></td>
+										<td class="colorView Color010" title="#63b359" data="Color010"></td>
+										<td class="colorView Color020" title="#2c9f67" data="Color020"></td>
+										<td class="colorView Color030" title="#509fc9" data="Color030"></td>
+										<td class="colorView Color040" title="#5885cf" data="Color040"></td>
+										<td class="colorView Color050" title="#9062c0" data="Color050"></td>
+										<td class="colorView Color060" title="#d09a45" data="Color060"></td>
+										<td class="colorView Color070" title="#e4b138" data="Color070"></td>
 									</tr>
 									<tr>
-										<td class="colorView Color080" title="#ee903c"></td>
-										<td class="colorView Color081" title="#f08500"></td>
-										<td class="colorView Color082" title="#a9d92d"></td>
-										<td class="colorView Color090" title="#dd6549"></td>
-										<td class="colorView Color100" title="#cc463d"></td>
-										<td class="colorView Color101" title="#cf3e36"></td>
-										<td class="colorView Color102" title="#5E6671s"></td>
+										<td class="colorView Color080" title="#ee903c" data="Color080"></td>
+										<td class="colorView Color081" title="#f08500" data="Color081"></td>
+										<td class="colorView Color082" title="#a9d92d" data="Color082"></td>
+										<td class="colorView Color090" title="#dd6549" data="Color090"></td>
+										<td class="colorView Color100" title="#cc463d" data="Color100"></td>
+										<td class="colorView Color101" title="#cf3e36" data="Color101"></td>
+										<td class="colorView Color102" title="#5E6671s" data="Color102"></td>
 									</tr>
 								</table>
 							</div>
@@ -217,6 +217,7 @@
 			  $(".colorView").on('click', function(event) {             //隐藏色板
 			  	event.preventDefault();
 			  	var color = $(this).attr("title");
+			  	$("#chooseColor").attr("data",$(this).attr("data"));
 			  	$("#chooseColor").css({
 			  		backgroundColor: color
 			  	});
@@ -581,18 +582,20 @@
 			   });
 			   }else{
 			   	alert("checkOk = true");
-			      var title = $(".cardTitle").val();
-			      var card_color =  $("#chooseColor").css("backgroundColor");   //卡券颜色
+			      var title = $("#cardTitle").val();
+			      var card_color =  $("#chooseColor").attr("data");   //卡券颜色
 			      var left_card_amount = $("#cardNumber").val(); //可获取的库存
 			      var sub_title = $("#favourView").val(); //卡券具体优惠信息
 			      var notice = $("#useView").val(); //卡券使用提醒
 			      var description = $("#groupDescription").val();//卡券使用说明
 			      var dataType;   //卡券时间类型
+			      var get_limit = $("# numberPlace").val();  //
+			      var service_phone = $("#serverTel").val();
 			      if(isChange == 0){
 			      dataType = "DATE_TYPE_FIX_TIME_RANGE";
 			      }else{
 			      dataType = "DATE_TYPE_FIX_TERM";
-			      }
+			      };
 			      
 			          //团购券 
 			      var deal_detail = $("#groupDetail").val();//团购票专有详细信息
@@ -637,7 +640,9 @@
 								            "begin_time_day":begin_time_day,
 								            "end_time_year":end_time_year,
 								            "end_time_month":end_time_month,
-								            "end_time_dayy":end_time_day,
+								            "end_time_day":end_time_day,
+								            "get_limit":get_limit,
+								            "service_phon":service_phone,
 								            },
 								    dataType:"json",
 								    success:function(data){
@@ -671,15 +676,18 @@
 										    url:"/WechatCard/CreateTicket/GroupTicket_save",
 										    dataType:"json",
 										   	data: {
-										     "title": title, 
+										    "title": title, 
 						                    "color": card_color, 
 						                    "quantity":left_card_amount,
 						                    "deal_detail":deal_detail,
 						                    "sub_title":sub_title,
-						                   " notice":notice,
+						                    "notice":notice,
 						                    "description":description,
-						                   " type":dataType,
-						                    "fixdTerm":fixdTerm,},
+						                    "type":dataType,
+						                    "fixdTerm":fixdTerm,
+						                    "get_limit":get_limit,
+								            "service_phon":service_phone,
+								            },
 										    success:function(data){
 										   			if(data.code == true){
 								                  		 $(".suup").slideDown('slow', function() {
@@ -720,10 +728,7 @@
 						      }
 						  });
 						
-					    if (isReseve == true) {
-					    alert("12");
-				  				
-				  		}
+					    
 						
 
 			              			              
