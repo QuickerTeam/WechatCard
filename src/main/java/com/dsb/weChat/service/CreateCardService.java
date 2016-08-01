@@ -9,9 +9,9 @@ import java.io.InputStream;
 public interface CreateCardService {
 
     //创建卡券第一步：上传卡券logo，得到url
-    String uploadCardLogo(File file, String access_token);
+    String uploadCardLogo(String access_token, File file);
 
     //创建卡券第二步：向微信服务器发送json数据，返回创建信息
-    String createCard(Object cardEntity, String access_token);
+    String createCard(String access_token, String json);
 
 }
