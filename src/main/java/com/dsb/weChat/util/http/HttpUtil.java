@@ -1,5 +1,22 @@
 package com.dsb.weChat.util.http;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocket;
+
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -13,31 +30,15 @@ import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.SSLContextBuilder;
 import org.apache.http.conn.ssl.TrustStrategy;
 import org.apache.http.conn.ssl.X509HostnameVerifier;
-import org.apache.http.entity.FileEntity;
-import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONObject;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocket;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.security.GeneralSecurityException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Max on 2016/7/27.
@@ -118,6 +119,7 @@ public class HttpUtil {
         return result;
     }
 
+
     /**
      * 发送POST HTTPS请求，参数以Map K-V 的形式传递进来
      * @param url
@@ -169,6 +171,8 @@ public class HttpUtil {
         return httpStr;
     }
 
+
+
     /**
      * 发送POST HTTPS 请求
      * @param url 请求地址
@@ -202,34 +206,41 @@ public class HttpUtil {
     }
 
 
+
     /**
      *
      * @param file 上传的文件
      * @param url 请求的地址
-     * @return
+     * @return 返回上传图片logo的url
      */
-    public static String doPostSSL(File file,String url) {
+    public static String doPostSSL(File file,String url){
         CloseableHttpClient httpClient = HttpClients.custom()
                 .setSSLSocketFactory(createSSLConnSocketFactory())
                 .setConnectionManager(connMgr)
                 .setDefaultRequestConfig(requestConfig)
                 .build();
-        HttpPost post = new HttpPost(url);
-        FileEntity fileEntity = new FileEntity(file,"binary/octet-stream");
-        post.setEntity(fileEntity);
         try {
+            HttpPost post = new HttpPost(url);
+            FileBody pic = new FileBody(file);
+            StringBody comment = new StringBody((file.getName()));
+            MultipartEntity multipartEntity = new MultipartEntity();
+            multipartEntity.addPart("pic", pic);
+            multipartEntity.addPart("picName", comment);
+            post.setEntity(multipartEntity);
+
             CloseableHttpResponse response = httpClient.execute(post);
-            if (response != null) {
-                HttpEntity entity = response.getEntity();
-                String json = IOUtils.toString(entity.getContent(),"UTF-8");
-                return json;
-            }
-            else {
-                System.out.println("响应的response对象为空");
-                return null;
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+
+            int statusCode = response.getStatusLine().getStatusCode();
+
+            System.out.println("上传图片接口被调用，微信服务器返回的code码为:" + statusCode);
+
+            HttpEntity entity = response.getEntity();
+            String json = IOUtils.toString(entity.getContent(), "UTF-8");
+            System.out.println("从微信服务器获得的json为：" + json);
+            EntityUtils.consume(entity);
+            return json;
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }

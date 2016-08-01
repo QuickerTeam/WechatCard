@@ -3,7 +3,6 @@ package com.dsb.web.controller;
 import java.io.File;
 import java.io.IOException;
 
-import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 
@@ -38,22 +37,25 @@ public class CreateTicket extends HttpServlet {
 
 	@RequestMapping(value = "/UpLoadLogo")
 	@ResponseBody
-	public String getLogo(HttpServletRequest request) throws IllegalStateException {// 上传logo
-		MultipartHttpServletRequest re = (MultipartHttpServletRequest)request;
+	public String getLogo(HttpServletRequest request)
+			throws IllegalStateException {// 上传logo
+		MultipartHttpServletRequest re = (MultipartHttpServletRequest) request;
 		MultipartFile multipartFile = re.getFile("logo_url");
 		String fileName = multipartFile.getOriginalFilename();
-		String filePath = "/WechatCard/src/main/webapp/WEB-INF/card_logo/" + fileName;
+		String filePath = "E:\\myeclipse\\workspace\\WechatCard\\src\\main\\webapp\\upload\\"
+				+ fileName;
 		logoFile = new File(filePath);
 		Response2Web response = new Response2Web();
-		
+
 		try {
 			multipartFile.transferTo(logoFile);
+			System.out.println(filePath);
 			response.setCode(true);
-			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			response.setCode(false);
 			e.printStackTrace();
+			System.out.println("error");
 		}
 		JSONObject j = new JSONObject(response);
 		String json = j.toString();
@@ -76,6 +78,7 @@ public class CreateTicket extends HttpServlet {
 		GetAccess getAccess = new GetAccessImpl();
 		JSONObject accessTokenJson = new JSONObject(getAccess.getAccessToken(
 				StaticConstant.appid, StaticConstant.secret));
+		System.out.println("1");
 		if (accessTokenJson != null) {// 获取到json
 			StaticConstant.accessToken = accessTokenJson.optString(
 					"access_token", "");
@@ -90,6 +93,7 @@ public class CreateTicket extends HttpServlet {
 				return responseJson;
 			}
 		}
+		System.out.println("2");
 		// 获取logo_url
 		CreateCardService cardCreateService = new CreateCardServiceImpl();
 		if (logoFile == null) {
@@ -101,14 +105,16 @@ public class CreateTicket extends HttpServlet {
 			System.out.println(responseJson);
 			return responseJson;
 		}
-		System.out.println("3");
-		JSONObject json = new JSONObject(cardCreateService.uploadCardLogo(logoFile,
-				StaticConstant.accessToken));
-		System.out.println("00json="+json);
+		// 获取logo的url
+		JSONObject json = new JSONObject(cardCreateService.uploadCardLogo(
+				logoFile, StaticConstant.accessToken));
 		logo_url = json.getString("url");
-		System.out.println("json="+json);
+		System.out.println("json=" + json);
+		// 将url封装到bean中
 		groupTicket.setLogo_url(logo_url);
-		System.out.println("4");
+		//json接收是否成功的消息
+		json = new JSONObject(cardCreateService.createCard(groupTicket,
+				StaticConstant.accessToken));
 		response.setCode(true);
 		// response转换成json字符串
 		JSONObject j = new JSONObject(response);
