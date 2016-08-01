@@ -540,8 +540,8 @@
 			         $(this).delay(1000).slideUp('slow');
 			         checkOk = false;
 			         return;
-			      });
-			     }else if (sY > eY || ((sY <= eY)&&(sM > eM)) ||  ((sY <= eY) && (sM <= eM) && (sD > eD))) {
+			      });    
+			     }else if (sY > eY || (sY <= eY&&sM > eM) ||  (sY <= eY && sM <= eM && sD > eD)) {
 			       $(".errup").text("开始时间不能晚于结束时间");
 			       $(".errup").slideDown('slow', function() {
 			         $(this).delay(1000).slideUp('slow');
@@ -614,7 +614,7 @@
 						                var begin_time_year = $("#starTimeY").val();
 						                var begin_time_month = $("#starTimeM").val();
 						                var begin_time_day = $("#starTimeD").val();
-						                var end_time_Year = $("#endTimeY").val();
+						                var end_time_year = $("#endTimeY").val();
 						                var end_time_month = $("#endTimeM").val();
 						                var end_time_day = $("#endTimeD").val();
 
@@ -637,7 +637,7 @@
 								            "begin_time_day":begin_time_day,
 								            "end_time_year":end_time_year,
 								            "end_time_month":end_time_month,
-								            "end_time_dayy":end_time_day
+								            "end_time_day":end_time_day,
 								            },
 								    dataType:"json",
 								    success:function(data){
@@ -679,7 +679,7 @@
 						                   " notice":notice,
 						                    "description":description,
 						                   " type":dataType,
-						                    "fixdTerm":fixdTerm},
+						                    "fixdTerm":fixdTerm,},
 										    success:function(data){
 										   			if(data.code == true){
 								                  		 $(".suup").slideDown('slow', function() {
