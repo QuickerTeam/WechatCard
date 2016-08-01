@@ -16,6 +16,9 @@ import org.apache.http.conn.ssl.X509HostnameVerifier;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
@@ -118,6 +121,7 @@ public class HttpUtil {
         return result;
     }
 
+
     /**
      * 发送POST HTTPS请求，参数以Map K-V 的形式传递进来
      * @param url
@@ -169,6 +173,8 @@ public class HttpUtil {
         return httpStr;
     }
 
+
+
     /**
      * 发送POST HTTPS 请求
      * @param url 请求地址
@@ -202,34 +208,41 @@ public class HttpUtil {
     }
 
 
+
     /**
      *
      * @param file 上传的文件
      * @param url 请求的地址
      * @return
      */
-    public static String doPostSSL(File file,String url) {
+    public static String doPostSSL(File file,String url){
         CloseableHttpClient httpClient = HttpClients.custom()
                 .setSSLSocketFactory(createSSLConnSocketFactory())
                 .setConnectionManager(connMgr)
                 .setDefaultRequestConfig(requestConfig)
                 .build();
-        HttpPost post = new HttpPost(url);
-        FileEntity fileEntity = new FileEntity(file,"binary/octet-stream");
-        post.setEntity(fileEntity);
         try {
+            HttpPost post = new HttpPost(url);
+            FileBody pic = new FileBody(file);
+            StringBody comment = new StringBody((file.getName()));
+            MultipartEntity multipartEntity = new MultipartEntity();
+            multipartEntity.addPart("pic", pic);
+            multipartEntity.addPart("picName", comment);
+            post.setEntity(multipartEntity);
+
             CloseableHttpResponse response = httpClient.execute(post);
-            if (response != null) {
-                HttpEntity entity = response.getEntity();
-                String json = IOUtils.toString(entity.getContent(),"UTF-8");
-                return json;
-            }
-            else {
-                System.out.println("响应的response对象为空");
-                return null;
-            }
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+
+            int statusCode = response.getStatusLine().getStatusCode();
+
+            System.out.println("上传图片接口被调用，微信服务器返回的code码为:" + statusCode);
+
+            HttpEntity entity = response.getEntity();
+            String json = IOUtils.toString(entity.getContent(), "UTF-8");
+            System.out.println("从微信服务器获得的json为：" + json);
+            EntityUtils.consume(entity);
+            return json;
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
