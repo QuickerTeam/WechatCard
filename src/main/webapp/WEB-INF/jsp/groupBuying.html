@@ -26,7 +26,7 @@
 	     					 	 <div class="remind">
 		     					 <div class="input-group">
 		        					<span class="input-group-addon">客服电话</span>
-		         					<input type="text" class="form-control onlyForm" id="serverTel" placeholder="选题"><i class="notMust icon">*选填</i>
+		         					<input type="text" class="form-control onlyForm" id="serverTel" placeholder="选填"><i class="notMust icon">*选填</i>
 		     					 </div>
 	     					 </div>
 	     					 <div class="remind">
@@ -144,7 +144,7 @@
 				
 			  var cardType = "groupBuying";
 			  var ismoreCard = false;
-			  var checkOk = true;  //为treu代表表单检验通过
+			  var checkOk = false;  //为treu代表表单检验通过
 			  
 				$("#upimg").val(null);     // 初始化上传图片的value
 				$("#moreCard").click(function(event) {
@@ -351,7 +351,7 @@
 			                nextElement.removeClass('icon-remove');
 			              };
 			              nextElement.addClass('notMust').attr({title: ""}).text('*选填');
-			              checkOk = false;
+			              checkOk = true;
 			            }else{
 			              nextElement.empty();
 			              if (nextElement.hasClass('icon-remove')) {
@@ -407,7 +407,7 @@
 			                nextElement.removeClass('icon-remove');
 			              };
 			              nextElement.addClass('icon-remove').attr({title: "请输入正整数"});
-			              checkOk = true;
+			              checkOk = false;
 			             }else{
 			             if ($(this).val()>50) {
 			              nextElement.empty();
@@ -427,7 +427,7 @@
 			                nextElement.removeClass('icon-remove');
 			              };
 			              nextElement.addClass('notMust').attr({title: ""}).text('*选填');
-			             checkOk = false;
+			             checkOk = true;
 			            }else{
 			              nextElement.empty();
 			              if (nextElement.hasClass('icon-remove')) {
@@ -586,10 +586,16 @@
 			      var left_card_amount = $("#cardNumber").val(); //可获取的库存
 			      var sub_title = $("#favourView").val(); //卡券具体优惠信息
 			      var notice = $("#useView").val(); //卡券使用提醒
-			      var description = $("#groupDescription").text();//卡券使用说明
-			      var dataType = isChange;//使用时间类型
+			      var description = $("#groupDescription").val();//卡券使用说明
+			      var dataType;   //卡券时间类型
+			      if(isChange == 0){
+			      dataType = "DATE_TYPE_FIX_TIME_RANGE";
+			      }else{
+			      dataType = "DATE_TYPE_FIX_TERM";
+			      }
+			      
 			          //团购券 
-			      var deal_detail = $("#groupDetail").text();//团购票专有详细信息
+			      var deal_detail = $("#groupDetail").val();//团购票专有详细信息
 			      var formData = new FormData();
 					  formData.append('logo_url', $("#upimg")[0].files[0]);
 				  var isReseve = false;		  
@@ -604,13 +610,13 @@
     						contentType: false,
 						    success:function(data){
 						    	if(data.code == true){
-						   		if (dataType == "0") {
-						                var beginTimeYear = $("#starTimeY").val();
-						                var beginTimeMonth = $("#starTimeM").val();
-						                var beginTimeDay = $("#starTimeD").val();
-						                var endTimeYear = $("#endTimeY").val();
-						                var endTimeMonth = $("#endTimeM").val();
-						                var endTimeDay = $("#endTimeD").val();
+						   		if (isChange == 0) {
+						                var begin_time_year = $("#starTimeY").val();
+						                var begin_time_month = $("#starTimeM").val();
+						                var begin_time_day = $("#starTimeD").val();
+						                var end_time_Year = $("#endTimeY").val();
+						                var end_time_month = $("#endTimeM").val();
+						                var end_time_day = $("#endTimeD").val();
 
 
 
@@ -619,19 +625,19 @@
 								    	url:"/WechatCard/CreateTicket/GroupTicket_save",
 								    	data: {
 								            "title": title, 
-								            "card_color": card_color, 
-								            "left_card_amount":left_card_amount,
+								            "color": card_color, 
+								            "quantity":left_card_amount,
 						                    "deal_detail":deal_detail,
 						                    "sub_title":sub_title,
 						                    "notice":notice,
 						                    "description":description,
-						                    "dataType":dataType,
-						                    "beginTimeYear":beginTimeYear,
-						                    "beginTimeMonth":beginTimeMonth,
-								            "beginTimeDay":beginTimeDay,
-								            "endTimeYear":endTimeYear,
-								            "endTimeMonth":endTimeMonth,
-								            "endTimeDay":endTimeDay
+						                    "type":dataType,
+						                    "begin_time_year":begin_time_year,
+						                    "begin_time_month":begin_time_month,
+								            "begin_time_day":begin_time_day,
+								            "end_time_year":end_time_year,
+								            "end_time_month":end_time_month,
+								            "end_time_dayy":end_time_day
 								            },
 								    dataType:"json",
 								    success:function(data){
@@ -666,13 +672,13 @@
 										    dataType:"json",
 										   	data: {
 										     "title": title, 
-						                    "card_color": card_color, 
-						                    "left_card_amount":left_card_amount,
+						                    "color": card_color, 
+						                    "quantity":left_card_amount,
 						                    "deal_detail":deal_detail,
 						                    "sub_title":sub_title,
 						                   " notice":notice,
 						                    "description":description,
-						                   " dataType":dataType,
+						                   " type":dataType,
 						                    "fixdTerm":fixdTerm},
 										    success:function(data){
 										   			if(data.code == true){
@@ -728,24 +734,5 @@
 			 
 
 
-$("#test").click(function(event) {
-	 $.ajax({
-						    type:"post",
-						    url:"/WechatCard/CreateTicket/UpLoadLogo",
-						    dataType:"json",
-						    cache: false,
-    						data: {
-    							"haha":"haha"
-    						},
-   						 	processData: false,
-    						contentType: false,
-						    success:function(data){
-						    	alert("success");
-						    },
-						    error:function(){
-						    	alert("error");
-						    }
-							});
-	});
 
 			</script>
