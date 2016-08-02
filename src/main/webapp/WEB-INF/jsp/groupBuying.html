@@ -100,22 +100,22 @@
 								<div id="chooseColor"></div>
 								<table class="colorTable">
 									<tr>
-										<td class="colorView Color010" title="#63b359"></td>
-										<td class="colorView Color020" title="#2c9f67"></td>
-										<td class="colorView Color030" title="#509fc9"></td>
-										<td class="colorView Color040" title="#5885cf"></td>
-										<td class="colorView Color050" title="#9062c0"></td>
-										<td class="colorView Color060" title="#d09a45"></td>
-										<td class="colorView Color070" title="#e4b138"></td>
+										<td class="colorView Color010" title="#63b359" data="Color010"></td>
+										<td class="colorView Color020" title="#2c9f67" data="Color020"></td>
+										<td class="colorView Color030" title="#509fc9" data="Color030"></td>
+										<td class="colorView Color040" title="#5885cf" data="Color040"></td>
+										<td class="colorView Color050" title="#9062c0" data="Color050"></td>
+										<td class="colorView Color060" title="#d09a45" data="Color060"></td>
+										<td class="colorView Color070" title="#e4b138" data="Color070"></td>
 									</tr>
 									<tr>
-										<td class="colorView Color080" title="#ee903c"></td>
-										<td class="colorView Color081" title="#f08500"></td>
-										<td class="colorView Color082" title="#a9d92d"></td>
-										<td class="colorView Color090" title="#dd6549"></td>
-										<td class="colorView Color100" title="#cc463d"></td>
-										<td class="colorView Color101" title="#cf3e36"></td>
-										<td class="colorView Color102" title="#5E6671s"></td>
+										<td class="colorView Color080" title="#ee903c" data="Color080"></td>
+										<td class="colorView Color081" title="#f08500" data="Color081"></td>
+										<td class="colorView Color082" title="#a9d92d" data="Color082"></td>
+										<td class="colorView Color090" title="#dd6549" data="Color090"></td>
+										<td class="colorView Color100" title="#cc463d" data="Color100"></td>
+										<td class="colorView Color101" title="#cf3e36" data="Color101"></td>
+										<td class="colorView Color102" title="#5E6671s" data="Color102"></td>
 									</tr>
 								</table>
 							</div>
@@ -217,6 +217,7 @@
 			  $(".colorView").on('click', function(event) {             //隐藏色板
 			  	event.preventDefault();
 			  	var color = $(this).attr("title");
+			  	$("#chooseColor").attr("data",$(this).attr("data"));
 			  	$("#chooseColor").css({
 			  		backgroundColor: color
 			  	});
@@ -527,12 +528,12 @@
 			 $("#upCard").on('click', function(event) {      //发送创建卡券的
 			   event.preventDefault();
 			   if (isChange == 0) {                     //根据客户选择的卡券有效期的时间类型进行不同的检验
-			      var sY = $("#starTimeY").val();
-			      var sM = $("#starTimeM").val();
-			      var sD = $("#starTimeD").val();
-			      var eY = $("#endTimeY").val();
-			      var eM = $("#endTimeM").val();
-			      var eD = $("#endTimeD").val(); 
+			      var sY = parseInt($("#starTimeY").val());
+			      var sM = parseInt($("#starTimeM").val());
+			      var sD = parseInt($("#starTimeD").val());
+			      var eY = parseInt($("#endTimeY").val());
+			      var eM = parseInt($("#endTimeM").val());
+			      var eD = parseInt($("#endTimeD").val()); 
 
 			      if (sY == "" || sM == "" || sD == "" || eY == "" || eM == "" || eD == "") {
 			       $(".errup").text("输入时间不能为空");
@@ -581,18 +582,20 @@
 			   });
 			   }else{
 			   	alert("checkOk = true");
-			      var title = $(".cardTitle").val();
-			      var card_color =  $("#chooseColor").css("backgroundColor");   //卡券颜色
-			      var left_card_amount = $("#cardNumber").val(); //可获取的库存
+			      var title = $("#cardTitle").val();
+			      var card_color =  $("#chooseColor").attr("data");   //卡券颜色
+			      var left_card_amount = parseInt($("#cardNumber").val()); //可获取的库存
 			      var sub_title = $("#favourView").val(); //卡券具体优惠信息
 			      var notice = $("#useView").val(); //卡券使用提醒
 			      var description = $("#groupDescription").val();//卡券使用说明
 			      var dataType;   //卡券时间类型
+			      var get_limit =parseInt($("#numberPlace").val());  //
+			      var service_phone = $("#serverTel").val();
 			      if(isChange == 0){
 			      dataType = "DATE_TYPE_FIX_TIME_RANGE";
 			      }else{
 			      dataType = "DATE_TYPE_FIX_TERM";
-			      }
+			      };
 			      
 			          //团购券 
 			      var deal_detail = $("#groupDetail").val();//团购票专有详细信息
@@ -611,12 +614,12 @@
 						    success:function(data){
 						    	if(data.code == true){
 						   		if (isChange == 0) {
-						                var begin_time_year = $("#starTimeY").val();
-						                var begin_time_month = $("#starTimeM").val();
-						                var begin_time_day = $("#starTimeD").val();
-						                var end_time_year = $("#endTimeY").val();
-						                var end_time_month = $("#endTimeM").val();
-						                var end_time_day = $("#endTimeD").val();
+						                var begin_time_year =parseInt($("#starTimeY").val());
+						                var begin_time_month = parseInt($("#starTimeM").val());
+						                var begin_time_day = parseInt($("#starTimeD").val());
+						                var end_time_year = parseInt($("#endTimeY").val());
+						                var end_time_month = parseInt($("#endTimeM").val());
+						                var end_time_day = parseInt($("#endTimeD").val());
 
 
 
@@ -638,6 +641,8 @@
 								            "end_time_year":end_time_year,
 								            "end_time_month":end_time_month,
 								            "end_time_day":end_time_day,
+								            "get_limit":get_limit,
+								            "service_phon":service_phone,
 								            },
 								    dataType:"json",
 								    success:function(data){
@@ -665,21 +670,24 @@
 								  });
 
 							   }else{
-						                var fixdTerm = $("#fixdTerm").val();
+						                var fixdTerm = parseInt($("#fixdTerm").val());
 						                $.ajax({
 								    		type:"post",
 										    url:"/WechatCard/CreateTicket/GroupTicket_save",
 										    dataType:"json",
 										   	data: {
-										     "title": title, 
+										    "title": title, 
 						                    "color": card_color, 
 						                    "quantity":left_card_amount,
 						                    "deal_detail":deal_detail,
 						                    "sub_title":sub_title,
-						                   " notice":notice,
+						                    "notice":notice,
 						                    "description":description,
-						                   " type":dataType,
-						                    "fixdTerm":fixdTerm,},
+						                    "type":dataType,
+						                    "fixdTerm":fixdTerm,
+						                    "get_limit":get_limit,
+								            "service_phon":service_phone,
+								            },
 										    success:function(data){
 										   			if(data.code == true){
 								                  		 $(".suup").slideDown('slow', function() {
@@ -720,10 +728,7 @@
 						      }
 						  });
 						
-					    if (isReseve == true) {
-					    alert("12");
-				  				
-				  		}
+					    
 						
 
 			              			              
