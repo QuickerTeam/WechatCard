@@ -43,8 +43,6 @@ public class JunitTest {
 			JSONArray cardIdArray = receiveJson.getJSONArray("card_id_list");
 			for (int i = 0; i < cardIdArray.length(); i++) {
 				json = new JSONObject(cardIdArray.get(i));
-				str = manageCardService.batchGet(StaticConstant.accessToken,
-						json.toString());
 				receiveJson = new JSONObject(str);
 				boolean b = UsedMethod.write2SimpleCardInfo(json,
 						cardInfoList.get(i));

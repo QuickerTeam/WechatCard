@@ -90,15 +90,15 @@ public class CreateTicket {
 			// 返回response
 			return response;
 		}
-		JSONObject json = new JSONObject(cardCreateService.uploadCardLogo(
-				StaticConstant.accessToken, logoFile));
-	/*	if (!json.getBoolean("status")) {
-			// 获取图片url出错
+		JSONObject json = new JSONObject(
+				cardCreateService.uploadCardLogo(logoFile));
+
+		if (!json.getBoolean("status")) { // 获取图片url出错
 			response.setCode(false);
-			response.setMsg("获取图片url出错");
-			// 返回response
+			response.setMsg("获取图片url出错"); // 返回response
 			return response;
-		}*/
+		}
+
 		logo_url = json.getString("url");
 		// 将url封装到bean中
 		GroupTicket.Card.Groupon.Base_info base_info = groupTicket.getCard()
@@ -106,16 +106,17 @@ public class CreateTicket {
 		base_info.setLogo_url(logo_url);
 		// 向微信发出创建卡券申请
 		groupTicketJson = new JSONObject(groupTicket);
-		json = new JSONObject(cardCreateService.createCard(
-				StaticConstant.accessToken, groupTicketJson.toString()));
-		/*if (json.getBoolean("status")) {// 创建成功
-			System.out.println("创建卡券成功");
+		json = new JSONObject(cardCreateService.createCard(groupTicketJson
+				.toString()));
+
+		if (json.getBoolean("status")) {// 创建成功 System.out.println("创建卡券成功");
 			System.out.println("card_id=" + json.getString("card_id"));
 			response.setCode(true);
 		} else {
 			System.out.println("创建卡券失败 errcode=" + json.getInt("errcode"));
 			response.setCode(false);
-		}*/
+		}
+
 		if (json.getString("errmsg").equals("0")) {// 创建成功
 			System.out.println("创建卡券成功");
 			System.out.println("card_id=" + json.getString("card_id"));

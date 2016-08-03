@@ -40,8 +40,7 @@ public class DistributeCardController {
 		System.out.println("json=" + json);
 		System.out.println("StaticConstant.accessToken="
 				+ StaticConstant.accessToken);
-		str = manageCardService.batchGet(StaticConstant.accessToken,
-				json.toString());
+		str = manageCardService.batchGet(json.toString());
 		System.out.println("2");
 		receiveJson = new JSONObject(str);
 		System.out.println("receiveJson=" + receiveJson);
@@ -56,8 +55,7 @@ public class DistributeCardController {
 			System.out.println("receiveJson=" + receiveJson);
 			System.out.println("cardIdArray=" + cardIdArray);
 			System.out.println("json=" + json);
-			str = manageCardService.queryCardInfo(StaticConstant.accessToken,
-					json.toString());
+			str = manageCardService.queryCardInfo(json.toString());
 			receiveJson = new JSONObject(str);
 			SimpleCardInfo e = new SimpleCardInfo();
 			e.setCard_id(card_id);// 写入card_id
