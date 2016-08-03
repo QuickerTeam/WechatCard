@@ -38,4 +38,15 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="resolveLazily" value="true" />
 	</bean>
+
+	<!--web容器启动后自动初始化获得access_token的bean-->
+	<bean id="getAccessUtil" class="com.dsb.weChat.util.http.GetAccessUtil">
+
+		<!-- 注入三个参数-->
+		<property name="appId" value="wxa6e1bbd8c3101e94"></property>
+		<property name="appSecret" value="b46bd37e33f913a528141e32286e27be"></property>
+		<property name="url" value="https://api.weixin.qq.com/cgi-bin/token"></property>
+
+	</bean>
+
 </beans>
