@@ -40,11 +40,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<li id="moreCard">创建卡券<i class="icon-double-angle-left fontSign"></i></li>
 				<li class="cardView">
 					<ul>
+						<li class="boxli">
+							 <div class="boxshandowTop"></div>
+						</li>
 						<li class="card thisCard" id="groupBuying">团购券</li>
 						<li class="card" id="voucher">代金券</li>
 						<li class="card" id="countCard">折扣券</li>
 						<li class="card" id="giftCard">礼品券</li>
 						<li class="card" id="coupon">优惠券</li>
+						<li class="boxli">
+							<div class="boxshandowButtom"></div>
+						</li>
 					</ul>
 				</li>
 				<li>投放卡券</li>
