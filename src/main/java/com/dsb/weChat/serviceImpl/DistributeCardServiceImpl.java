@@ -21,7 +21,7 @@ public class DistributeCardServiceImpl implements DistributeCardService {
         String url = "https://api.weixin.qq.com/card/qrcode/create?access_token=" + StaticConstant.accessToken;
         String returnJson = HttpUtil.doPostSSL(url,QRCodejson);
 
-        String errCode;
+        int errCode;
         JSONObject json;
 
         JSONObject jsonObject = new JSONObject(returnJson);
@@ -30,21 +30,21 @@ public class DistributeCardServiceImpl implements DistributeCardService {
         if (jsonObject.isNull("errcode")) {
             json = new JSONObject();
             json.put("status", true);
-            json.put("expire_seconds",(String) jsonObject.get("expire_seconds"));
-            json.put("url",(String) jsonObject.get("url"));
-            json.put("show_qrcode_url",(String) jsonObject.get("show_qrcode_url"));
+            json.put("expire_seconds", jsonObject.getInt("expire_seconds"));
+            json.put("url",  jsonObject.getString("url"));
+            json.put("show_qrcode_url", jsonObject.getString("show_qrcode_url"));
             return json.toString();
         } else {
 
             //判断access_token是否有效
             if (AccessUtil.isValid(jsonObject)) {
-                errCode = (String)jsonObject.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
-                    json.put("expire_seconds",(String)  jsonObject.get("expire_seconds"));
-                    json.put("url",(String) jsonObject.get("url"));
-                    json.put("show_qrcode_url",(String) jsonObject.get("show_qrcode_url"));
+                    json.put("expire_seconds",jsonObject.getInt("expire_seconds"));
+                    json.put("url", jsonObject.getString("url"));
+                    json.put("show_qrcode_url", jsonObject.getString("show_qrcode_url"));
                     return json.toString();
                 }
                 else {
@@ -57,13 +57,13 @@ public class DistributeCardServiceImpl implements DistributeCardService {
             else {
                 String returnJson1 = HttpUtil.doPostSSL(url,QRCodejson);
                 JSONObject JSONObject1 = new JSONObject(returnJson1);
-                errCode = (String)JSONObject1.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
-                    json.put("expire_seconds", (String) jsonObject.get("expire_seconds"));
-                    json.put("url",(String) jsonObject.get("url"));
-                    json.put("show_qrcode_url",(String) jsonObject.get("show_qrcode_url"));
+                    json.put("expire_seconds",jsonObject.getInt("expire_seconds"));
+                    json.put("url", jsonObject.getString("url"));
+                    json.put("show_qrcode_url", jsonObject.getString("show_qrcode_url"));
                     return json.toString();
                 }
                 else {

@@ -23,7 +23,7 @@ public class CheckCardServiceImpl implements CheckCardService{
     public String queryCardStage(String cardJson) {
         String url = "https://api.weixin.qq.com/card/code/get?access_token=" + StaticConstant.accessToken;
         String returnJson = HttpUtil.doPostSSL(url,cardJson);
-        String errCode;
+        int errCode;
         JSONObject json;
 
         JSONObject jsonObject = new JSONObject(returnJson);
@@ -38,8 +38,8 @@ public class CheckCardServiceImpl implements CheckCardService{
 
             //判断access_token是否有效
             if (AccessUtil.isValid(jsonObject)) {
-                errCode = (String)jsonObject.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
                     json.put("errmsg","该卡券可以使用");
@@ -55,8 +55,8 @@ public class CheckCardServiceImpl implements CheckCardService{
             else {
                 String returnJson1 = HttpUtil.doPostSSL(url,cardJson);
                 JSONObject JSONObject1 = new JSONObject(returnJson1);
-                errCode = (String)JSONObject1.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
                     json.put("errmsg","该卡券可以使用");
@@ -81,7 +81,7 @@ public class CheckCardServiceImpl implements CheckCardService{
     public String consumeCard(String cardJson) {
         String url = "https://api.weixin.qq.com/card/code/consume?access_token=" + StaticConstant.accessToken;
         String returnJson = HttpUtil.doPostSSL(url,cardJson);
-        String errCode;
+        int errCode;
         JSONObject json;
 
         JSONObject jsonObject = new JSONObject(returnJson);
@@ -96,8 +96,8 @@ public class CheckCardServiceImpl implements CheckCardService{
 
             //判断access_token是否有效
             if (AccessUtil.isValid(jsonObject)) {
-                errCode = (String)jsonObject.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
                     json.put("errmsg","核销成功");
@@ -113,8 +113,8 @@ public class CheckCardServiceImpl implements CheckCardService{
             else {
                 String returnJson1 = HttpUtil.doPostSSL(url,cardJson);
                 JSONObject JSONObject1 = new JSONObject(returnJson1);
-                errCode = (String)JSONObject1.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
                     json.put("errmsg","核销成功");
