@@ -97,7 +97,7 @@
 
 							<div class="remind">
 								<span class="upView">选择卡片背景颜色</span>
-								<div id="chooseColor"></div>
+								<div id="chooseColor" data = "Color010"></div>
 								<table class="colorTable">
 									<tr>
 										<td class="colorView Color010" title="#63b359" data="Color010"></td>
@@ -521,7 +521,7 @@
 			  isChange = 1;
 			}else{
 			 $(".typeView").animate({"top":"0px"}, "400");
-			  isChange = 1;
+			  isChange = 0;
 			} 
 			});
 
@@ -661,7 +661,6 @@
 								    },
 								   error:function(data){
 								       $(".errup").text("网络异常，创建失败");
-								       alert("2");
        									  $(".errup").slideDown('slow', function() {
          								  $(this).delay(1000).slideUp('slow');
        									});
