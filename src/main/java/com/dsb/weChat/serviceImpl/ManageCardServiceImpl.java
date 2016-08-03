@@ -24,7 +24,7 @@ public class ManageCardServiceImpl implements ManageCardService {
     public String queryCardInfo(String cardJson) {
         String url = "https://api.weixin.qq.com/card/get?access_token=" + StaticConstant.accessToken;
         String returnJson = HttpUtil.doPostSSL(url,cardJson);
-        String errCode;
+        int errCode;
         JSONObject json;
 
         JSONObject jsonObject = new JSONObject(returnJson);
@@ -33,17 +33,17 @@ public class ManageCardServiceImpl implements ManageCardService {
         if (jsonObject.isNull("errcode")) {
             json = new JSONObject();
             json.put("status", true);
-            json.put("card",(String) jsonObject.get("card"));
+            json.put("card", jsonObject.getString("card"));
             return json.toString();
         } else {
 
             //判断access_token是否有效
             if (AccessUtil.isValid(jsonObject)) {
-                errCode = (String)jsonObject.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
-                    json.put("card",(String) jsonObject.get("card"));
+                    json.put("card",jsonObject.getString("card"));
                     return json.toString();
                 }
                 else {
@@ -56,11 +56,11 @@ public class ManageCardServiceImpl implements ManageCardService {
             else {
                 String returnJson1 = HttpUtil.doPostSSL(url,cardJson);
                 JSONObject JSONObject1 = new JSONObject(returnJson1);
-                errCode = (String)JSONObject1.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
-                    json.put("card",(String) jsonObject.get("card"));
+                    json.put("card",jsonObject.getString("card"));
                     return json.toString();
                 }
                 else {
@@ -82,7 +82,7 @@ public class ManageCardServiceImpl implements ManageCardService {
     public String batchGet(String cardJson) {
         String url = "https://api.weixin.qq.com/card/batchget?access_token=" + StaticConstant.accessToken;
         String returnJson = HttpUtil.doPostSSL(url,cardJson);
-        String errCode;
+        int errCode;
         JSONObject json;
 
         JSONObject jsonObject = new JSONObject(returnJson);
@@ -91,19 +91,19 @@ public class ManageCardServiceImpl implements ManageCardService {
         if (jsonObject.isNull("errcode")) {
             json = new JSONObject();
             json.put("status", true);
-            json.put("card_id_list",(String) jsonObject.get("card_id_list"));
-            json.put("total_num",(Integer) jsonObject.get("total_num"));
+            json.put("card_id_list", jsonObject.getJSONArray("card_id_list"));
+            json.put("total_num", jsonObject.getInt("total_num"));
             return json.toString();
         } else {
 
             //判断access_token是否有效
             if (AccessUtil.isValid(jsonObject)) {
-                errCode = (String)jsonObject.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
-                    json.put("card_id_list",(String) jsonObject.get("card_id_list"));
-                    json.put("total_num",(Integer) jsonObject.get("total_num"));
+                    json.put("card_id_list", jsonObject.getJSONArray("card_id_list"));
+                    json.put("total_num", jsonObject.getInt("total_num"));
                     return json.toString();
                 }
                 else {
@@ -116,12 +116,12 @@ public class ManageCardServiceImpl implements ManageCardService {
             else {
                 String returnJson1 = HttpUtil.doPostSSL(url,cardJson);
                 JSONObject JSONObject1 = new JSONObject(returnJson1);
-                errCode = (String)JSONObject1.get("errcode");
-                if (errCode.equals("0")) {
+                errCode = jsonObject.getInt("errcode");
+                if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
-                    json.put("card_id_list",(String) jsonObject.get("card_id_list"));
-                    json.put("total_num",(Integer) jsonObject.get("total_num"));
+                    json.put("card_id_list", jsonObject.getJSONArray("card_id_list"));
+                    json.put("total_num", jsonObject.getInt("total_num"));
                     return json.toString();
                 }
                 else {
