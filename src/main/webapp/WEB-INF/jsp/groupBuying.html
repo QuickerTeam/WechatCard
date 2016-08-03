@@ -669,7 +669,7 @@
 								  });
 
 							   }else{
-						                var fixdTerm = parseInt($("#fixdTerm").val());
+						                var fixdTerm = parseInt($("#timeRange").val());
 						                $.ajax({
 								    		type:"post",
 										    url:"/WechatCard/CreateTicket/GroupTicket_save",
@@ -683,7 +683,7 @@
 						                    "notice":notice,
 						                    "description":description,
 						                    "type":dataType,
-						                    "fixdTerm":fixdTerm,
+						                    "fixed_term":fixdTerm,
 						                    "get_limit":get_limit,
 								            "service_phone":service_phone,
 								            },

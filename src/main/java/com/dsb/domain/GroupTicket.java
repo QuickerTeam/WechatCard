@@ -1,25 +1,25 @@
 package com.dsb.domain;
 
-import org.omg.CORBA.DATA_CONVERSION;
-
 /**
  * 团购券
  * 
  * @author Time 所有的get/set方法都是自动生成
  */
 public class GroupTicket {
-	private card card = new card();
+	// card字段以及set/get方法
+	private Card card = new Card();
 
-	public card getCard() {
-		return card;
-	}
-
-	public void setCard(card card) {
+	public void setCard(Card card) {
 		this.card = card;
 	}
 
-	public class card {// 所有的卡券信息
-		private String card_type = "GROUPON";// 团购券类型
+	public Card getCard() {
+		return card;
+	}
+
+	public class Card {// 所有的卡券信息
+		// card_type字段以及set/get方法
+		private String card_type;// 团购券类型
 
 		public String getCard_type() {
 			return card_type;
@@ -29,20 +29,20 @@ public class GroupTicket {
 			this.card_type = card_type;
 		}
 
-		public groupon getGroupon() {
+		// groupon字段以及set/get方法
+		private Groupon groupon = new Groupon();
+
+		public Groupon getGroupon() {
 			return groupon;
 		}
 
-		public void setGroupon(groupon groupon) {
+		public void setGroupon(Groupon groupon) {
 			this.groupon = groupon;
 		}
 
-		private groupon groupon = new groupon();
-
-		public class groupon {
+		public class Groupon {
+			// deal_detail字段以及set/get方法
 			public String deal_detail;// 团购详情
-
-			private base_info base_info = new base_info();
 
 			public String getDeal_detail() {
 				return deal_detail;
@@ -52,27 +52,39 @@ public class GroupTicket {
 				this.deal_detail = deal_detail;
 			}
 
-			public base_info getBase_info() {
+			// base_info字段以及set/get方法
+			private Base_info base_info = new Base_info();
+
+			public Base_info getBase_info() {
 				return base_info;
 			}
 
-			public void setBase_info(base_info base_info) {
+			public void setBase_info(Base_info base_info) {
 				this.base_info = base_info;
 			}
 
-			public class base_info {
+			public class Base_info {
 				private int get_limit;// 每人可领券的数量限制
-				private sku sku = new sku();
 
-				public sku getSku() {
-					return sku;
+				public int getGet_limit() {
+					return get_limit;
 				}
 
-				public void setSku(sku sku) {
+				public void setGet_limit(int get_limit) {
+					this.get_limit = get_limit;
+				}
+
+				private Sku sku = new Sku();
+
+				public void setSku(Sku sku) {
 					this.sku = sku;
 				}
 
-				public class sku {// 用来保存quantity库存
+				public Sku getSku() {
+					return sku;
+				}
+
+				public class Sku {// 用来保存quantity库存
 					private int quantity;// 库存
 
 					public int getQuantity() {
@@ -84,28 +96,7 @@ public class GroupTicket {
 					}
 				}
 
-				private String brand_name = "商户名字";// 商户名字
 				private String sub_title;// 券名
-				private String title;// 卡券名
-				private String source = "袋鼠帮";
-				private String color;// 券颜色
-				private String description;// 卡券使用说明
-
-				public int getGet_limit() {
-					return get_limit;
-				}
-
-				public void setGet_limit(int get_limit) {
-					this.get_limit = get_limit;
-				}
-
-				public String getBrand_name() {
-					return brand_name;
-				}
-
-				public void setBrand_name(String brand_name) {
-					this.brand_name = brand_name;
-				}
 
 				public String getSub_title() {
 					return sub_title;
@@ -115,6 +106,8 @@ public class GroupTicket {
 					this.sub_title = sub_title;
 				}
 
+				private String title;// 卡券名
+
 				public String getTitle() {
 					return title;
 				}
@@ -123,21 +116,7 @@ public class GroupTicket {
 					this.title = title;
 				}
 
-				public String getSource() {
-					return source;
-				}
-
-				public void setSource(String source) {
-					this.source = source;
-				}
-
-				public String getColor() {
-					return color;
-				}
-
-				public void setColor(String color) {
-					this.color = color;
-				}
+				private String description;// 卡券使用说明
 
 				public String getDescription() {
 					return description;
@@ -147,6 +126,38 @@ public class GroupTicket {
 					this.description = description;
 				}
 
+				private String brand_name;// 商户名字
+
+				public String getBrand_name() {
+					return brand_name;
+				}
+
+				public void setBrand_name(String brand_name) {
+					this.brand_name = brand_name;
+				}
+
+				private String source;
+
+				public String getSource() {
+					return source;
+				}
+
+				public void setSource(String source) {
+					this.source = source;
+				}
+
+				private String color;// 券颜色
+
+				public String getColor() {
+					return color;
+				}
+
+				public void setColor(String color) {
+					this.color = color;
+				}
+
+				private String notice;// 卡券使用提醒
+
 				public String getNotice() {
 					return notice;
 				}
@@ -154,6 +165,8 @@ public class GroupTicket {
 				public void setNotice(String notice) {
 					this.notice = notice;
 				}
+
+				private String logo_url;// 服务器返回的logourl
 
 				public String getLogo_url() {
 					return logo_url;
@@ -163,6 +176,8 @@ public class GroupTicket {
 					this.logo_url = logo_url;
 				}
 
+				private String code_type;// code类型，二维码、code等
+
 				public String getCode_type() {
 					return code_type;
 				}
@@ -170,6 +185,8 @@ public class GroupTicket {
 				public void setCode_type(String code_type) {
 					this.code_type = code_type;
 				}
+
+				private String service_phone;// 客服电话
 
 				public String getService_phone() {
 					return service_phone;
@@ -179,18 +196,17 @@ public class GroupTicket {
 					this.service_phone = service_phone;
 				}
 
-				public date_info getDate_info() {
+				private Date_info date_info = new Date_info();
+
+				public Date_info getDate_info() {
 					return date_info;
 				}
 
-				public void setDate_info(date_info date_info) {
+				public void setDate_info(Date_info date_info) {
 					this.date_info = date_info;
 				}
 
-				private String notice;// 卡券使用提醒
-				private date_info date_info = new date_info();
-
-				public class date_info {// 所有日期信息
+				public class Date_info {// 所有日期信息
 					private String type;// 有效日期类型(时间段还是倒计时)
 					// 当有效期类型为时间段时，用前两个数据。否则用最后一个数据
 					private String begin_timestamp;// 起始日期
@@ -229,13 +245,16 @@ public class GroupTicket {
 					public void setFixed_term(int fixed_term) {
 						this.fixed_term = fixed_term;
 					}
+
+					public int getFixed_begin_term() {
+						return fixed_begin_term;
+					}
+
+					public void setFixed_begin_term(int fixed_begin_term) {
+						this.fixed_begin_term = fixed_begin_term;
+					}
 				}
-
-				private String logo_url;// 服务器返回的logourl
-				private String code_type = "CODE_TYPE_BARCODE";// code类型，二维码、code等
-				private String service_phone;// 客服电话
 			}
-
 		}
 	}
 }
