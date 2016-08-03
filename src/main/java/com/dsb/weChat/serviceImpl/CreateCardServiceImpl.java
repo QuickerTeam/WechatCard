@@ -1,11 +1,13 @@
 package com.dsb.weChat.serviceImpl;
 
+import com.dsb.utils.StaticConstant;
 import com.dsb.weChat.service.CreateCardService;
+import com.dsb.weChat.util.http.AccessUtil;
 import com.dsb.weChat.util.http.HttpUtil;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.InputStream;
 
 /**
  * Created by Max on 2016/7/27.
@@ -13,29 +15,117 @@ import java.io.InputStream;
 public class CreateCardServiceImpl implements CreateCardService {
 
     /**
-     *
-     * @param file 图片logow文件
-     * @param access_token 接口调用凭证
-     * @return  logo的URL地址
+     * @param file         图片logow文件
+     * @return logo的URL地址
      */
     @Override
-    public String uploadCardLogo(String access_token, File file ) {
-        String url = "https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token=" + access_token;;
-        String json = HttpUtil.doPostSSL(file, url);
-        System.out.println("uploadCardLogo()接口，微信服务器返回的logo图片地址为:" + json);
-        return json;
-    }
+    public String uploadCardLogo(File file) {
+        String url = "https://api.weixin.qq.com/cgi-bin/media/uploadimg?access_token="
+                + StaticConstant.accessToken;;
+        String returnJson = HttpUtil.doPostSSL(file, url);
+        String errCode;
+        JSONObject json;
+
+        JSONObject jsonObject = new JSONObject(returnJson);
+
+        //不存在errcode字段，则意味着发送成功
+        if (jsonObject.isNull("errcode")) {
+            json = new JSONObject();
+            json.put("status", true);
+            json.put("url", (String) jsonObject.get("url"));
+            return json.toString();
+        } else {
+            //判断access_token是否有效
+            if (AccessUtil.isValid(jsonObject)) {
+                errCode = (String)jsonObject.get("errcode");
+                if (errCode.equals("0")) {
+                    json = new JSONObject();
+                    json.put("status", true);
+                    json.put("url", (String) jsonObject.get("url"));
+                    return json.toString();
+                }
+                else {
+                    json = new JSONObject();
+                    json.put("status", false);
+                    json.put("errmsg", "上传图片失败");
+                    return json.toString();
+                }
+            }
+            else {
+                String returnJson1 = HttpUtil.doPostSSL(file, url);
+                JSONObject JSONObject1 = new JSONObject(returnJson1);
+                errCode = (String)JSONObject1.get("errcode");
+                if (errCode.equals("0")) {
+                    json = new JSONObject();
+                    json.put("status", true);
+                    json.put("url", (String) jsonObject.get("url"));
+                    return json.toString();
+                }
+                else {
+                    json = new JSONObject();
+                    json.put("status", false);
+                    json.put("errmsg", "上传图片失败");
+                    return json.toString();
+                }
+            }
+        }
+}
+
 
     /**
-     * @param json 封封装了创建卡券基本信息的java been对象的json
-     * @param access_token 接口调用凭证
+     * @param javaBeenJson 封封装了创建卡券基本信息的java been对象的json
      * @return 创建成功/失败json字符串
      */
     @Override
-    public String createCard(String access_token, String json ) {
-        String url = "https://api.weixin.qq.com/card/create?access_token=" + access_token;;
-        String returnJson = HttpUtil.doPostSSL(url,json);
-        System.out.println("createCard()接口，微信服务器返回的json字段为：" + returnJson);
-        return returnJson;
+    public String createCard(String javaBeenJson) {
+        String url = "https://api.weixin.qq.com/card/create?access_token=" + StaticConstant.accessToken;
+        String returnJson = HttpUtil.doPostSSL(url, javaBeenJson);
+        String errCode;
+        JSONObject json;
+
+        JSONObject jsonObject = new JSONObject(returnJson);
+
+        //不存在errcode字段，则意味着发送成功
+        if (jsonObject.isNull("errcode")) {
+            json = new JSONObject();
+            json.put("status", true);
+            json.put("card_id", (String) jsonObject.get("card_id"));
+            return json.toString();
+        } else {
+
+            //判断access_token是否有效
+            if (AccessUtil.isValid(jsonObject)) {
+                errCode = (String)jsonObject.get("errcode");
+                if (errCode.equals("0")) {
+                    json = new JSONObject();
+                    json.put("status", true);
+                    json.put("card_id", (String) jsonObject.get("card_id"));
+                    return json.toString();
+                }
+                else {
+                    json = new JSONObject();
+                    json.put("status", false);
+                    json.put("errmsg", "创建卡券失败");
+                    return json.toString();
+                }
+            }
+            else {
+                String returnJson1 = HttpUtil.doPostSSL(url, javaBeenJson);
+                JSONObject JSONObject1 = new JSONObject(returnJson1);
+                errCode = (String)JSONObject1.get("errcode");
+                if (errCode.equals("0")) {
+                    json = new JSONObject();
+                    json.put("status", true);
+                    json.put("card_id", (String) jsonObject.get("card_id"));
+                    return json.toString();
+                }
+                else {
+                    json = new JSONObject();
+                    json.put("status", false);
+                    json.put("errmsg", "创建卡券失败");
+                    return json.toString();
+                }
+            }
+        }
     }
 }
