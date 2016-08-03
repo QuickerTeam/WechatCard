@@ -5,7 +5,10 @@ import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
+
 import com.dsb.domain.GroupTicket;
+import com.dsb.domain.SimpleCardInfo;
 
 /**
  * 一些常用的方法
@@ -20,7 +23,7 @@ public class UsedMethod {
 	 * @param request来自web的请求
 	 * @return 是否成功写入进javabean中
 	 */
-	public static boolean Write2GroupTicket(GroupTicket groupTicket,
+	public static boolean write2GroupTicket(GroupTicket groupTicket,
 			HttpServletRequest request) {
 
 		// 属性初始化
@@ -49,7 +52,7 @@ public class UsedMethod {
 		base_info.setBrand_name("商户名字");
 		base_info.setSub_title(request.getParameter("sub_title"));
 		base_info.setTitle(request.getParameter("title"));
-		System.out.println("sub_title="+base_info.getSub_title());
+		System.out.println("sub_title=" + base_info.getSub_title());
 		base_info.setSource("袋鼠帮");
 		if (request.getParameter("service_phone") != null) {
 			// 有客服电话
@@ -89,6 +92,23 @@ public class UsedMethod {
 			date_info.setType("DATE_TYPE_FIX_TERM");
 			date_info.setFixed_term(Integer.valueOf(request
 					.getParameter("fixed_term")));
+		}
+		return true;
+	}
+
+	public static boolean write2SimpleCardInfo(JSONObject json,
+			SimpleCardInfo simpleCardInfo) {
+		try {
+			simpleCardInfo.setCard_id(json.getString("card_id"));
+			simpleCardInfo.setCard_type(json.getString("catd_type"));
+			simpleCardInfo.setColor(json.getString("color"));
+			simpleCardInfo.setLogo_url(json.getString("logo_url"));
+			simpleCardInfo.setTitle(json.getString("title"));
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out
+					.println("UsedMethod中write2SimpleCardInfo方法出错，未能将数据写入卡券对象中");
+			return false;
 		}
 		return true;
 	}
