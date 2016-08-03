@@ -36,7 +36,7 @@
 	});
 
 	$.ajax({               //进入管理卡券页面，异步获取所有已经创建的卡券的信息
-		url: '/DistributeCard',
+		url: '/DistributeCard/AllCard',
 		type: 'post',
 		dataType: 'json',
 	})
@@ -69,7 +69,7 @@
 			var i = $(this).attr("id").split("card")[1]; // 获取这张卡片在卡片列表中的序号
 			var cardId = card[i].cardId;
 			$.ajax({
-				url: '/DistributeCard',
+				url: '/DistributeCard/AllCard',
 				type: 'post',
 				dataType: 'json',
 				data: {"card_id": cardId},
