@@ -58,6 +58,26 @@ $(".card").on('click', function(event) {
   };
 });
 
-  $("#moreCard").trigger('click');
-  $("#groupBuying").trigger('click');
+$(".leftbtn").on('click', function(event) {
+	  event.preventDefault();
+	  sbodyView = $(this).attr("id");
+	  $(".card").removeClass('thisCard');
+	  switch(sbodyView){
+	    case "sendCardM":
+	        $(".sbody").load("/WechatCard/jsp/sendCard.html");
+	        $(this).addClass('thisCard');
+	      break;
+	    case "cancleCardM":
+	        $(".sbody").load("/WechatCard/jsp/cancelCard.html");
+	        $(this).addClass('thisCard');
+	      break;
+	    case "manageCardM":
+	        $(".sbody").load("/WechatCard/jsp/manageCaed.html");
+	        $(this).addClass('thisCard');
+	    break;
+	    default:
+	      break;
+	  }
+	});
+  
 });

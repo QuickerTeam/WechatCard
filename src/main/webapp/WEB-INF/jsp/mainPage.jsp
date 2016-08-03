@@ -53,13 +53,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 						</li>
 					</ul>
 				</li>
-				<li>投放卡券</li>
-				<li>核销卡券</li>
-				<li>管理卡券</li>
-			</ul>
+				<li id = "sendCardM" class="leftbtn">投放卡券</li>
+				<li id = "cancelCardM" class="leftbtn">核销卡券</li>
+				<li id = "manageCardM" class="leftbtn">管理卡券</li>
+			</ul> 
 		</nav>
-		<p class="suup smaview">创建成功</p>
-		<p class="errup smaview" ></p>
+		
 		<div class="sbody">
 			
 		</div>
