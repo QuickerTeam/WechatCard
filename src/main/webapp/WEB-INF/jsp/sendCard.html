@@ -46,19 +46,19 @@
 			var cardType =  card[i].card_type;
 			switch(cardType){
 				case "GROUPON":
-					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section1"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section1"));
 					break;
 				case "CASH":
-					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section2"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section2"));
 					break;
 				case "DISCOUNT":
-					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section3"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section3"));
 					break;
 				case "GIFT":
-					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section4"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section4"));
 					break;
 				case "GENERAL_COUPON":
-					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section5"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section5"));
 					break;
 			};	
 			}
