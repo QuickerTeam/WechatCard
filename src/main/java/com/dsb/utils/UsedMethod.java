@@ -98,12 +98,20 @@ public class UsedMethod {
 
 	public static boolean write2SimpleCardInfo(JSONObject json,
 			SimpleCardInfo simpleCardInfo) {
+		JSONObject base_info = null;// 储存获得的一张卡券信息
 		try {
-			simpleCardInfo.setCard_id(json.getString("card_id"));
-			simpleCardInfo.setCard_type(json.getString("catd_type"));
-			simpleCardInfo.setColor(json.getString("color"));
-			simpleCardInfo.setLogo_url(json.getString("logo_url"));
-			simpleCardInfo.setTitle(json.getString("title"));
+			JSONObject card = json.getJSONObject("card");
+			if (card.getString("card_type").equals("GROUPON")) {
+				// 团购券
+				simpleCardInfo.setCard_type("GROUPON");
+				base_info = card.getJSONObject("groupon").getJSONObject("base_info");
+				System.out.println(base_info);
+			} else {
+				// 其他的券再写else if
+			}
+			simpleCardInfo.setColor(base_info.getString("color"));
+			simpleCardInfo.setLogo_url(base_info.getString("logo_url"));
+			simpleCardInfo.setTitle(base_info.getString("title"));
 		} catch (Exception e) {
 			// TODO: handle exception
 			System.out

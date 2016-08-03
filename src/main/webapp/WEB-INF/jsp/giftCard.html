@@ -140,20 +140,9 @@
 			<script type="text/javascript"">
 				
 			  var cardType = "groupBuying";
-			  var ismoreCard = false;
 			  var checkOk = trualert("gift");
 				$("#upimg").val(null);     // 初始化上传图片的value
-				$("#moreCard").click(function(event) {
-					if(ismoreCard == false){
-						$(".cardView").slideDown('400');
-						$(".fontSign").removeClass('icon-double-angle-left').addClass('icon-double-angle-down');
-						ismoreCard = true;
-					}else{
-						$(".cardView").slideUp('400');
-						$(".fontSign").removeClass('icon-double-angle-down').addClass('icon-double-angle-left');
-						ismoreCard = false;
-					}
-				});
+				
 
 
 			$("#upimg").on("change", function(){                  //上传图片同时预览上传的图片

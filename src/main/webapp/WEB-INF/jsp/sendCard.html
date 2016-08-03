@@ -1,0 +1,122 @@
+<div class="container">
+	<div class="row">
+		<span class="groupBuying col-md-12">选择卡券生成二维码</span>
+			<div class="cardBody col-md-10 col-md-offset-1">
+				<ul class="nav nav-tabs " >
+	   				<li class="active"><a href="#" class="btnMenu" data="section1">团购券</a></li>
+					   <li ><a href="#" class="btnMenu" data="section2">代金券</a></li>
+					   <li><a href="#" class="btnMenu" data="section3">折扣券</a></li>
+					   <li><a href="#" class="btnMenu" data="section4">礼品券</a></li>
+					   <li><a href="#" class="btnMenu" data="section5">优惠券</a></li>  
+				</ul>	
+				<div class="smallCardList groupList" id="section1"></div>
+				<div class="smallCardList voucherList" id="section2"></div>
+				<div class="smallCardList discountList" id="section3"></div>	
+				<div class="smallCardList giftcardList" id="section4"></div>
+				<div class="smallCardList couponList" id="section5"></div> 
+			</div>
+			<div class="QRbody col-md-10 col-md-offset-1">
+				<div class="showQR col-md-3 col-md-offset-4"></div>
+			</div>
+		</div>
+</div>
+	<script type="text/javascript">
+		$().ready(function() {
+	/* Act on the event */
+	$(".btnMenu").on('click', function(event) {
+		var exdiv = $(".active").children('.btnMenu').attr("data");
+		$(".active").removeClass("active");
+		var nowdiv = $(this).attr("data");
+		$(this).parent("li").addClass("active");
+		$("#"+exdiv).hide('400', function() {
+			
+		});
+		$("#"+nowdiv).show('400');
+		return false;
+	});
+
+	$.ajax({               //进入管理卡券页面，异步获取所有已经创建的卡券的信息
+		url: '/DistributeCard',
+		type: 'post',
+		dataType: 'json',
+	})
+	.done(function(data) {                 	//数据获取成功
+		var card = data.msg.card_list;
+		for (var i = card.length - 1; i >= 0; i--) {
+			var cardType =  card[i].card_type;
+			switch(cardType){
+				case "GROUPON":
+					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section1"));
+					break;
+				case "CASH":
+					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section2"));
+					break;
+				case "DISCOUNT":
+					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section3"));
+					break;
+				case "GIFT":
+					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section4"));
+					break;
+				case "GENERAL_COUPON":
+					$("<div class='cards col-md-2 "+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section5"));
+					break;
+			};	
+			}
+			
+					
+			$(".cards").on('click', function(event) {
+			event.preventDefault();
+			var i = $(this).attr("id").split("card")[1]; // 获取这张卡片在卡片列表中的序号
+			var cardId = card[i].cardId;
+			$.ajax({
+				url: '/DistributeCard',
+				type: 'post',
+				dataType: 'json',
+				data: {"card_id": cardId},
+			})
+			.done(function(data) {
+				if (data.code == true) {
+					// 将获取的二维码战士出来
+					$("<img src='"+data.QR+"' class = 'cardQR img-responsive'").appendTo($(".showQR"));                   
+				}else{
+					$(".errup").text(data.msg);
+       				$(".errup").slideDown('slow', function() {
+         				$(this).delay(1000).slideUp('slow');
+       				});  
+				}
+			})
+			.fail(function() {
+				$(".errup").text("网络异常，请检查网络状况");
+       			$(".errup").slideDown('slow', function() {
+         			$(this).delay(1000).slideUp('slow');
+       				}); 
+			})
+			.always(function() {
+				console.log("complete");
+			});
+			
+
+			});
+
+
+		
+
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
+	
+});
+
+
+
+
+
+
+
+	</script>
+</body>
+</html>
