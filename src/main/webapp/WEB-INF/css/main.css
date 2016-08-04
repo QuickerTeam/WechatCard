@@ -19,7 +19,7 @@ header img{
 
 .leftMenu{
 	width: 180px;
-	height: 600px;
+	min-height: 600px;
 	background-color: rgb(50,50,54);
 	float: left;
 	
@@ -105,12 +105,12 @@ header img{
 
 
 .smaview{
-	width: 400px;
-	height: 80px;
-	font-size: 20px;
+	width: 300px;
+	height: 60px;
+	font-size: 18px;
 	color: #FFFFFF;
 	line-height: 60px;
-	background-color: rgb(208,208,208);
+	background-color: rgb(75,151,249);
 	font-family: "Helvetica","STHeitiSC-Light","Arial",sans-serif;
 	text-align: center;
 	position: fixed;
@@ -139,12 +139,16 @@ header img{
 	border-bottom:1px solid rgb(208,208,208);
 }
 
-.input-group{
+.remind .input-group{
 	width: 460px;
 	margin: 10px 0;
 
 }
 
+.showType .input-group{
+	width: 460px;
+	margin: 10px 0;
+}
 
 
 .icon{
@@ -415,7 +419,7 @@ header img{
 }
 
 .QRbody{
-	min-height:200px;
+	min-height: 200px;
 	margin-top: 20px;
 	margin-bottom: 20px;
 	background-color: rgb(255,255,255);
@@ -445,7 +449,8 @@ header img{
 .cards{
 	height: 80px;
 	margin: 10px 0 10px 2.8%;
-
+	background-color: #63b359;
+	padding: 0;
 }
 
 .cards:hover{
@@ -507,13 +512,44 @@ header img{
 	display: none;
 }
 
-.showQR{
-
-
-	 
-}
 
 .QR{
 	width: 100%;
 
+}
+
+.smalltitle{
+	margin-top: 20px;
+	margin-bottom: 50px;
+	color: rgb(38,38,38);
+}
+
+.cancleCard{
+	border:2px solid rgb(32,189,146);
+}
+
+.icon-ok-sign{
+	position: absolute;
+	color: rgb(255,255,255);
+	right: 3px;
+	bottom: 3px;
+
+}
+
+.waitDiv{
+	text-align: center;
+	background-color: rgba(52,52,52,0.5);
+	z-index: 2000;
+	position: fixed;
+	top: 0;
+	left: 0;
+	display: none;
+
+}
+
+.waitDiv i{
+	position: absolute;
+	top: 50%;
+	margin-top: -10px;
+	color:rgb(255,255,255);
 }
