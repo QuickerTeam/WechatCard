@@ -3,6 +3,8 @@ package com.dsb.web.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -11,10 +13,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.dsb.domain.BatchCard;
 import com.dsb.domain.Response2Web;
+import com.dsb.domain.ShowQRCode;
 import com.dsb.domain.SimpleCardInfo;
 import com.dsb.utils.StaticConstant;
 import com.dsb.utils.UsedMethod;
+import com.dsb.weChat.service.DistributeCardService;
 import com.dsb.weChat.service.ManageCardService;
+import com.dsb.weChat.serviceImpl.DistributeCardServiceImpl;
 import com.dsb.weChat.serviceImpl.ManageCardServiceImpl;
 
 @Controller
@@ -78,10 +83,17 @@ public class DistributeCardController {
 		UsedMethod.log(response.getMsg(), 2);
 		return response;
 	}
-	
+
 	@RequestMapping(value = "/OneCard")
 	@ResponseBody
-	public Object oneCard(){//发放某一张卡券
-		return null;
+	public Object oneCard(HttpServletRequest request) {// 发放某一张卡券
+		ShowQRCode qrCode = new ShowQRCode();
+		DistributeCardService distributeCardService = new DistributeCardServiceImpl();
+		str = distributeCardService.getQRCode(request.getParameter("card_id"));
+		json = new JSONObject(str);
+		response.setCode(true);
+		response.setMsg(json.getString("url"));
+		UsedMethod.log(response.getMsg(), 2);
+		return response;
 	}
 }
