@@ -104,7 +104,8 @@ public class UsedMethod {
 			if (card.getString("card_type").equals("GROUPON")) {
 				// 团购券
 				simpleCardInfo.setCard_type("GROUPON");
-				base_info = card.getJSONObject("groupon").getJSONObject("base_info");
+				base_info = card.getJSONObject("groupon").getJSONObject(
+						"base_info");
 				System.out.println(base_info);
 			} else {
 				// 其他的券再写else if
@@ -119,5 +120,20 @@ public class UsedMethod {
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * 这个方法可以控制当级别高于某个值时才会输出。 建议调试信息grade=1，常规信息grade=2,必须信息grade=3
+	 * 
+	 * @author Time
+	 * @param obj
+	 *            所需要输出的对象
+	 * @param grade
+	 *            输出的级别
+	 */
+	public static void log(Object obj, int grade) {
+		int i = 0;// 当i大于grade时obj才会被输出
+		if (grade > i)
+			System.out.println(obj);
 	}
 }

@@ -37,6 +37,7 @@ public class CreateTicket {
 	@ResponseBody
 	public Object getLogo(HttpServletRequest request)
 			throws IllegalStateException {// 上传logo
+		UsedMethod.log("/UpLoadLogo", 1);
 		MultipartHttpServletRequest re = (MultipartHttpServletRequest) request;
 		MultipartFile multipartFile = re.getFile("logo_url");
 		String fileName = multipartFile.getOriginalFilename();
@@ -58,6 +59,7 @@ public class CreateTicket {
 
 	@RequestMapping(value = "/GroupTicket_input")
 	public String groupTicketInput() {// 创建团购券页面
+		UsedMethod.log("/GroupTicket_input", 1);
 		return "mainPage";
 	}
 
@@ -73,6 +75,7 @@ public class CreateTicket {
 	@RequestMapping(value = "/GroupTicket_save")
 	@ResponseBody
 	public Object groupTicketSave(HttpServletRequest request) {// 创建团购券
+		UsedMethod.log("/GroupTicket_save", 1);
 		// 获取access_token
 		if (StaticConstant.accessToken.equals("")) {
 			// accessToken出错
@@ -110,19 +113,19 @@ public class CreateTicket {
 				.toString()));
 
 		if (json.getBoolean("status")) {// 创建成功 System.out.println("创建卡券成功");
-			System.out.println("card_id=" + json.getString("card_id"));
+			UsedMethod.log("card_id=" + json.getString("card_id"),2);
 			response.setCode(true);
 		} else {
-			System.out.println("创建卡券失败 errcode=" + json.getInt("errcode"));
+			UsedMethod.log("创建卡券失败 errcode=" + json.getInt("errcode"),2);
 			response.setCode(false);
 		}
 
 		if (json.getString("errmsg").equals("0")) {// 创建成功
-			System.out.println("创建卡券成功");
-			System.out.println("card_id=" + json.getString("card_id"));
+			UsedMethod.log("创建卡券成功",2);
+			UsedMethod.log("card_id=" + json.getString("card_id"),2);
 			response.setCode(true);
 		} else {
-			System.out.println("创建卡券失败 errcode=" + json.getInt("errcode"));
+			UsedMethod.log("创建卡券失败 errcode=" + json.getInt("errcode"),2);
 			response.setCode(false);
 		}
 		return response;

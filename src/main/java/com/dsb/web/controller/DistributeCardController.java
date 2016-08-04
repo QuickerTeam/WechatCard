@@ -32,16 +32,17 @@ public class DistributeCardController {
 	@RequestMapping(value = "/AllCard")
 	@ResponseBody
 	public Object AllCard() {// 显示所有卡片供商家选择
-		System.out.println("/AllCard");
+		UsedMethod.log("/AllCard", 1);
+		cardInfoList.clear();// 删除list的所有元素
 		batchCard.setOffset(0);
 		batchCard.setCount(50);
 		json = new JSONObject(batchCard);// 将批量查询bean传给服务器
-		System.out.println("json=" + json);
-		System.out.println("StaticConstant.accessToken="
-				+ StaticConstant.accessToken);
+		UsedMethod.log("json=" + json, 1);
+		UsedMethod.log("StaticConstant.accessToken="
+				+ StaticConstant.accessToken, 1);
 		str = manageCardService.batchGet(json.toString());
 		receiveJson = new JSONObject(str);
-		System.out.println("receiveJson=" + receiveJson);
+		UsedMethod.log("receiveJson=" + receiveJson, 1);
 		if (receiveJson.getBoolean("status")) {
 			// 接收成功
 			// cardIdArray用于储存cardId
@@ -50,16 +51,16 @@ public class DistributeCardController {
 				// 将cardid装入json
 				card_id = (String) cardIdArray.get(i);
 				json = new JSONObject("{\"card_id\":" + card_id + "}");
-				System.out.println("receiveJson=" + receiveJson);
-				System.out.println("cardIdArray=" + cardIdArray);
-				System.out.println("json=" + json);
+				UsedMethod.log("receiveJson=" + receiveJson, 1);
+				UsedMethod.log("cardIdArray=" + cardIdArray, 1);
+				UsedMethod.log("json=" + json, 1);
 				str = manageCardService.queryCardInfo(json.toString());
 				receiveJson = new JSONObject(str);
 				SimpleCardInfo e = new SimpleCardInfo();
 				e.setCard_id(card_id);// 写入card_id
 				boolean b = UsedMethod.write2SimpleCardInfo(receiveJson, e);
 				cardInfoList.add(e);
-				System.out.println("----" + i + "----");
+				UsedMethod.log("----" + i + "----", 1);
 				if (b) {
 					response.setCode(true);
 				} else {
@@ -68,16 +69,17 @@ public class DistributeCardController {
 					return response;
 				}
 			}
-			System.out.println("1");
 			response.setMsg(new JSONArray(cardInfoList).toString());
 		} else {
-			System.out.println("2");
 			response.setCode(false);
 			response.setMsg("无法获取到已创建的卡券");
 			return response;
 		}
-		System.out.println("3");
-		System.out.println(response.getMsg());
+		UsedMethod.log(response.getMsg(), 2);
 		return response;
 	}
+	
+	@RequestMapping(value = "/AllCard")
+	@ResponseBody
+	public Object 
 }
