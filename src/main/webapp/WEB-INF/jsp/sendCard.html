@@ -24,7 +24,7 @@
 		$().ready(function() {
 	/* Act on the event */
 	$(".btnMenu").on('click', function(event) {
-		var exdiv = $(".active").children('.btnMenu').attr("data");
+		var exdiv = $(".active").children(".btnMenu").attr("data");
 		$(".active").removeClass("active");
 		var nowdiv = $(this).attr("data");
 		$(this).parent("li").addClass("active");
@@ -36,7 +36,7 @@
 	});
 
 	$.ajax({               //进入管理卡券页面，异步获取所有已经创建的卡券的信息
-		url: '/DistributeCard/AllCard',
+		url: '/WechatCar/DistributeCard/AllCard',
 		type: 'post',
 		dataType: 'json',
 	})
@@ -46,19 +46,19 @@
 			var cardType =  card[i].card_type;
 			switch(cardType){
 				case "GROUPON":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section1"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "+card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section1"));
 					break;
 				case "CASH":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section2"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "+card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section2"));
 					break;
 				case "DISCOUNT":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section3"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "+card[i].color+"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section3"));
 					break;
 				case "GIFT":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section4"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "+card[i].color+"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section4"));
 					break;
 				case "GENERAL_COUPON":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section5"));
+					$("<div class='cards col-md-2 ' style='backgroundColor = "+card[i].color+"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section5"));
 					break;
 			};	
 			}
@@ -69,7 +69,7 @@
 			var i = $(this).attr("id").split("card")[1]; // 获取这张卡片在卡片列表中的序号
 			var cardId = card[i].cardId;
 			$.ajax({
-				url: '/DistributeCard/AllCard',
+				url: '/WechatCar/DistributeCard/AllCard',
 				type: 'post',
 				dataType: 'json',
 				data: {"card_id": cardId},
