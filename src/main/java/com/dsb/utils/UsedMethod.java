@@ -46,11 +46,8 @@ public class UsedMethod {
 
 		// 写入值
 		card.setCard_type("GROUPON");
-		UsedMethod.log("service_phone="+request.getParameter("service_phone"), 1);
-		if (request.getParameter("service_phone") != null) {// 填写没人领取数量
-			base_info.setGet_limit(Integer.parseInt(request
-					.getParameter("get_limit")));
-		}
+		base_info.setGet_limit(Integer.parseInt(request
+				.getParameter("get_limit")));
 		sku.setQuantity(Integer.valueOf(request.getParameter("quantity")));
 		base_info.setBrand_name("商户名字");
 		base_info.setSub_title(request.getParameter("sub_title"));
@@ -126,7 +123,7 @@ public class UsedMethod {
 	}
 
 	/**
-	 * 这个方法可以控制当级别高于某个值时才会输出。 建议调试信息grade = 1，常规信息grade = 2,必须信息grade = 3
+	 * 这个方法可以控制当级别高于某个值时才会输出。 建议调试信息grade=1，常规信息grade=2,必须信息grade=3
 	 * 
 	 * @author Time
 	 * @param obj

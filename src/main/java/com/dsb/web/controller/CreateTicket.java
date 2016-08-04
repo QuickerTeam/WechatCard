@@ -2,8 +2,6 @@ package com.dsb.web.controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
@@ -78,13 +76,6 @@ public class CreateTicket {
 	@ResponseBody
 	public Object groupTicketSave(HttpServletRequest request) {// 创建团购券
 		UsedMethod.log("/GroupTicket_save", 1);
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			UsedMethod.log("格式出错", 2);
-		}
-		UsedMethod.log("title000="+request.getParameter("title"),1);
 		// 获取access_token
 		if (StaticConstant.accessToken.equals("")) {
 			// accessToken出错
@@ -129,6 +120,14 @@ public class CreateTicket {
 			response.setCode(false);
 		}
 
+		if (json.getString("errmsg").equals("0")) {// 创建成功
+			UsedMethod.log("创建卡券成功",2);
+			UsedMethod.log("card_id=" + json.getString("card_id"),2);
+			response.setCode(true);
+		} else {
+			UsedMethod.log("创建卡券失败 errcode=" + json.getInt("errcode"),2);
+			response.setCode(false);
+		}
 		return response;
 	}
 }
