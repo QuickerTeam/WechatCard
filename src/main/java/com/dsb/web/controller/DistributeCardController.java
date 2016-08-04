@@ -79,7 +79,9 @@ public class DistributeCardController {
 		return response;
 	}
 	
-	@RequestMapping(value = "/AllCard")
+	@RequestMapping(value = "/OneCard")
 	@ResponseBody
-	public Object 
+	public Object oneCard(){//发放某一张卡券
+		return null;
+	}
 }
