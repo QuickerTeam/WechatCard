@@ -606,6 +606,9 @@
     						data:formData,
    						 	processData: false,
     						contentType: false,
+    						beforeSend:function(){
+    						$(".waitDiv").css("display", "block");
+    						},
 						    success:function(data){
 						    	if(data.code == true){
 						   		if (isChange == 0) {
@@ -641,10 +644,11 @@
 								            },
 								    dataType:"json",
 								    success:function(data){
+								    		$(".waitDiv").css("display", "none");
 								   			if(data.code == true){
 						                  		 $(".suup").slideDown('slow', function() {
 						                   		 $(this).delay(1000).slideUp('slow');
-						          				 alert(title);
+						          				
 						                   		});
 						                	}else{
 						                		$(".errup").empty();
@@ -656,8 +660,9 @@
 						      			return false;
 								    },
 								   error:function(data){
+								   		$(".waitDiv").css("display", "none");
 								   		$(".errup").empty();
-								       $(".errup").text("网络异常，创建失败");
+								        $(".errup").text("网络异常，创建失败");
        									  $(".errup").slideDown('slow', function() {
          								  $(this).delay(1000).slideUp('slow');
        									});
@@ -685,6 +690,7 @@
 								            "service_phone":service_phone,
 								            },
 										    success:function(data){
+										    		$(".waitDiv").css("display", "none");
 										   			if(data.code == true){
 								                  		 $(".suup").slideDown('slow', function() {
 								                   		 $(this).delay(1000).slideUp('slow');
@@ -700,6 +706,7 @@
 								      			return false;
 										    },
 										   error:function(data){
+										   	   $(".waitDiv").css("display", "none");
 											   $(".errup").empty();
 										       $(".errup").text("网络异常，创建失败");
 		       									  $(".errup").slideDown('slow', function() {
@@ -710,6 +717,7 @@
 										  });
 						                }
 				  		}else{
+				  			$(".waitDiv").css("display", "none");
 				  			$(".errup").empty();
 				  			$(".errup").text(data.msg);
        						$(".errup").slideDown('slow', function() {
@@ -718,6 +726,7 @@
        						}
 						    },
 						   error:function(){
+						   	   $(".waitDiv").css("display", "none");
 						   	   $(".errup").empty();
 						       $(".errup").text("网络异常，创建失败");
        							$(".errup").slideDown('slow', function() {
@@ -726,11 +735,7 @@
 						       return false;
 						      }
 						  });
-						
-					    
-						
-
-			              			              
+					          			              
 			         
 			   }
 			 

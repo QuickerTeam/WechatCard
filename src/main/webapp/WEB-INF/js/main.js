@@ -1,5 +1,13 @@
 $().ready(function(){
 	var ismoreCard = false;
+	var bodyH;
+	var bodyW;
+	bodyH = $(window).height();
+	bodyW = $(window).width();
+	$(".waitDiv").css({
+		"width": bodyW,
+		"height": bodyH
+	});
 	$("#moreCard").click(function(event) {
 		if(ismoreCard == false){
 			$(".cardView").slideDown('400');
@@ -12,12 +20,29 @@ $().ready(function(){
 		}
 	});
 
+	function setBodyH(){
+		  var viewportH = $(window).height();
+		  if($(".sbody").height() < viewportH-60){
+		    $(".sbody").css('minHeight', viewportH-60);
+		    $(".leftMenu").css('minHeight', viewportH-60);
+		  }else{
+		    $(".leftMenu").css('minHeight', $(".sbody").height());
+		  }
+		  $(".waitDiv").css("display","none");
+		}
 
-
-
-
+	function setsBodyH(){
+		  var viewportH = $(window).height();
+		  if($(".sbody").height() < viewportH-60){
+		    $(".sbody").css('minHeight', viewportH-60);
+		    $(".leftMenu").css('minHeight', viewportH-60);
+		  }else{
+		    $(".leftMenu").css('minHeight', $(".sbody").height());
+		  }
+		}
 
 $(".card").on('click', function(event) {
+	$(".waitDiv").css("display","block");
   event.preventDefault();
   cardType = $(this).attr("id");
   $(".card").removeClass('thisCard');
@@ -27,7 +52,7 @@ $(".card").on('click', function(event) {
 
       
 
-      $(".sbody").load("/WechatCard/jsp/groupBuying.html");
+      $(".sbody").load("/WechatCard/jsp/groupBuying.html",setBodyH);
 
       $(this).addClass('thisCard');
 
@@ -35,22 +60,24 @@ $(".card").on('click', function(event) {
 
     case "voucher":
 
-      $(".sbody").load("/WechatCard/jsp/voucher.html");
+      $(".sbody").load("/WechatCard/jsp/voucher.html",setBodyH);
       $(this).addClass('thisCard');
       break;
    
    
    
     case "countCard":
-      $(".sbody").load("/WechatCard/jsp/discount.html");
+      $(".sbody").load("/WechatCard/jsp/discount.html",setBodyH);
       $(this).addClass('thisCard');
       break;
+      
     case "giftCard":
-      $(".sbody").load("/WechatCard/jsp/giftCard.html");
+      $(".sbody").load("/WechatCard/jsp/giftCard.html",setBodyH);
       $(this).addClass('thisCard');
       break;
+      
     case "coupon":
-      $(".sbody").load("/WechatCard/jsp/coupon.html");
+      $(".sbody").load("/WechatCard/jsp/coupon.html",setBodyH);
 
       $(this).addClass('thisCard');
       break;
@@ -60,19 +87,20 @@ $(".card").on('click', function(event) {
 
 $(".leftbtn").on('click', function(event) {
 	  event.preventDefault();
+
 	  sbodyView = $(this).attr("id");
-	  $(".card").removeClass('thisCard');
+	  $(".thisCard").removeClass('thisCard');
 	  switch(sbodyView){
 	    case "sendCardM":
-	        $(".sbody").load("/WechatCard/jsp/sendCard.html");
+	        $(".sbody").load("/WechatCard/jsp/sendCard.html",setsBodyH);
 	        $(this).addClass('thisCard');
 	      break;
 	    case "cancleCardM":
-	        $(".sbody").load("/WechatCard/jsp/cancelCard.html");
+	        $(".sbody").load("/WechatCard/jsp/cancelCard.html",setsBodyH);
 	        $(this).addClass('thisCard');
 	      break;
 	    case "manageCardM":
-	        $(".sbody").load("/WechatCard/jsp/manageCaed.html");
+	        $(".sbody").load("/WechatCard/jsp/manageCaed.html",setsBodyH);
 	        $(this).addClass('thisCard');
 	    break;
 	    default:

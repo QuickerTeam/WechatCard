@@ -58,7 +58,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				<li id = "manageCardM" class="leftbtn">管理卡券</li>
 			</ul> 
 		</nav>
-		
+		<div class="waitDiv">
+			<i class="icon-spinner icon-spin icon-3x"></i>
+		</div>
 		<div class="sbody">
 			
 		</div>
