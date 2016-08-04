@@ -99,6 +99,7 @@
 				}
 			})
 			.fail(function() {
+				$(".errup").empty();
 				$(".errup").text("网络异常，请检查网络状况");
        			$(".errup").slideDown('slow', function() {
          			$(this).delay(1000).slideUp('slow');
@@ -130,6 +131,3 @@
 
 
 
-	</script>
-</body>
-</html>
