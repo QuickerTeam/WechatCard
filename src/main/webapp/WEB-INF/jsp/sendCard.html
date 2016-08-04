@@ -36,13 +36,13 @@
 	});
 
 	$.ajax({               //进入管理卡券页面，异步获取所有已经创建的卡券的信息
-		url: '/WechatCar/DistributeCard/AllCard',
+		url: '/WechatCard/DistributeCard/AllCard',
 		type: 'post',
 		dataType: 'json',
 	})
 	.done(function(data) {                 	//数据获取成功
 		var card = data.msg;
-		for (var i = card.length() - 1; i >= 0; i--) {
+		for (var i = card.length - 1; i >= 0; i--) {
 			var cardType =  card[i].card_type;
 			switch(cardType){
 				case "GROUPON":
@@ -69,7 +69,7 @@
 			var i = $(this).attr("id").split("card")[1]; // 获取这张卡片在卡片列表中的序号
 			var cardId = card[i].cardId;
 			$.ajax({
-				url: '/WechatCar/DistributeCard/AllCard',
+				url: '/WechatCard/DistributeCard/AllCard',
 				type: 'post',
 				dataType: 'json',
 				data: {"card_id": cardId},
