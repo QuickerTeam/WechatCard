@@ -526,6 +526,7 @@
 			      var eD = parseInt($("#endTimeD").val()); 
 
 			      if (sY == "" || sM == "" || sD == "" || eY == "" || eM == "" || eD == "") {
+			       $(".errup").empty();
 			       $(".errup").text("输入时间不能为空");
 			       $(".errup").slideDown('slow', function() {
 			         $(this).delay(1000).slideUp('slow');
@@ -533,6 +534,7 @@
 			         return;
 			      });    
 			     }else if (sY > eY || (sY <= eY&&sM > eM) ||  (sY <= eY && sM <= eM && sD > eD)) {
+			     	$(".errup").empty();
 			       $(".errup").text("开始时间不能晚于结束时间");
 			       $(".errup").slideDown('slow', function() {
 			         $(this).delay(1000).slideUp('slow');
@@ -540,6 +542,7 @@
 			         return;
 			      });
 			     }else if (isNaN(sY) ||isNaN(sM)||isNaN(sD)||isNaN(eY)||isNaN(eM)||isNaN(eD) || (sM>12) || (sD >31) || (eM >12) || (eD > 31)) {
+			        $(".errup").empty();
 			        $(".errup").text("输入的时间格式不正确");
 			        $(".errup").slideDown('slow', function() {
 			         $(this).delay(1000).slideUp('slow');
@@ -552,6 +555,7 @@
 			 }else{
 			      timeRange = $("#timeRange").val();
 			      if (isNaN(timeRange)) {
+			        $(".errup").empty();
 			         $(".errup").text("输入的时间不能为负");
 			        $(".errup").slideDown('slow', function() {
 			         $(this).delay(1000).slideUp('slow');
@@ -565,6 +569,7 @@
 
 
 			   if (checkOk == false) {
+			   	   $(".errup").empty();
 			       $(".errup").text(" 创建卡券失败，请检查填写信息是否有误");
 			       $(".errup").slideDown('slow', function() {
 			         $(this).delay(1000).slideUp('slow');
@@ -642,6 +647,7 @@
 						          				 alert(title);
 						                   		});
 						                	}else{
+						                		$(".errup").empty();
 							      				$(".errup").text(data.msg);
        											$(".errup").slideDown('slow', function() {
          											$(this).delay(1000).slideUp('slow');
@@ -650,6 +656,7 @@
 						      			return false;
 								    },
 								   error:function(data){
+								   		$(".errup").empty();
 								       $(".errup").text("网络异常，创建失败");
        									  $(".errup").slideDown('slow', function() {
          								  $(this).delay(1000).slideUp('slow');
@@ -684,6 +691,7 @@
 								          
 								                   		});
 								                	}else{
+								                		$(".errup").empty();
 									      				$(".errup").text(data.msg);
 		       											$(".errup").slideDown('slow', function() {
 		         											$(this).delay(1000).slideUp('slow');
@@ -692,7 +700,7 @@
 								      			return false;
 										    },
 										   error:function(data){
-
+											   $(".errup").empty();
 										       $(".errup").text("网络异常，创建失败");
 		       									  $(".errup").slideDown('slow', function() {
 		         								  $(this).delay(1000).slideUp('slow');
@@ -702,6 +710,7 @@
 										  });
 						                }
 				  		}else{
+				  			$(".errup").empty();
 				  			$(".errup").text(data.msg);
        						$(".errup").slideDown('slow', function() {
          					$(this).delay(1000).slideUp('slow');
@@ -709,6 +718,7 @@
        						}
 						    },
 						   error:function(){
+						   	   $(".errup").empty();
 						       $(".errup").text("网络异常，创建失败");
        							$(".errup").slideDown('slow', function() {
          						$(this).delay(1000).slideUp('slow');
