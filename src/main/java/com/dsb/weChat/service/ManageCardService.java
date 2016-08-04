@@ -9,8 +9,10 @@ public interface ManageCardService {
     String queryCardInfo(String cardJson);
 
     //批量获取卡券列表
-
     String batchGet(String cardJson);
+
+    //删除卡券接口
+    String deleteCard(String cardJson);
 
 
 }

@@ -133,4 +133,28 @@ public class ManageCardServiceImpl implements ManageCardService {
             }
         }
     }
+
+    /**
+     * 删除卡券接口
+     * @param cardJson 封装了card id的json
+     * @return 完成情况
+     */
+    @Override
+    public String deleteCard(String cardJson) {
+        String url = "https://api.weixin.qq.com/card/delete?access_token=" + StaticConstant.accessToken;
+        String returnJson = HttpUtil.doPostSSL(url,cardJson);
+        int errCode;
+        JSONObject jsonObject = new JSONObject(returnJson);
+        errCode = jsonObject.getInt("errcode");
+        JSONObject json = new JSONObject();
+        if (errCode == 0) {
+            json.put("status",true);
+            json.put("errmsg","删除成功");
+        }
+        else {
+            json.put("status",false);
+            json.put("errmsg","删除失败");
+        }
+        return json.toString();
+    }
 }

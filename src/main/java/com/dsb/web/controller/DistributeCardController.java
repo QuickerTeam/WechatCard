@@ -42,7 +42,7 @@ public class DistributeCardController {
 		UsedMethod.log("/AllCard", 1);
 		cardInfoList.clear();// 删除list的所有元素
 		batchCard.setOffset(0);
-		batchCard.setCount(3);
+		batchCard.setCount(50);
 		json = new JSONObject(batchCard);// 将批量查询bean传给服务器
 		UsedMethod.log("json=" + json, 1);
 		UsedMethod.log("StaticConstant.accessToken="
@@ -97,7 +97,7 @@ public class DistributeCardController {
 		json = new JSONObject(qrCode);
 		str = distributeCardService.getQRCode(json.toString());
 		UsedMethod.log(str, 2);
-		UsedMethod.log(json.toString(), 2);
+		UsedMethod.log("json="+json.toString(), 2);
 		json = new JSONObject(str);
 		response.setCode(true);
 		response.setMsg(json.getString("show_qrcode_url"));
