@@ -35,48 +35,49 @@ public class DistributeCardController {
 		System.out.println("/AllCard");
 		batchCard.setOffset(0);
 		batchCard.setCount(50);
-		System.out.println("01");
 		json = new JSONObject(batchCard);// 将批量查询bean传给服务器
 		System.out.println("json=" + json);
 		System.out.println("StaticConstant.accessToken="
 				+ StaticConstant.accessToken);
 		str = manageCardService.batchGet(json.toString());
-		System.out.println("2");
 		receiveJson = new JSONObject(str);
 		System.out.println("receiveJson=" + receiveJson);
-		// if (receiveJson.getBoolean("status")) {
-		// 接收成功
-		// cardIdArray用于储存cardId
-		JSONArray cardIdArray = receiveJson.getJSONArray("card_id_list");
-		for (int i = 0; i < cardIdArray.length(); i++) {
-			// 将cardid装入json
-			card_id = (String) cardIdArray.get(i);
-			json = new JSONObject("{\"card_id\":" + card_id + "}");
-			System.out.println("receiveJson=" + receiveJson);
-			System.out.println("cardIdArray=" + cardIdArray);
-			System.out.println("json=" + json);
-			str = manageCardService.queryCardInfo(json.toString());
-			receiveJson = new JSONObject(str);
-			SimpleCardInfo e = new SimpleCardInfo();
-			e.setCard_id(card_id);// 写入card_id
-			boolean b = UsedMethod.write2SimpleCardInfo(receiveJson, e);
-			cardInfoList.add(e);
-			System.out.println("----" + i + "----");
-			if (b) {
-				response.setCode(true);
-			} else {
-				response.setCode(false);
-				response.setMsg("未能将数据写入卡券对象中");
-				return response;
+		if (receiveJson.getBoolean("status")) {
+			// 接收成功
+			// cardIdArray用于储存cardId
+			JSONArray cardIdArray = receiveJson.getJSONArray("card_id_list");
+			for (int i = 0; i < cardIdArray.length(); i++) {
+				// 将cardid装入json
+				card_id = (String) cardIdArray.get(i);
+				json = new JSONObject("{\"card_id\":" + card_id + "}");
+				System.out.println("receiveJson=" + receiveJson);
+				System.out.println("cardIdArray=" + cardIdArray);
+				System.out.println("json=" + json);
+				str = manageCardService.queryCardInfo(json.toString());
+				receiveJson = new JSONObject(str);
+				SimpleCardInfo e = new SimpleCardInfo();
+				e.setCard_id(card_id);// 写入card_id
+				boolean b = UsedMethod.write2SimpleCardInfo(receiveJson, e);
+				cardInfoList.add(e);
+				System.out.println("----" + i + "----");
+				if (b) {
+					response.setCode(true);
+				} else {
+					response.setCode(false);
+					response.setMsg("未能将数据写入卡券对象中");
+					return response;
+				}
 			}
+			System.out.println("1");
+			response.setMsg(new JSONArray(cardInfoList).toString());
+		} else {
+			System.out.println("2");
+			response.setCode(false);
+			response.setMsg("无法获取到已创建的卡券");
+			return response;
 		}
-		response.setMsg(new JSONArray(cardInfoList).toString());
+		System.out.println("3");
 		System.out.println(response.getMsg());
-		// } else {
-		// response.setCode(false);
-		// response.setMsg("无法获取到已创建的卡券");
-		// return response;
-		// }
 		return response;
 	}
 }

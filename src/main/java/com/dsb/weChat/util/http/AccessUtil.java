@@ -57,8 +57,8 @@ public class AccessUtil {
 
     //判断access_token是否已经失效
     public static boolean isValid(JSONObject jsonObject) {
-        String errCode = (String) jsonObject.get("errcode");
-        if (errCode.equals("40001")) {
+        int errCode =  jsonObject.getInt("errcode");
+        if (errCode == 40001) {
             getAccess();
             return false;
         }

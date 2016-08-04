@@ -33,7 +33,7 @@ public class ManageCardServiceImpl implements ManageCardService {
         if (jsonObject.isNull("errcode")) {
             json = new JSONObject();
             json.put("status", true);
-            json.put("card", jsonObject.getString("card"));
+            json.put("card",jsonObject.get("card"));
             return json.toString();
         } else {
 
@@ -43,7 +43,7 @@ public class ManageCardServiceImpl implements ManageCardService {
                 if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
-                    json.put("card",jsonObject.getString("card"));
+                    json.put("card",jsonObject.get("card"));
                     return json.toString();
                 }
                 else {
@@ -60,7 +60,7 @@ public class ManageCardServiceImpl implements ManageCardService {
                 if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
-                    json.put("card",jsonObject.getString("card"));
+                    json.put("card",jsonObject.get("card"));
                     return json.toString();
                 }
                 else {
