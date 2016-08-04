@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
@@ -79,7 +81,7 @@ public class HttpUtil {
 	 * 
 	 * @param url
 	 * @param params
-	 * @return
+	 * @return 服务器返回数数据
 	 */
 	public static String doGetSSL(String url, Map<String, String> params) {
 		String apiUrl = url;
@@ -89,18 +91,20 @@ public class HttpUtil {
 				.setDefaultRequestConfig(requestConfig).build();
 		StringBuffer param = new StringBuffer();
 		int i = 0;
-		for (String key : params.keySet()) {
-			if (i == 0)
-				param.append("?");
-			else
-				param.append("&");
-			param.append(key).append("=").append(params.get(key));
-			i++;
+		List<NameValuePair> pairList = new ArrayList<NameValuePair>(
+				params.size());
+		for (Map.Entry<String, String> entry : params.entrySet()) {
+			NameValuePair pair = new BasicNameValuePair(entry.getKey(),
+					entry.getValue().toString());
+			pairList.add(pair);
 		}
-		apiUrl += param;
+
+
 		String result = null;
 		try {
+			String str = EntityUtils.toString(new UrlEncodedFormEntity(pairList));
 			HttpGet get = new HttpGet(apiUrl);
+			get.setURI(new URI(get.getURI().toString() + "?" +str ));
 			CloseableHttpResponse response = httpClient.execute(get);
 
 			int statusCode = response.getStatusLine().getStatusCode();
@@ -116,6 +120,8 @@ public class HttpUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 			return null;
+		} catch (URISyntaxException e) {
+			e.printStackTrace();
 		}
 		return result;
 	}
@@ -125,7 +131,7 @@ public class HttpUtil {
 	 * 
 	 * @param url
 	 * @param params
-	 * @return
+	 * @return 服务器返回数数据
 	 */
 	public static String doPostSSL(String url, Map<String, Object> params) {
 		CloseableHttpClient httpClient = HttpClients.custom()
@@ -175,10 +181,8 @@ public class HttpUtil {
 	/**
 	 * 发送POST HTTPS 请求
 	 * 
-	 * @param url
-	 *            请求地址
-	 * @param json
-	 *            以json数据格式传输
+	 * @param url 请求地址
+	 * @param json 以json数据格式传输
 	 * @return 服务器返回数数据
 	 */
 	public static String doPostSSL(String url, String json) {
@@ -212,10 +216,8 @@ public class HttpUtil {
 
 	/**
 	 * 
-	 * @param file
-	 *            上传的文件
-	 * @param url
-	 *            请求的地址
+	 * @param file 上传的文件
+	 * @param url 请求的地址
 	 * @return 返回上传图片logo的url
 	 */
 	public static String doPostSSL(File file, String url) {
@@ -293,5 +295,4 @@ public class HttpUtil {
 		}
 		return sslsf;
 	}
-
 }
