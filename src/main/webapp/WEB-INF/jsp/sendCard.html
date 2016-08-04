@@ -41,8 +41,8 @@
 		dataType: 'json',
 	})
 	.done(function(data) {                 	//数据获取成功
-		var card = data.msg.card_list;
-		for (var i = card.length - 1; i >= 0; i--) {
+		var card = data.msg;
+		for (var i = card.length() - 1; i >= 0; i--) {
 			var cardType =  card[i].card_type;
 			switch(cardType){
 				case "GROUPON":
