@@ -6,5 +6,5 @@ package com.dsb.weChat.service;
 public interface DistributeCardService {
 
     //获取卡券二维码
-    String getQRCode(String QRCodejson);
+    String getQRCode(String json,String access_token);
 }

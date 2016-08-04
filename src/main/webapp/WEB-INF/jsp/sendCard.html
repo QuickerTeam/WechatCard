@@ -1,25 +1,37 @@
-<div class="container">
-	<div class="row">
-		<span class="groupBuying col-md-12">选择卡券生成二维码</span>
-			<div class="cardBody col-md-10 col-md-offset-1">
-				<ul class="nav nav-tabs " >
-	   				<li class="active"><a href="#" class="btnMenu" data="section1">团购券</a></li>
-					   <li ><a href="#" class="btnMenu" data="section2">代金券</a></li>
-					   <li><a href="#" class="btnMenu" data="section3">折扣券</a></li>
-					   <li><a href="#" class="btnMenu" data="section4">礼品券</a></li>
-					   <li><a href="#" class="btnMenu" data="section5">优惠券</a></li>  
-				</ul>	
-				<div class="smallCardList groupList" id="section1"></div>
-				<div class="smallCardList voucherList" id="section2"></div>
-				<div class="smallCardList discountList" id="section3"></div>	
-				<div class="smallCardList giftcardList" id="section4"></div>
-				<div class="smallCardList couponList" id="section5"></div> 
+
+			<div class="container">
+				<div class="row">
+				<span class="groupBuying col-md-12">选择卡券生成二维码</span>
+					<div class="cardBody col-md-10 col-md-offset-1">
+						<ul class="nav nav-tabs " >
+	   					   <li class="active"><a href="#" class="btnMenu" data="section1">团购券</a></li>
+						   <li ><a href="#" class="btnMenu" data="section2">代金券</a></li>
+						   <li><a href="#" class="btnMenu" data="section3">折扣券</a></li>
+						   <li><a href="#" class="btnMenu" data="section4">礼品券</a></li>
+						   <li><a href="#" class="btnMenu" data="section5">优惠券</a></li>  
+						</ul>	
+						<div class="smallCardList groupList" id="section1">
+						</div>
+
+						<div class="smallCardList voucherList" id="section2">
+						</div>
+						<div class="smallCardList discountList" id="section3">
+						</div>	
+						<div class="smallCardList giftcardList" id="section4">
+						</div>
+						<div class="smallCardList couponList" id="section5">
+						</div> 
+					</div>
+					<div class="QRbody col-md-10 col-md-offset-1">
+						<div class="showQR col-md-3 col-md-offset-4">
+							
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="QRbody col-md-10 col-md-offset-1">
-				<div class="showQR col-md-3 col-md-offset-4"></div>
-			</div>
-		</div>
-</div>
+			
+		
+	
 	<script type="text/javascript">
 		$().ready(function() {
 	/* Act on the event */
@@ -41,24 +53,25 @@
 		dataType: 'json',
 	})
 	.done(function(data) {                 	//数据获取成功
-		var card = data.msg;
-		for (var i = card.length() - 1; i >= 0; i--) {
+		var card = $.parseJSON(data.msg);
+		alert(card[0]);
+		for (var i = card.length - 1; i >= 0; i--) {
 			var cardType =  card[i].card_type;
 			switch(cardType){
 				case "GROUPON":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section1"));
+					$("#section1").append("<div class='cards col-md-2' style='background-color:"+card[i].color+";' id='card"+i+"'><p><img src='"+card[i].logo_url+"' class='cardLogo'>"+card[i].title+"</p></div>");
 					break;
 				case "CASH":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section2"));
+					$("<div class='cards col-md-2' style='backgroundColor:"+card[i].color+";' id='card"+i+"'><p><img src=''"+card[i].logo_url+"' class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section2"));
 					break;
 				case "DISCOUNT":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section3"));
+					$("<div class='cards col-md-2' style='backgroundColor:"+card[i].color+";' id='card"+i+"'><p><img src='"+card[i].logo_url+"' class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section3"));
 					break;
 				case "GIFT":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section4"));
+					$("<div class='cards col-md-2' style='backgroundColor:"+card[i].color+";' id='card"+i+"'><p><img src='"+card[i].logo_url+"' class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section4"));
 					break;
 				case "GENERAL_COUPON":
-					$("<div class='cards col-md-2 ' style='backgroundColor = "card[i].color"'  id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section5"));
+					$("<div class='cards col-md-2' style='backgroundColor:"+card[i].color+";' id='card"+i+"'><p><img src='"+card[i].logo_url+"' class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section5"));
 					break;
 			};	
 			}
@@ -69,7 +82,7 @@
 			var i = $(this).attr("id").split("card")[1]; // 获取这张卡片在卡片列表中的序号
 			var cardId = card[i].cardId;
 			$.ajax({
-				url: '/DistributeCard/AllCard',
+				url: '/WechatCard/DistributeCard/OneCard',
 				type: 'post',
 				dataType: 'json',
 				data: {"card_id": cardId},

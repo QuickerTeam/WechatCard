@@ -6,9 +6,9 @@ package com.dsb.weChat.service;
 public interface CheckCardService {
 
     //查询单张卡券状态信息
-    String queryCardStage(String cardJson);
+    String queryCardStage(String access_token, String json);
 
     //核销卡券信息
-    String consumeCard(String cardJson);
+    String consumeCard(String access_token, String json);
 
 }
