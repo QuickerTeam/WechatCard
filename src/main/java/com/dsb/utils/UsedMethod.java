@@ -46,18 +46,28 @@ public class UsedMethod {
 
 		// 写入值
 		card.setCard_type("GROUPON");
-		base_info.setGet_limit(Integer.parseInt(request
-				.getParameter("get_limit")));
+		UsedMethod.log(
+				"service_phone=" + request.getParameter("service_phone"), 1);
+		try {
+			base_info.setGet_limit(Integer.valueOf(request
+					.getParameter("get_limit")));
+			UsedMethod.log("已填写每人领取数量", 1);
+		} catch (Exception e) {
+			// 未填写每人领取数量
+		}
 		sku.setQuantity(Integer.valueOf(request.getParameter("quantity")));
 		base_info.setBrand_name("商户名字");
 		base_info.setSub_title(request.getParameter("sub_title"));
 		base_info.setTitle(request.getParameter("title"));
-		System.out.println("sub_title=" + base_info.getSub_title());
 		base_info.setSource("袋鼠帮");
-		if (request.getParameter("service_phone") != null) {
-			// 有客服电话
+		try {
+			// 已填写客服电话
 			base_info.setService_phone(request.getParameter("service_phone"));
+			UsedMethod.log("填写客服电话", 1);
+		} catch (Exception e) {
+			// 未填写客服电话
 		}
+
 		base_info.setColor(request.getParameter("color"));
 		base_info.setDescription(request.getParameter("description"));
 		base_info.setNotice(request.getParameter("notice"));

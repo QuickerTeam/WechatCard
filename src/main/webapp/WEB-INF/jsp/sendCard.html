@@ -80,7 +80,8 @@
 			$(".cards").on('click', function(event) {
 			event.preventDefault();
 			var i = $(this).attr("id").split("card")[1]; // 获取这张卡片在卡片列表中的序号
-			var cardId = card[i].cardId;
+			alert(i);
+			var cardId = card[i].card_id;
 			$.ajax({
 				url: '/WechatCard/DistributeCard/OneCard',
 				type: 'post',
@@ -90,7 +91,7 @@
 			.done(function(data) {
 				if (data.code == true) {
 					// 将获取的二维码战士出来
-					$("<img src='"+data.QR+"' class = 'cardQR img-responsive'").appendTo($(".showQR"));                   
+					$("<img src='"+data.msg+"' class = 'cardQR img-responsive'").appendTo($(".showQR"));                   
 				}else{
 					$(".errup").text(data.msg);
        				$(".errup").slideDown('slow', function() {
