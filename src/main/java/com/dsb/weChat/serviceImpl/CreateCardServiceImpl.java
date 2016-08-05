@@ -1,13 +1,13 @@
 package com.dsb.weChat.serviceImpl;
 
+import java.io.File;
+
+import org.json.JSONObject;
+
 import com.dsb.utils.StaticConstant;
 import com.dsb.weChat.service.CreateCardService;
 import com.dsb.weChat.util.http.AccessUtil;
 import com.dsb.weChat.util.http.HttpUtil;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.File;
 
 /**
  * Created by Max on 2016/7/27.
@@ -52,9 +52,11 @@ public class CreateCardServiceImpl implements CreateCardService {
                 }
             }
             else {
+            	url = "https://api.weixin.qq.com/card/batchget?access_token="
+						+ StaticConstant.accessToken;
                 String returnJson1 = HttpUtil.doPostSSL(file, url);
                 JSONObject JSONObject1 = new JSONObject(returnJson1);
-                errCode = jsonObject.getInt("errcode");
+                errCode = JSONObject1.getInt("errcode");
                 if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
@@ -112,7 +114,7 @@ public class CreateCardServiceImpl implements CreateCardService {
             else {
                 String returnJson1 = HttpUtil.doPostSSL(url, javaBeenJson);
                 JSONObject JSONObject1 = new JSONObject(returnJson1);
-                errCode = jsonObject.getInt("errcode");
+                errCode = JSONObject1.getInt("errcode");
                 if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);

@@ -1,17 +1,10 @@
 package com.dsb.weChat.serviceImpl;
 
-import com.dsb.weChat.service.GetAccess;
-import com.dsb.weChat.util.http.HttpUtil;
-import org.apache.http.HttpEntity;
-import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.junit.Test;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import com.dsb.weChat.service.GetAccess;
+import com.dsb.weChat.util.http.HttpUtil;
 
 /**
  * Created by Max on 2016/7/27.

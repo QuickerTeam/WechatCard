@@ -53,9 +53,11 @@ public class CheckCardServiceImpl implements CheckCardService{
                 }
             }
             else {
+            	url = "https://api.weixin.qq.com/card/batchget?access_token="
+						+ StaticConstant.accessToken;
                 String returnJson1 = HttpUtil.doPostSSL(url,cardJson);
                 JSONObject JSONObject1 = new JSONObject(returnJson1);
-                errCode = jsonObject.getInt("errcode");
+                errCode = JSONObject1.getInt("errcode");
                 if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);
@@ -111,9 +113,11 @@ public class CheckCardServiceImpl implements CheckCardService{
                 }
             }
             else {
+            	url = "https://api.weixin.qq.com/card/batchget?access_token="
+						+ StaticConstant.accessToken;
                 String returnJson1 = HttpUtil.doPostSSL(url,cardJson);
                 JSONObject JSONObject1 = new JSONObject(returnJson1);
-                errCode = jsonObject.getInt("errcode");
+                errCode = JSONObject1.getInt("errcode");
                 if (errCode == 0) {
                     json = new JSONObject();
                     json.put("status", true);

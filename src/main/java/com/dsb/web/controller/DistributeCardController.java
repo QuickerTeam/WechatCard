@@ -64,10 +64,10 @@ public class DistributeCardController {
 				//获取某张卡券的所有信息
 				str = manageCardService.queryCardInfo(json.toString());
 				receiveJson = new JSONObject(str);
-				SimpleCardInfo e = new SimpleCardInfo();
-                e.setCard_id(card_id.getCard_id());// 写入card_id
-				boolean b = UsedMethod.write2SimpleCardInfo(receiveJson, e);
-				cardInfoList.add(e);
+				SimpleCardInfo simpleCardInfo = new SimpleCardInfo();
+				simpleCardInfo.setCard_id(card_id.getCard_id());// 写入card_id
+				boolean b = UsedMethod.write2SimpleCardInfo(receiveJson, simpleCardInfo);
+				cardInfoList.add(simpleCardInfo);
 				UsedMethod.log("----" + i + "----", 1);
 				if (b) {
 					response.setCode(true);

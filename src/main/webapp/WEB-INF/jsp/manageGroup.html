@@ -1,12 +1,7 @@
-<div class="container">
-				<div class="row">
-					<span class="groupBuying col-md-12">团购券</span>
-					 <form class="inputGroupView col-md-11" role = "form">            <!-- 团购券-->
-					 		<div class="remind">
+							<div class="remind">
 						 	    <div class="input-group">
 		        					<span class="input-group-addon">券名</span>
-		         					<input type="text" class="form-control onlyForm" id="cardTitle" placeholder="不超过9个字"><i class="icon"></i><!-- <i class="icon-remove warnning icon" title="字数超过九个字"></i> -->
-		         					<!-- <i class="icon-ok icon"></i> -->
+		         					<input type="text" class="form-control onlyForm cardTitle" placeholder="不超过9个字"><i class="icon"></i>
 		     					</div>
 
 	     					 </div>
@@ -26,7 +21,7 @@
 	     					 	 <div class="remind">
 		     					 <div class="input-group">
 		        					<span class="input-group-addon">客服电话</span>
-		         					<input type="text" class="form-control onlyForm" id="serverTel" placeholder="选填"><i class="notMust icon">*选填</i>
+		         					<input type="text" class="form-control onlyForm" id="serverTel" placeholder="选题"><i class="notMust icon">*选填</i>
 		     					 </div>
 	     					 </div>
 	     					 <div class="remind">
@@ -97,25 +92,25 @@
 
 							<div class="remind">
 								<span class="upView">选择卡片背景颜色</span>
-								<div id="chooseColor" data = "Color010"></div>
+								<div id="chooseColor"></div>
 								<table class="colorTable">
 									<tr>
-										<td class="colorView Color010" title="#63b359" data="Color010"></td>
-										<td class="colorView Color020" title="#2c9f67" data="Color020"></td>
-										<td class="colorView Color030" title="#509fc9" data="Color030"></td>
-										<td class="colorView Color040" title="#5885cf" data="Color040"></td>
-										<td class="colorView Color050" title="#9062c0" data="Color050"></td>
-										<td class="colorView Color060" title="#d09a45" data="Color060"></td>
-										<td class="colorView Color070" title="#e4b138" data="Color070"></td>
+										<td class="colorView Color010" title="#63b359"></td>
+										<td class="colorView Color020" title="#2c9f67"></td>
+										<td class="colorView Color030" title="#509fc9"></td>
+										<td class="colorView Color040" title="#5885cf"></td>
+										<td class="colorView Color050" title="#9062c0"></td>
+										<td class="colorView Color060" title="#d09a45"></td>
+										<td class="colorView Color070" title="#e4b138"></td>
 									</tr>
 									<tr>
-										<td class="colorView Color080" title="#ee903c" data="Color080"></td>
-										<td class="colorView Color081" title="#f08500" data="Color081"></td>
-										<td class="colorView Color082" title="#a9d92d" data="Color082"></td>
-										<td class="colorView Color090" title="#dd6549" data="Color090"></td>
-										<td class="colorView Color100" title="#cc463d" data="Color100"></td>
-										<td class="colorView Color101" title="#cf3e36" data="Color101"></td>
-										<td class="colorView Color102" title="#5E6671s" data="Color102"></td>
+										<td class="colorView Color080" title="#ee903c"></td>
+										<td class="colorView Color081" title="#f08500"></td>
+										<td class="colorView Color082" title="#a9d92d"></td>
+										<td class="colorView Color090" title="#dd6549"></td>
+										<td class="colorView Color100" title="#cc463d"></td>
+										<td class="colorView Color101" title="#cf3e36"></td>
+										<td class="colorView Color102" title="#5E6671s"></td>
 									</tr>
 								</table>
 							</div>
@@ -133,25 +128,24 @@
     								<textarea class="form-control" rows="3" id="groupDetail"></textarea>
     								<i class="icon"></i>
     							</p>
-  							</div>
-	     					
-	     					 <button class="btn btn-primary col-md-1 col-md-offset-7" id="upCard">创建卡券</button>
-					 </form>
-
-				 </div>
-			</div>
-			<script type="text/javascript">
+  							</div>	
+	<script type="text/javascript">
 				
 			  var cardType = "groupBuying";
-			
-			  var checkOk = false;  //为treu代表表单检验通过
 			  
+			  var checkOk = false;  //为treu代表表单检验通过
+			  var isChange = 0;    // 表示采用的时间类型，0表示使用时间区间，1表示采用时间长短
+
+			  $("input").attr('disabled',""); //禁用表单填写
+			  $("textarea").attr('disabled',"");// 禁用文字输入
+
+
+
 				$("#upimg").val(null);     // 初始化上传图片的value
-				var star_time;
-				var end_time;
-
-
-			$("#upimg").on("change", function(){                  //上传图片同时预览上传的图片
+				
+				
+				function addimg(){
+					                //上传图片同时预览上传的图片
 			    // Get a reference to the fileList
 			    var files = !!this.files ? this.files : [];
 			    var nextElement = $(".addimg").nextAll("i");
@@ -193,27 +187,45 @@
 			          checkOk = true;
 			    }
 			 
-			});
+			
+				}
 
-			  $(".addimg").click(function(event) {               
+
+
+			
+
+			  $(".addimg").click(function() {               
 			  	$("#upimg").trigger("click");
 			  });
 
-
-			  $("#chooseColor").on('click',  function(event) {        //显示选择颜色的色版
-			  	event.preventDefault();
+			  function chooseColor(){         //显示选择颜色的色版
+			  	
 			  	$(".colorTable").css({display:"inline-block"});
-			  });
+			  }
 
-			  $(".colorView").on('click', function(event) {             //隐藏色板
-			  	event.preventDefault();
+			   
+
+			  function colorView(){
+				
 			  	var color = $(this).attr("title");
-			  	$("#chooseColor").attr("data",$(this).attr("data"));
 			  	$("#chooseColor").css({
 			  		backgroundColor: color
 			  	});
 			  	$(".colorTable").hide("400");
-			  });
+				}
+				// $("#upimg").on("change", addimg());
+				//$("#chooseColor").on('click',chooseColor);  
+			  	//$(".colorView").on('click', colorView);  //隐藏色板
+
+			  	function changeType(){
+					if (isChange == 0) {
+				  		$(".typeView").animate({"top":"-54px"}, "400");
+				  		isChange = 1;
+					}else{
+				 		$(".typeView").animate({"top":"0px"}, "400");
+				  		isChange = 1;
+					} 
+			  	}	
 
 
 			  $(".form-control").blur(function(event) {    //表单验证
@@ -237,7 +249,7 @@
 			              if (nextElement.hasClass('icon-remove')) {
 			                nextElement.removeClass('icon-remove');
 			              };
-			  						nextElement.addClass('icon-remove').attr({title: "字数不能为空"});
+			  						nextElement.addClass('icon-remove').attr({title: "字数不能超过0"});
 			              checkOk = false;
 			  					}else{
 			  						if (nextElement.hasClass('icon-remove')) {
@@ -343,7 +355,7 @@
 			                nextElement.removeClass('icon-remove');
 			              };
 			              nextElement.addClass('notMust').attr({title: ""}).text('*选填');
-			              checkOk = true;
+			              checkOk = false;
 			            }else{
 			              nextElement.empty();
 			              if (nextElement.hasClass('icon-remove')) {
@@ -399,7 +411,7 @@
 			                nextElement.removeClass('icon-remove');
 			              };
 			              nextElement.addClass('icon-remove').attr({title: "请输入正整数"});
-			              checkOk = false;
+			              checkOk = true;
 			             }else{
 			             if ($(this).val()>50) {
 			              nextElement.empty();
@@ -419,7 +431,7 @@
 			                nextElement.removeClass('icon-remove');
 			              };
 			              nextElement.addClass('notMust').attr({title: ""}).text('*选填');
-			             checkOk = true;
+			             checkOk = false;
 			            }else{
 			              nextElement.empty();
 			              if (nextElement.hasClass('icon-remove')) {
@@ -505,291 +517,12 @@
 			  });
 
 			var isChange = 0;    // 表示采用的时间类型，0表示使用时间区间，1表示采用时间长短
-			$("#changeType").on('click', function(event) {             //切换时间类型
-			  event.preventDefault();
-			  if (isChange == 0) {
-			  $(".typeView").animate({"top":"-54px"}, "400");
-			  isChange = 1;
-			}else{
-			 $(".typeView").animate({"top":"0px"}, "400");
-			  isChange = 0;
-			} 
-			});
-
-
-(function($) {
-$.extend({ 
-  myTime: {             
-    /**
-     * 当前时间戳
-     * @return <int>    unix时间戳(秒) 
-     */
-    CurTime: function(){
-      return Date.parse(new Date())/1000;
-    },
-    /**       
-     * 日期 转换为 Unix时间戳
-     * @param <string> 2014-01-01 20:20:20 日期格式       
-     * @return <int>    unix时间戳(秒)       
-     */
-    DateToUnix: function(string) {   //  将时间类型转化为时间戳
-      var f = string.split(' ', 2);
-      var d = (f[0] ? f[0] : '').split('-', 3);
-      var t = (f[1] ? f[1] : '').split(':', 3);
-      return (new Date(
-          parseInt(d[0], 10) || null,
-          (parseInt(d[1], 10) || 1) - 1,
-          parseInt(d[2], 10) || null,
-          parseInt(t[0], 10) || null,
-          parseInt(t[1], 10) || null,
-          parseInt(t[2], 10) || null
-          )).getTime() / 1000;
-    },
-    /**       
-     * 时间戳转换日期       
-     * @param <int> unixTime  待时间戳(秒)       
-     * @param <bool> isFull  返回完整时间(Y-m-d 或者 Y-m-d H:i:s)       
-     * @param <int> timeZone  时区       
-     */
-    UnixToDate: function(unixTime, isFull, timeZone) {          //将时间戳转化为时间类型
-      if (typeof (timeZone) == 'number')
-      {
-        unixTime = parseInt(unixTime) + parseInt(timeZone) * 60 * 60;
-      }
-      var time = new Date(unixTime * 1000);
-      var ymdhis = "";
-      ymdhis += time.getUTCFullYear() + "-";
-      ymdhis += (time.getUTCMonth()+1) + "-";
-      ymdhis += time.getUTCDate();
-      if (isFull === true)
-      {
-        ymdhis += " " + time.getUTCHours() + ":";
-        ymdhis += time.getUTCMinutes() + ":";
-        ymdhis += time.getUTCSeconds();
-      }
-      return ymdhis;
-    }
-  }
-});
-})(jQuery);
-
-
-			 $("#upCard").on('click', function(event) {      //发送创建卡券的
-			   event.preventDefault();
-			   if (isChange == 0) {                     //根据客户选择的卡券有效期的时间类型进行不同的检验
-			      var sY = parseInt($("#starTimeY").val());
-			      var sM = parseInt($("#starTimeM").val());
-			      var sD = parseInt($("#starTimeD").val());
-			      var eY = parseInt($("#endTimeY").val());
-			      var eM = parseInt($("#endTimeM").val());
-			      var eD = parseInt($("#endTimeD").val()); 
-				  star_time = $.DateToUnix(getDate(sY+"/"+sM+"/"+sD));
-				  end_time = $.UnixToDate(getDate(eY+"/"+eM+"/"+eD));	
-			      if (sY == "" || sM == "" || sD == "" || eY == "" || eM == "" || eD == "") {
-			       $(".errup").empty();
-			       $(".errup").text("输入时间不能为空");
-			       $(".errup").slideDown('slow', function() {
-			         $(this).delay(1000).slideUp('slow');
-			         checkOk = false;
-			         return;
-			      });  
-			      }else if (isNaN(sY) ||isNaN(sM)||isNaN(sD)||isNaN(eY)||isNaN(eM)||isNaN(eD) || (sM>12) || (sD >31) || (eM >12) || (eD > 31)) {
-			        $(".errup").empty();
-			        $(".errup").text("输入的时间格式不正确");
-			        $(".errup").slideDown('slow', function() {
-			         $(this).delay(1000).slideUp('slow');
-			         checkOk = false;
-			         return;
-			       });  
-			     }else if (star_time>end_time) {
-			     	$(".errup").empty();
-			       $(".errup").text("开始时间不能晚于结束时间");
-			       $(".errup").slideDown('slow', function() {
-			         $(this).delay(1000).slideUp('slow');
-			         checkOk = false;
-			         return;
-			      });
-			     
-			   }else{
-			   	checkOk = true;
-			   }
-			 }else{
-			      timeRange = $("#timeRange").val();
-			      if (isNaN(timeRange)) {
-			        $(".errup").empty();
-			         $(".errup").text("输入的时间不能为负");
-			        $(".errup").slideDown('slow', function() {
-			         $(this).delay(1000).slideUp('slow');
-			         checkOk = false;
-			         return;
-			       });
-			      }else{
-			      	checkOk = true;
-			      }
-			 };
-
-
-			   if (checkOk == false) {
-			   	   $(".errup").empty();
-			       $(".errup").text(" 创建卡券失败，请检查填写信息是否有误");
-			       $(".errup").slideDown('slow', function() {
-			         $(this).delay(1000).slideUp('slow');
-			         return;
-			   });
-			   }else{
-			   	alert("checkOk = true");
-			      var title = $("#cardTitle").val();
-			      var card_color =  $("#chooseColor").attr("data");   //卡券颜色
-			      var left_card_amount = parseInt($("#cardNumber").val()); //可获取的库存
-			      var sub_title = $("#favourView").val(); //卡券具体优惠信息
-			      var notice = $("#useView").val(); //卡券使用提醒
-			      var description = $("#groupDescription").val();//卡券使用说明
-			      var dataType;   //卡券时间类型
-			      var get_limit =parseInt($("#numberPlace").val());  //
-			      var service_phone = $("#serverTel").val();
-			      if(isChange == 0){
-			      dataType = "DATE_TYPE_FIX_TIME_RANGE";
-			      }else{
-			      dataType = "DATE_TYPE_FIX_TERM";
-			      };
-			      
-			          //团购券 
-			      var deal_detail = $("#groupDetail").val();//团购票专有详细信息
-			      var formData = new FormData();
-					  formData.append('logo_url', $("#upimg")[0].files[0]);
-				  var isReseve = false;		  
-
-					   $.ajax({
-						    type:"post",
-						    url:"/WechatCard/CreateTicket/UpLoadLogo",
-						    dataType:"json",
-						    cache: false,
-    						data:formData,
-   						 	processData: false,
-    						contentType: false,
-    						beforeSend:function(){
-    						$(".waitDiv").css("display", "block");
-    						},
-						    success:function(data){
-						    	if(data.code == true){
-						   		if (isChange == 0) {
-							   		$.ajax({
-								  	  	type:"post",
-								    	url:"/WechatCard/CreateTicket/GroupTicket_save",
-								    	data: {
-								            "title": title, 
-								            "color": card_color, 
-								            "quantity":left_card_amount,
-						                    "deal_detail":deal_detail,
-						                    "sub_title":sub_title,
-						                    "notice":notice,
-						                    "description":description,
-						                    "type":dataType,
-						                    "begin_timestamp":star_time,
-						                    "end_timestamp":end_time,
-								            "get_limit":get_limit,
-								            "service_phone":service_phone,
-								            },
-								    dataType:"json",
-								    success:function(data){
-								    		$(".waitDiv").css("display", "none");
-								   			if(data.code == true){
-						                  		 $(".suup").slideDown('slow', function() {
-						                   		 $(this).delay(1000).slideUp('slow');
-						          				
-						                   		});
-						                	}else{
-						                		$(".errup").empty();
-							      				$(".errup").text(data.msg);
-       											$(".errup").slideDown('slow', function() {
-         											$(this).delay(1000).slideUp('slow');
-       											});
-						                   	}
-						      			return false;
-								    },
-								   error:function(data){
-								   		$(".waitDiv").css("display", "none");
-								   		$(".errup").empty();
-								        $(".errup").text("网络异常，创建失败");
-       									  $(".errup").slideDown('slow', function() {
-         								  $(this).delay(1000).slideUp('slow');
-       									});
-								       return false;
-								      }
-								  });
-
-							   }else{
-						                var fixdTerm = parseInt($("#timeRange").val());
-						                $.ajax({
-								    		type:"post",
-										    url:"/WechatCard/CreateTicket/GroupTicket_save",
-										    dataType:"json",
-										   	data: {
-										    "title": title, 
-						                    "color": card_color, 
-						                    "quantity":left_card_amount,
-						                    "deal_detail":deal_detail,
-						                    "sub_title":sub_title,
-						                    "notice":notice,
-						                    "description":description,
-						                    "type":dataType,
-						                    "fixed_term":fixdTerm,
-						                    "get_limit":get_limit,
-								            "service_phone":service_phone,
-								            },
-										    success:function(data){
-										    		$(".waitDiv").css("display", "none");
-										   			if(data.code == true){
-								                  		 $(".suup").slideDown('slow', function() {
-								                   		 $(this).delay(1000).slideUp('slow');
-								          
-								                   		});
-								                	}else{
-								                		$(".errup").empty();
-									      				$(".errup").text(data.msg);
-		       											$(".errup").slideDown('slow', function() {
-		         											$(this).delay(1000).slideUp('slow');
-		       											});
-								                   	}
-								      			return false;
-										    },
-										   error:function(data){
-										   	   $(".waitDiv").css("display", "none");
-											   $(".errup").empty();
-										       $(".errup").text("网络异常，创建失败");
-		       									  $(".errup").slideDown('slow', function() {
-		         								  $(this).delay(1000).slideUp('slow');
-		       									});
-										       return false;
-										      }
-										  });
-						                }
-				  		}else{
-				  			$(".waitDiv").css("display", "none");
-				  			$(".errup").empty();
-				  			$(".errup").text(data.msg);
-       						$(".errup").slideDown('slow', function() {
-         					$(this).delay(1000).slideUp('slow');
-       						});  
-       						}
-						    },
-						   error:function(){
-						   	   $(".waitDiv").css("display", "none");
-						   	   $(".errup").empty();
-						       $(".errup").text("网络异常，创建失败");
-       							$(".errup").slideDown('slow', function() {
-         						$(this).delay(1000).slideUp('slow');
-       							});
-						       return false;
-						      }
-						  });
-					          			              
-			         
-			   }
-			 
-			 });
+			
+ 
 			 
 
+
+					
 
 
 			</script>

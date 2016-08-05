@@ -80,6 +80,7 @@ public class ManagerCardController {
 		json = new JSONObject(card_id);
 		UsedMethod.log(json.toString(), 1);
 		str = manageCardService.deleteCard(json.toString());
+		UsedMethod.log(str, 1);
 		response.setCode(true);
 		return response;
 	}
