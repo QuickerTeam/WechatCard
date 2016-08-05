@@ -190,6 +190,8 @@ public class HttpUtil {
 		HttpPost post = new HttpPost(url);
 		try {
 			StringEntity stringEntity = new StringEntity(json,"UTF-8");
+			//如果微信传过来的是全部问号，将下面这行代码取消注释
+			//stringEntity.setContentEncoding("UTF-8");
 			post.setEntity(stringEntity);
 			CloseableHttpResponse response = httpClient.execute(post);
 			HttpEntity httpEntity = response.getEntity();

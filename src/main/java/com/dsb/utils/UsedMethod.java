@@ -1,8 +1,5 @@
 package com.dsb.utils;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.json.JSONObject;
@@ -56,7 +53,7 @@ public class UsedMethod {
 			// 未填写每人领取数量
 		}
 		sku.setQuantity(Integer.valueOf(request.getParameter("quantity")));
-		base_info.setBrand_name("商户名字");
+		base_info.setBrand_name("海洋星");
 		base_info.setSub_title(request.getParameter("sub_title"));
 		base_info.setTitle(request.getParameter("title"));
 		base_info.setSource("袋鼠帮");
@@ -77,27 +74,25 @@ public class UsedMethod {
 		if (request.getParameter("type").equals("DATE_TYPE_FIX_TIME_RANGE"))//
 		{// 表示固定日期区间
 			date_info.setType("DATE_TYPE_FIX_TIME_RANGE");
-			// 将时间转化成1970年开始按秒计时
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-			String beginTime = "" + request.getParameter("begin_time_year")
-					+ request.getParameter("begin_time_month")
-					+ request.getParameter("begin_time_day");// beginTime来记录开始时间，之后转换成秒
-			String endTime = "" + request.getParameter("end_time_year")
-					+ request.getParameter("end_time_month")
-					+ request.getParameter("end_time_day");// endTime来记录开始时间，之后转换成秒
-			long beginSeconds = 0;// 转换成的秒数
-			long endSeconds = 0;
-			try {
-				beginSeconds = (sdf.parse(beginTime).getTime() / 1000);
-				endSeconds = (sdf.parse(endTime).getTime() / 1000);
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("时间转换出错");
-				return false;
-			}
-			date_info.setBegin_timestamp(beginSeconds + "");
-			date_info.setEnd_timestamp(endSeconds + "");
+			date_info.setBegin_timestamp(request.getParameter("begin_timestamp"));
+			date_info.setEnd_timestamp(request.getParameter("end_time"));
+		// // 将时间转化成1970年开始按秒计时
+		// SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+		// String beginTime = "20160804";
+		// String endTime = "20160831";
+		// long beginSeconds = 0;// 转换成的秒数
+		// long endSeconds = 0;
+		// try {
+		// beginSeconds = (sdf.parse(beginTime).getTime() / 1000);
+		// endSeconds = (sdf.parse(endTime).getTime() / 1000);
+		// } catch (ParseException e) {
+		// // TODO Auto-generated catch block
+		// e.printStackTrace();
+		// System.out.println("时间转换出错");
+		// return false;
+		// }
+		// date_info.setBegin_timestamp(beginSeconds + "");
+		// date_info.setEnd_timestamp(endSeconds + "");
 		} else {// 表示固定时长（自领取后按天算）
 			date_info.setType("DATE_TYPE_FIX_TERM");
 			date_info.setFixed_term(Integer.valueOf(request

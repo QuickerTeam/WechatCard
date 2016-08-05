@@ -40,8 +40,9 @@ public class DistributeCardController {
 	public Object AllCard() {// 显示所有卡片供商家选择
 		UsedMethod.log("/AllCard", 1);
 		cardInfoList.clear();// 删除list的所有元素
+		//每次获得的卡券数量
 		batchCard.setOffset(0);
-		batchCard.setCount(3);
+		batchCard.setCount(50);
 		json = new JSONObject(batchCard);// 将批量查询bean传给服务器
 		UsedMethod.log("json=" + json, 1);
 		UsedMethod.log("StaticConstant.accessToken="
@@ -60,6 +61,7 @@ public class DistributeCardController {
 				UsedMethod.log("receiveJson=" + receiveJson, 1);
 				UsedMethod.log("cardIdArray=" + cardIdArray, 1);
 				UsedMethod.log("json=" + json, 1);
+				//获取某张卡券的所有信息
 				str = manageCardService.queryCardInfo(json.toString());
 				receiveJson = new JSONObject(str);
 				SimpleCardInfo e = new SimpleCardInfo();
