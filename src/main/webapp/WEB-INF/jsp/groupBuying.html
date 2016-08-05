@@ -526,8 +526,9 @@
 			      var eM = parseInt($("#endTimeM").val());
 			      var eD = parseInt($("#endTimeD").val()); 
 			      
-				  star_time = $.myTime.DateToUnix(getDate(sY+"/"+sM+"/"+sD));
-				  end_time = $.myTime.UnixToDate(getDate(eY+"/"+eM+"/"+eD));	
+				  star_time = $.myTime.DateToUnix(sY+"/"+sM+"/"+sD);
+				  alert(star_time);
+				  end_time = $.myTime.DateToUnix(eY+"/"+eM+"/"+eD);	
 			      if (sY == "" || sM == "" || sD == "" || eY == "" || eM == "" || eD == "") {
 			       $(".errup").empty();
 			       $(".errup").text("输入时间不能为空");
