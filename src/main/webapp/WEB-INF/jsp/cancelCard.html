@@ -1,0 +1,163 @@
+<div class="container">
+				<div class="row">
+				<!-- 	<span class="groupBuying col-md-12">选择需要核销的卡券</span>
+					<div class="cardBody col-md-10 col-md-offset-1">
+						<ul class="nav nav-tabs " >
+	   					   <li class="active"><a href="#" class="btnMenu" data="section1">团购券</a></li>
+						   <li ><a href="#" class="btnMenu" data="section2">代金券</a></li>
+						   <li><a href="#" class="btnMenu" data="section3">折扣券</a></li>
+						   <li><a href="#" class="btnMenu" data="section4">礼品券</a></li>
+						   <li><a href="#" class="btnMenu" data="section5">优惠券</a></li>  
+						</ul>	
+						<div class="smallCardList groupList" id="section1">
+							<div class="cards col-md-2 cancleCard" id="card1"><p><img src="../img/logo.png+" class="cardLogo">火锅优惠券<i class="icon-ok-sign"></i></p></div>
+					
+						
+							<div class="cards col-md-2" id="card2"><p><img src="../img/logo.png+" class="cardLogo">火锅优惠券</p></div>
+						</div>
+
+
+
+
+
+						<div class="smallCardList voucherList" id="section2">
+						</div>
+						<div class="smallCardList discountList" id="section3">
+						</div>	
+						<div class="smallCardList giftcardList" id="section4">
+						</div>
+						<div class="smallCardList couponList" id="section5">
+						</div> 
+					</div> -->
+					<div class="cancelDiv col-md-10 col-md-offset-1">
+						<span class="col-md-6 col-md-offset-1 smalltitle">输入需要核销的卡券号</span>
+						<div class="input-group col-md-10 col-md-offset-1">
+		        			<span class="input-group-addon">卡券号</span>
+		         			<input type="text" class="form-control onlyForm" id="codeId" placeholder="">
+		     			</div>
+		     			<button class="btn btn-primary col-md-1 col-md-offset-7" id="cancel">核销卡券</button>
+					</div>
+					
+				</div>
+			</div>
+			<script type="text/javascript">
+		$().ready(function() {
+	/* Act on the event */
+			/* $(".btnMenu").on('click', function(event) {         //切换显示卡券的类型
+			var exdiv = $(".active").children('.btnMenu').attr("data");
+			$(".active").removeClass("active");
+			var nowdiv = $(this).attr("data");
+			$(this).parent("li").addClass("active");
+			$("#"+exdiv).hide('400', function() {
+				
+			});
+			$("#"+nowdiv).show('400');
+			return false;
+		}); */
+		/* var cardId =""; */
+		/* $(".cards").on('click', function(event) {
+			event.preventDefault();
+			var i = $(this).attr("id").split("card")[1]; // 获取这张卡片在卡片列表中的序号
+			cardId = card[i].card_id;
+			$(".cancleCard").removeClass("cancleCard");
+			$(".icon-ok-sign").remove();
+			$(this).addClass("cancleCard");
+			$("<i class='icon-ok-sign'></i>").appendTo($(this).children('p'));
+			}); */
+
+	/* $.ajax({               //进入管理卡券页面，异步获取所有已经创建的卡券的信息
+		url: '/WechatCard/ConsumeCard',
+		type: 'post',
+		dataType: 'json',
+	})
+	.done(function(data) {                 	//数据获取成功
+		var card = $.parseJSON(data.msg);
+		for (var i = card.length - 1; i >= 0; i--) {
+			
+			switch(cardType){
+				case "GROUPON":
+					$("<div class='cards col-md-2' style='backgroundColor="+ card[i].card.grouponcolor+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section1"));
+					break;
+				case "CASH":
+					$("<div class='cards col-md-2' style='backgroundColor="+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section2"));
+					break;
+				case "DISCOUNT":
+					$("<div class='cards col-md-2' style='backgroundColor="+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section3"));
+					break;
+				case "GIFT":
+					$("<div class='cards col-md-2' style='backgroundColor="+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section4"));
+					break;
+				case "GENERAL_COUPON":
+					$("<div class='cards col-md-2' style='backgroundColor="+ card[i].color+"' id='card"+i+"><p><img src="+card[i].logo_url+" class='cardLogo'>"+card[i].title+"</p></div>").appendTo($("#section5"));
+					break;
+			};	
+			}
+			 */
+			
+		
+
+			$("#cancel").on('click', function(event) {
+				event.preventDefault();
+				 var code_id = $("codeId").val();
+				if (code_id == "") {
+					 $(".errup").empty();
+					 $(".errup").text("请输入卡券号");
+       					$(".errup").slideDown('slow', function() {
+         				$(this).delay(1000).slideUp('slow');
+       				  });
+       				return false;
+				}else{ 
+				
+					$.ajax({
+						url: '/WechatCard/ConsumeCard',
+						type: 'POST',
+						dataType: 'json',
+						data: {
+							"code":code_id},
+					})
+					.done(function(data) {
+						if(data.code == true){
+							$(".errup").text("卡券核销成功");
+       						$(".errup").slideDown('slow', function() {
+         					  $(this).delay(1000).slideUp('slow');
+       						});
+						}else{
+							$(".errup").text("卡券核销失败");
+       						$(".errup").slideDown('slow', function() {
+         					  $(this).delay(1000).slideUp('slow');
+       						});
+						}
+					})
+					.fail(function() {
+						$(".errup").text("网络异常");
+       					$(".errup").slideDown('slow', function() {
+         					$(this).delay(1000).slideUp('slow');
+       					});
+					})
+					.always(function() {
+						console.log("complete");
+					});
+					
+				}
+			});
+
+
+		
+
+/* 	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	}); */
+	
+});
+
+
+
+
+
+
+
+	</script>

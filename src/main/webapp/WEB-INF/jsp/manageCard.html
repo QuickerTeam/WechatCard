@@ -1,0 +1,403 @@
+<div class="container">
+				<div class="row">
+					<div class="cardList col-md-10 col-md-offset-1">
+						
+							
+					</div>
+					
+				</div>
+			</div>
+			<script>
+ 		 $().load(function() {
+	/* Act on the event */
+	$.ajax({               //进入管理卡券页面，异步获取所有已经创建的卡券的信息
+		url: '/WechatCard/ManagerCard',
+		type: 'post',
+		dataType: 'json',
+		beforeSend:function(){
+			$(".waitDiv").css("display", "block");
+		}
+	})
+	.done(function(data) {              	//数据获取成功
+		var card = $.parseJSON(data.msg);
+
+		for (var i = card.length - 1; i >= 0; i--) {
+			var cardType =  card[i].card.card_type;
+			switch(cardType){
+				case "GROUPON":
+						var group = card[i].card.groupon;
+						$("<div class='cards col-md-2' id='card"+i+"' style = 'backgroundColor:"+ group.color+"' data-toggle='modal' data-target='#myModal"+i+"'><p><img src="+group.base_info.logo_url+" class='cardLogo'>"+group.base_info.title+"</p></div>").appendTo($(".cardList"));
+					$("<div class='modal fade' id='myModal"+i+"' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button><h4 class='modal-title' id='myModalLabel"+i+"'>"+card[i].title+"</h4></div><div class='modal-body'></div><div class='modal-footer'><button type='button' class='btn  closeModal' data-dismiss='modal'>关闭</button><button type='button' class='btn btn-warning deletCard'>删除</button><button type='button' class='btn btn-primary changeModol'>修改</button><button type='button' class='btn btn-primary upCardchange'>提交</button></div></div></div></div>").appendTo($(".sbody"));
+					break;
+				
+    			case "voucher":
+    
+   		    	break;
+    			case "countCard":
+     
+      			break;
+    			case "giftCard":
+      
+      				break;	
+    			case "coupon":	
+      
+      				break;
+      			default:	
+      				break;
+			}
+					
+			}	
+		$(".cards").on('click', function(event) {    //为每一张卡片添加点击事件
+			event.preventDefault();
+			var i = $(this).attr("id").split("card")[1]; // 获取这张卡片在卡片列表中的值
+			var thisType = card[i].card.card_type;
+			switch(thisType){
+				case "GROUPON":
+						group = card[i].card.groupon;
+						$("#myModal"+i).load("../jsp/manageGroup.html",function(){
+						$("#cardTitle").val(group.base_info.title);
+						$("#cardNumber").val(group.quantity);
+						$("#useView").val(group.notice);
+						$("#serverTel").val(group.service_phone);
+						$("#favourView").val(group.base_info.sub_title);
+						$("#numberPlace").val(group.get_limit);
+						$("#myModal"+i+" .addimg").empty();
+						$("<img src='"+card[i].logo_url+"' class = 'imgview'>").appendTo($("#myModal"+i+" .addimg")); 
+				        $("#chooseColor").css({"backgroundColor": group.color});
+				        $("#groupDescription").text(group.description);
+				        $("#groupDetail").text(card[i].deal_detail);
+				        $("#myModal"+i).attr("data", group.base_info.id);
+				       
+
+				        if (group.data_info.type == "DATE_TYPE_FIX_TIME_RANGE") {
+				        	var starTime = $.UnixToDat(group.data_info.begin_timestamp);
+				        	var endTime = $.UnixToDat(group.data_info.end_timestamp);
+
+				        	$("#starTimeY").val(starTime.getFullYear());
+				        	$("#starTimeM").val(starTime.getMonth());
+				        	$("#starTimeD").val(starTime.getData());
+				        	$("#endTimeY").val(endTime.getFullYear());
+				        	$("#endTimeM").val(endTime.getMonth());
+				        	$("#endTimeD").val(endTime.getData());
+
+				        }else{
+				        	 $(".typeView").animate({"top":"-54px"}, "400");
+				        	 $("#fixdTerm").val(group.data_info.fixdTerm);
+				        }
+
+				        $("#myModal"+i+" .changeModol").on('click', function(event) {    //点击可以修改页面
+				        	$("#myModal"+i).children("input").removeAttr('disabled');
+				        	$("#myModal"+i).children("textarea").removeAttr('disabled');
+				        	$("#upimg").on("change", addimg);
+							$("#chooseColor").on('click',chooseColor);  
+				  			$(".colorView").on('click', colorView);  //隐藏色板
+				  			$("#changeType").on("click",changeType);
+				  			$("#upCardchange").css({
+				  				"display": 'inlineBlock'
+				  			});
+				  			$(this).css({"display":"inlineBlock"});
+
+				        });
+
+				        $("#myModal"+i+" .deletCard").on('click', function(event) {        //删除卡券
+				        	event.preventDefault();
+
+				        	$.ajax({                    //将需要删除的卡片1信息给予后端
+				        		url: '/WechatCard/ManagerCard/RemoveCard',
+				        		type: 'post',
+				        		dataType: 'json',
+				        		data: {card_id: $(this).parents(".modal").attr("data")},
+				        	})
+				        	.done(function(data) {
+				        		if(data.code == true){
+				        			$(".errup").text("卡片删除成功");
+			       					$(".errup").slideDown('slow', function() {
+			         					$(this).delay(1000).slideUp('slow');
+			       					});
+			       					$("#myModal" +i).remove();
+			       					$("#card"+i).remove();
+				        		}else{
+				        			$(".errup").text("卡片删除失败");
+			       					$(".errup").slideDown('slow', function() {
+			         					$(this).delay(1000).slideUp('slow');
+			       					});
+				        		}
+				        	})
+				        	.fail(function() {
+				        		alert("error");
+				        	})
+				        	.always(function() {
+				        		alert("complete");
+				        	});
+				        	
+				        });   //删除卡券
+				        $(".closeModal").on('click',function(event) {   //关闭模拟窗口
+				        	event.preventDefault();
+				        	$("myModal" + i).remove();
+				        });
+
+
+
+				        //上传卡券
+				        $("#upCard").on('click', function(event) {      //发送创建卡券的
+						   event.preventDefault();
+						   var star_time;
+						   var end_time;
+						   if (isChange == 0) {                     //根据客户选择的卡券有效期的时间类型进行不同的检验
+							  var sY = $("#starTimeY").val();
+						      var sM = $("#starTimeM").val();
+						      var sD = $("#starTimeD").val(); 
+						      var eY = $("#endTimeY").val();
+						      var eM = $("#endTimeM").val();
+						      var eD = $("#endTimeD").val(); 
+
+						      star_time = $.DateToUnix(getDate(sY+"/"+sM+"/"+sD));
+							  end_time = $.UnixToDate(getDate(eY+"/"+eM+"/"+eD));
+
+						      if (sY == "" || sM == "" || sD == "" || eY == "" || eM == "" || eD == "") {
+						       $(".errup").text("输入时间不能为空");
+						       $(".errup").slideDown('slow', function() {
+						         $(this).delay(1000).slideUp('slow');
+						         checkOk = false;
+						         return;
+						      });    
+						     }else if (star_time>end_time) {
+						       $(".errup").text("开始时间不能晚于结束时间");
+						       $(".errup").slideDown('slow', function() {
+						         $(this).delay(1000).slideUp('slow');
+						         checkOk = false;
+						         return;
+
+									      });
+						     }else if (isNaN(sY) ||isNaN(sM)||isNaN(sD)||isNaN(eY)||isNaN(eM)||isNaN(eD) || (sM>12) || (sD >31) || (eM >12) || (eD > 31)) {
+						        $(".errup").text("输入的时间格式不正确");
+						        $(".errup").slideDown('slow', function() {
+						         $(this).delay(1000).slideUp('slow');
+						         checkOk = false;
+						         return;
+						       });
+						   }else{
+						   	checkOk = true;
+						   }
+						 }else{
+						      timeRange = $("#timeRange").val();
+						      if (isNaN(timeRange)) {
+						         $(".errup").text("输入的时间不能为负");
+						        $(".errup").slideDown('slow', function() {
+						         $(this).delay(1000).slideUp('slow');
+						         checkOk = false;
+						         return;
+						       });
+						      }else{
+						      	checkOk = true;
+						      }
+						 };
+
+
+			   if (checkOk == false) {
+			       $(".errup").text(" 创建卡券失败，请检查填写信息是否有误");
+			       $(".errup").slideDown('slow', function() {
+			         $(this).delay(1000).slideUp('slow');
+			         return;
+			   });
+			   }else{
+			   	  alert("checkOk = true");
+			      var title = $("#cardTitle").val();
+			      var card_color =  $("#chooseColor").attr("data");   //卡券颜色
+			      var left_card_amount = $("#cardNumber").val(); //可获取的库存
+			      var sub_title = $("#favourView").val(); //卡券具体优惠信息
+			      var notice = $("#useView").val(); //卡券使用提醒
+			      var description = $("#groupDescription").val();//卡券使用说明
+			      var dataType;   //卡券时间类型
+			      var get_limit = $("# numberPlace").val();  //
+			      var service_phone = $("#serverTel").val();
+			      if(isChange == 0){
+			      dataType = "DATE_TYPE_FIX_TIME_RANGE";
+			      }else{
+			      dataType = "DATE_TYPE_FIX_TERM";
+			      };
+			      
+			          //团购券 
+			      var deal_detail = $("#groupDetail").val();//团购票专有详细信息
+			      var formData = new FormData();
+					  formData.append('logo_url', $("#upimg")[0].files[0]);
+				  var isReseve = false;		  
+
+					   $.ajax({
+						    type:"post",
+						    url:"/WechatCard/CreateTicket/UpLoadLogo",
+						    dataType:"json",
+						    cache: false,
+    						data:formData,
+   						 	processData: false,
+    						contentType: false,
+						    success:function(data){
+						    	if(data.code == true){
+						   		if (isChange == 0) {
+						              
+
+
+
+							   		$.ajax({
+								  	  	type:"post",
+								    	url:"/WechatCard/CreateTicket/GroupTicket_save",
+								    	data: {
+								            "title": title, 
+								            "color": card_color, 
+								            "quantity":left_card_amount,
+						                    "deal_detail":deal_detail,
+						                    "sub_title":sub_title,
+						                    "notice":notice,
+						                    "description":description,
+						                    "type":dataType,
+						                    "begin_timestamp":star_time,
+						                    "end_timestamp":end_time,
+								            "get_limit":get_limit,
+								            "service_phone":service_phone,
+								            },
+								    dataType:"json",
+								    success:function(data){
+								   			if(data.code == true){
+						                  		 $(".suup").slideDown('slow', function() {
+						                   		 $(this).delay(1000).slideUp('slow');
+						          
+						                   		});
+						                	}else{
+							      				$(".errup").text(data.msg);
+       											$(".errup").slideDown('slow', function() {
+         											$(this).delay(1000).slideUp('slow');
+       											});
+						                   	}
+						      			return false;
+								    },
+								   error:function(data){
+								       $(".errup").text("网络异常，创建失败");
+								       alert("2");
+       									  $(".errup").slideDown('slow', function() {
+         								  $(this).delay(1000).slideUp('slow');
+       									});
+								       return false;
+								      }
+								  });
+
+							   }else{
+						                var fixdTerm = $("#fixdTerm").val();
+						                $.ajax({
+								    		type:"post",
+										    url:"/WechatCard/CreateTicket/GroupTicket_save",
+										    dataType:"json",
+										   	data: {
+										    "title": title, 
+						                    "color": card_color, 
+						                    "quantity":left_card_amount,
+						                    "deal_detail":deal_detail,
+						                    "sub_title":sub_title,
+						                    "notice":notice,
+						                    "description":description,
+						                    "type":dataType,
+						                    "fixdTerm":fixdTerm,
+						                    "get_limit":get_limit,
+								            "service_phone":service_phone,
+								            },
+										    success:function(data){
+										   			if(data.code == true){
+								                  		 $(".suup").slideDown('slow', function() {
+								                   		 $(this).delay(1000).slideUp('slow');
+								          
+								                   		});
+								                  	$("myModal" + i).children('input').attr('disabled','');       //使输入框不可用
+								                  	$("myModal" + i).children('textarea').attr('disabled','');    	//使输入框不可用
+								                  	$("myModal" + i +"changeModol").css('display', 'inlineBlock');
+								                  	$("myModal" + i +"upCardchange").css('display', 'none');
+								                	}else{
+									      				$(".errup").text(data.msg);
+		       											$(".errup").slideDown('slow', function() {
+		         											$(this).delay(1000).slideUp('slow');
+		       											});
+								                   	}
+								      			return false;
+										    },
+										   error:function(data){
+
+										       $(".errup").text("网络异常，创建失败");
+		       									  $(".errup").slideDown('slow', function() {
+		         								  $(this).delay(1000).slideUp('slow');
+		       									});
+										       return false;
+										      }
+										  });
+						                }
+				  		}else{
+				  			$(".errup").text(data.msg);
+       						$(".errup").slideDown('slow', function() {
+         					$(this).delay(1000).slideUp('slow');
+       						});  
+       						}
+						    },
+						   error:function(){
+						       $(".errup").text("网络异常，创建失败");
+       							$(".errup").slideDown('slow', function() {
+         						$(this).delay(1000).slideUp('slow');
+       							});
+						       return false;
+						      }
+						  });
+						
+					    
+						
+
+			              			              
+			         
+			   }
+			 
+			 });//上传表单信息
+			
+			 
+				        	
+				}); 
+				 	
+					
+			 
+
+			        	
+			    
+			       
+      			break;
+
+    		case "voucher":
+    
+   		    break;
+    		case "countCard":
+     
+      		break;
+    		case "giftCard":
+      
+      		break;
+    		case "coupon":
+      
+      		break;
+      		default:
+      		break;
+			}
+
+});
+		
+
+	})
+	.fail(function() {
+		console.log("error");
+	})
+	.always(function() {
+		console.log("complete");
+	});
+	
+});
+
+
+
+
+
+
+
+
+	</script>

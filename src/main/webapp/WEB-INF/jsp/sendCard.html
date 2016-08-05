@@ -104,6 +104,7 @@
 					$(".waitDiv").css('display', 'none');
 				if (data.code == true) {
 					// 将获取的二维码展示出来
+					$(".cardQR").remove();
 					$("<img src='"+data.msg+"' class = 'cardQR img-responsive'>").appendTo($(".showQR"));                   
 				}else{
 					$(".errup").empty();
