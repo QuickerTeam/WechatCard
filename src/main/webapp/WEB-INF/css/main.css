@@ -473,8 +473,7 @@ header img{
 .cards{
 	height: 80px;
 	margin: 10px 0 10px 2.8%;
-	background-color: #63b359;
-	padding: 0;
+		padding: 0;
 }
 
 .cards:hover{
@@ -577,4 +576,6 @@ header img{
 	margin-top: -10px;
 }
 
-
+.upCardchange{
+	display:none;
+}

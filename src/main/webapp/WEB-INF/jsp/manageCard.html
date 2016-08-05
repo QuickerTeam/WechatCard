@@ -20,14 +20,16 @@
 	})
 	.done(function(data) {              	//数据获取成功
 		var card = $.parseJSON(data.msg);
-
+		$(".waitDiv").css("display", "none");
 		for (var i = card.length - 1; i >= 0; i--) {
+			card[i] = $.parseJSON(card[i]);
 			var cardType =  card[i].card.card_type;
+		
 			switch(cardType){
 				case "GROUPON":
 						var group = card[i].card.groupon;
-						$("<div class='cards col-md-2' id='card"+i+"' style = 'backgroundColor:"+ group.color+"' data-toggle='modal' data-target='#myModal"+i+"'><p><img src="+group.base_info.logo_url+" class='cardLogo'>"+group.base_info.title+"</p></div>").appendTo($(".cardList"));
-					$("<div class='modal fade' id='myModal"+i+"' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button><h4 class='modal-title' id='myModalLabel"+i+"'>"+card[i].title+"</h4></div><div class='modal-body'></div><div class='modal-footer'><button type='button' class='btn  closeModal' data-dismiss='modal'>关闭</button><button type='button' class='btn btn-warning deletCard'>删除</button><button type='button' class='btn btn-primary changeModol'>修改</button><button type='button' class='btn btn-primary upCardchange'>提交</button></div></div></div></div>").appendTo($(".sbody"));
+						$("<div class='cards col-md-2' id='card"+i+"' style = 'background-color:"+ group.base_info.color+"' data-toggle='modal' data-target='#myModal"+i+"'><p><img src="+group.base_info.logo_url+" class='cardLogo'>"+group.base_info.title+"</p></div>").appendTo($(".cardList"));
+					$("<div class='modal fade' id='myModal"+i+"' tabindex='-1' role='dialog' aria-labelledby='myModalLabel' aria-hidden='true'><div class='modal-dialog'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button><h4 class='modal-title' id='myModalLabel"+i+"'>"+ group.base_info.title+"</h4></div><div class='modal-body'></div><div class='modal-footer'><button type='button' class='btn  closeModal' data-dismiss='modal'>关闭</button><button type='button' class='btn btn-warning deletCard'>删除</button><button type='button' class='btn btn-primary changeModol'>修改</button><button type='button' class='btn btn-primary upCardchange'>提交</button></div></div></div></div>").appendTo($(".sbody"));
 					break;
 				
     			case "voucher":
@@ -54,68 +56,76 @@
 			switch(thisType){
 				case "GROUPON":
 						group = card[i].card.groupon;
-						$("#myModal"+i).load("../jsp/manageGroup.html",function(){
+						
+						$("#myModal"+i+" .modal-body").load("../jsp/manageGroup.html",function(){
 						$("#cardTitle").val(group.base_info.title);
-						$("#cardNumber").val(group.quantity);
-						$("#useView").val(group.notice);
-						$("#serverTel").val(group.service_phone);
+						$("#cardNumber").val(group.base_info.sku.quantity);
+						$("#useView").val(group.base_info.notice);
+						$("#serverTel").val(group.base_info.service_phone);
 						$("#favourView").val(group.base_info.sub_title);
-						$("#numberPlace").val(group.get_limit);
+						$("#numberPlace").val(group.base_info.get_limit);
 						$("#myModal"+i+" .addimg").empty();
-						$("<img src='"+card[i].logo_url+"' class = 'imgview'>").appendTo($("#myModal"+i+" .addimg")); 
-				        $("#chooseColor").css({"backgroundColor": group.color});
-				        $("#groupDescription").text(group.description);
-				        $("#groupDetail").text(card[i].deal_detail);
+						$("<img src='"+group.base_info.logo_url+"' class = 'imgview'>").appendTo($("#myModal"+i+" .addimg")); 
+				        $("#chooseColor").css({"backgroundColor": group.base_info.color});
+				        $("#groupDescription").val(group.base_info.description);
+				        $("#groupDetail").val(group.deal_detail);
 				        $("#myModal"+i).attr("data", group.base_info.id);
 				       
-
-				        if (group.data_info.type == "DATE_TYPE_FIX_TIME_RANGE") {
-				        	var starTime = $.UnixToDat(group.data_info.begin_timestamp);
-				        	var endTime = $.UnixToDat(group.data_info.end_timestamp);
-
+						date = group.base_info.date_info;
+						
+						
+						
+				        if (date.type == "DATE_TYPE_FIX_TIME_RANGE") {
+				        	var starTime = getDate($.myTime.UnixToDate(date.begin_timestamp));
+				        	var endTime = getDate($.myTime.UnixToDate(date.end_timestamp));
+						
 				        	$("#starTimeY").val(starTime.getFullYear());
 				        	$("#starTimeM").val(starTime.getMonth());
-				        	$("#starTimeD").val(starTime.getData());
+				        	$("#starTimeD").val(starTime.getDate());
 				        	$("#endTimeY").val(endTime.getFullYear());
 				        	$("#endTimeM").val(endTime.getMonth());
-				        	$("#endTimeD").val(endTime.getData());
+				        	$("#endTimeD").val(endTime.getDate());
 
 				        }else{
 				        	 $(".typeView").animate({"top":"-54px"}, "400");
-				        	 $("#fixdTerm").val(group.data_info.fixdTerm);
+				        	 $("#fixdTerm").val(date.fixdTerm);
 				        }
 
 				        $("#myModal"+i+" .changeModol").on('click', function(event) {    //点击可以修改页面
-				        	$("#myModal"+i).children("input").removeAttr('disabled');
-				        	$("#myModal"+i).children("textarea").removeAttr('disabled');
+				        	$("input").removeAttr('disabled');
+				        	$("textarea").removeAttr('disabled');
 				        	$("#upimg").on("change", addimg);
 							$("#chooseColor").on('click',chooseColor);  
 				  			$(".colorView").on('click', colorView);  //隐藏色板
 				  			$("#changeType").on("click",changeType);
-				  			$("#upCardchange").css({
-				  				"display": 'inlineBlock'
-				  			});
-				  			$(this).css({"display":"inlineBlock"});
+				  			$(this).next(".upCardchange").css("display", 'inline-block');
+				  			$(this).css("display","none");
 
 				        });
 
 				        $("#myModal"+i+" .deletCard").on('click', function(event) {        //删除卡券
 				        	event.preventDefault();
-
+							alert($(this).parents(".modal").attr("data"));
 				        	$.ajax({                    //将需要删除的卡片1信息给予后端
 				        		url: '/WechatCard/ManagerCard/RemoveCard',
 				        		type: 'post',
 				        		dataType: 'json',
 				        		data: {card_id: $(this).parents(".modal").attr("data")},
+				        		beforeSend:function(){
+				        		$(".waitDiv").css("display", "block"); 
+				        		}
 				        	})
 				        	.done(function(data) {
+				        	
 				        		if(data.code == true){
+				        		
 				        			$(".errup").text("卡片删除成功");
 			       					$(".errup").slideDown('slow', function() {
 			         					$(this).delay(1000).slideUp('slow');
 			       					});
-			       					$("#myModal" +i).remove();
+			       					$("#myModal" +i +".modal-body").empty();
 			       					$("#card"+i).remove();
+			       					$(".close").trigger("click");
 				        		}else{
 				        			$(".errup").text("卡片删除失败");
 			       					$(".errup").slideDown('slow', function() {
@@ -124,19 +134,26 @@
 				        		}
 				        	})
 				        	.fail(function() {
+				        	
 				        		alert("error");
 				        	})
 				        	.always(function() {
-				        		alert("complete");
+				        		$(".waitDiv").css("display", "none");
 				        	});
 				        	
 				        });   //删除卡券
 				        $(".closeModal").on('click',function(event) {   //关闭模拟窗口
 				        	event.preventDefault();
-				        	$("myModal" + i).remove();
+				       		$(this).parents(".modal-content").children(".modal-body").empty();
+				       		$(".upCardchange").css("display","none");
+							$(".changeModol").css("display","inline-block");
 				        });
 
-
+						$(".close").on("click",function(){   //关闭窗口
+							$(this).parents(".modal-content").children(".modal-body").empty();
+							$(".upCardchange").css("display","none");
+							$(".changeModol").css("display","inline-block");
+						});
 
 				        //上传卡券
 				        $("#upCard").on('click', function(event) {      //发送创建卡券的

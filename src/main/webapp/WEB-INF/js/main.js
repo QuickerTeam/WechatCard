@@ -105,7 +105,7 @@ $(".card").on('click', function(event) {
 	$(".waitDiv").css("display","block");
   event.preventDefault();
   cardType = $(this).attr("id");
-  $(".card").removeClass('thisCard');
+  $(".thisCard").removeClass('thisCard');
 
   switch(cardType){
     case "groupBuying":
