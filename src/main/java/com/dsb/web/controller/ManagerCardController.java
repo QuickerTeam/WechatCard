@@ -57,7 +57,25 @@ public class ManagerCardController {
 				UsedMethod.log("json=" + json, 1);
 				// 获取某张卡券的所有信息
 				str = manageCardService.queryCardInfo(json.toString());
-				cardList.add(str);
+				// 获取卡券当前状态
+				String status = null;// 储存卡券状态
+				str = receiveJson.getString("card");
+				json = new JSONObject(str);
+				if (json.getString("card_type").equals("GROUPON")) {
+					// 团购券类型
+					str = json.getString("groupon");
+					json = new JSONObject(str);
+					str = json.getString("base_info");
+					json = new JSONObject(str);
+					status = json.getString("status");
+				} else {
+					// 其他卡券类型
+				}
+				if (!status.equals("CARD_STATUS_DELETE")) {
+					// 如果卡券状态为已删除将不会传给前端
+					cardList.add(str);
+				}
+				UsedMethod.log(status, 1);
 				UsedMethod.log("----" + i + "----", 1);
 			}
 			response.setCode(true);
