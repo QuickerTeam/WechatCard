@@ -5,7 +5,10 @@ import java.text.SimpleDateFormat;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.JSONObject;
+
 import com.dsb.domain.GroupTicket;
+import com.dsb.domain.SimpleCardInfo;
 
 /**
  * 一些常用的方法
@@ -20,7 +23,7 @@ public class UsedMethod {
 	 * @param request来自web的请求
 	 * @return 是否成功写入进javabean中
 	 */
-	public static boolean Write2GroupTicket(GroupTicket groupTicket,
+	public static boolean write2GroupTicket(GroupTicket groupTicket,
 			HttpServletRequest request) {
 
 		// 属性初始化
@@ -43,18 +46,28 @@ public class UsedMethod {
 
 		// 写入值
 		card.setCard_type("GROUPON");
-		base_info.setGet_limit(Integer.parseInt(request
-				.getParameter("get_limit")));
+		UsedMethod.log(
+				"service_phone=" + request.getParameter("service_phone"), 1);
+		try {
+			base_info.setGet_limit(Integer.valueOf(request
+					.getParameter("get_limit")));
+			UsedMethod.log("已填写每人领取数量", 1);
+		} catch (Exception e) {
+			// 未填写每人领取数量
+		}
 		sku.setQuantity(Integer.valueOf(request.getParameter("quantity")));
 		base_info.setBrand_name("商户名字");
 		base_info.setSub_title(request.getParameter("sub_title"));
 		base_info.setTitle(request.getParameter("title"));
-		System.out.println("sub_title="+base_info.getSub_title());
 		base_info.setSource("袋鼠帮");
-		if (request.getParameter("service_phone") != null) {
-			// 有客服电话
+		try {
+			// 已填写客服电话
 			base_info.setService_phone(request.getParameter("service_phone"));
+			UsedMethod.log("填写客服电话", 1);
+		} catch (Exception e) {
+			// 未填写客服电话
 		}
+
 		base_info.setColor(request.getParameter("color"));
 		base_info.setDescription(request.getParameter("description"));
 		base_info.setNotice(request.getParameter("notice"));
@@ -91,5 +104,46 @@ public class UsedMethod {
 					.getParameter("fixed_term")));
 		}
 		return true;
+	}
+
+	public static boolean write2SimpleCardInfo(JSONObject json,
+			SimpleCardInfo simpleCardInfo) {
+		JSONObject base_info = null;// 储存获得的一张卡券信息
+		try {
+			JSONObject card = json.getJSONObject("card");
+			if (card.getString("card_type").equals("GROUPON")) {
+				// 团购券
+				simpleCardInfo.setCard_type("GROUPON");
+				base_info = card.getJSONObject("groupon").getJSONObject(
+						"base_info");
+				System.out.println(base_info);
+			} else {
+				// 其他的券再写else if
+			}
+			simpleCardInfo.setColor(base_info.getString("color"));
+			simpleCardInfo.setLogo_url(base_info.getString("logo_url"));
+			simpleCardInfo.setTitle(base_info.getString("title"));
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out
+					.println("UsedMethod中write2SimpleCardInfo方法出错，未能将数据写入卡券对象中");
+			return false;
+		}
+		return true;
+	}
+
+	/**
+	 * 这个方法可以控制当级别高于某个值时才会输出。 建议调试信息grade=1，常规信息grade=2,必须信息grade=3
+	 * 
+	 * @author Time
+	 * @param obj
+	 *            所需要输出的对象
+	 * @param grade
+	 *            输出的级别
+	 */
+	public static void log(Object obj, int grade) {
+		int i = 0;// 当i大于grade时obj才会被输出
+		if (grade > i)
+			System.out.println(obj);
 	}
 }

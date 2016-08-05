@@ -1,9 +1,12 @@
 package com.dsb.domain;
 
+
+
 /**
- * 团购券
+ * 团购券 所有的get/set方法都是自动生成
  * 
- * @author Time 所有的get/set方法都是自动生成
+ * @author Time
+ * 
  */
 public class GroupTicket {
 	// card字段以及set/get方法

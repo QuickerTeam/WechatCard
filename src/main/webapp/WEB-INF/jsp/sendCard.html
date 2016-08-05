@@ -104,7 +104,7 @@
 					$(".waitDiv").css('display', 'none');
 				if (data.code == true) {
 					// 将获取的二维码展示出来
-					$("<img src='"+data.msg+"' class = 'cardQR img-responsive'").appendTo($(".showQR"));                   
+					$("<img src='"+data.msg+"' class = 'cardQR img-responsive'>").appendTo($(".showQR"));                   
 				}else{
 					$(".errup").empty();
 					$(".errup").text(data.msg);
@@ -114,6 +114,7 @@
 				}
 			})
 			.fail(function() {
+			$(".waitDiv").css('display', 'none');
 				$(".errup").empty();
 				$(".errup").text("网络异常，请检查网络状况");
        			$(".errup").slideDown('slow', function() {

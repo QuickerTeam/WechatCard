@@ -1,0 +1,12 @@
+target/
+src/main/webapp/WEB-INF/classes/com/dsb/domain/BatchCard.class
+src/main/webapp/WEB-INF/classes/com/dsb/domain/GroupTicket$Card$Groupon$Base_info$Date_info.class
+src/main/webapp/WEB-INF/classes/com/dsb/domain/GroupTicket$Card$Groupon$Base_info$Sku.class
+src/main/webapp/WEB-INF/classes/com/dsb/domain/GroupTicket$Card$Groupon$Base_info.class
+src/main/webapp/WEB-INF/classes/com/dsb/domain/GroupTicket$Card$Groupon.class
+src/main/webapp/WEB-INF/classes/com/dsb/domain/GroupTicket$Card.class
+src/main/webapp/WEB-INF/classes/com/dsb/domain/SimpleCardInfo.class
+src/main/webapp/WEB-INF/classes/com/dsb/utils/UsedMethod.class
+src/main/webapp/WEB-INF/classes/com/dsb/weChat/util/http/GetAccessUtil.class
+src/main/webapp/WEB-INF/classes/com/dsb/web/controller/DistributeCardController.class
+src/main/webapp/WEB-INF/classes/
