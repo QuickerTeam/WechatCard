@@ -30,8 +30,8 @@
 						</div> 
 					</div> -->
 					<div class="cancelDiv col-md-10 col-md-offset-1">
-						<span class="col-md-6 col-md-offset-1 smalltitle">输入需要核销的卡券号</span>
-						<div class="input-group col-md-10 col-md-offset-1">
+						<span class="col-md-6 col-md-offset-4 smalltitle">输入需要核销的卡券号</span>
+						<div class="input-group col-md-10 col-md-offset-4">
 		        			<span class="input-group-addon">卡券号</span>
 		         			<input type="text" class="form-control onlyForm" id="codeId" placeholder="">
 		     			</div>
@@ -98,7 +98,8 @@
 
 			$("#cancel").on('click', function(event) {
 				event.preventDefault();
-				 var code_id = $("codeId").val();
+				 var code_id = $("#codeId").val();
+				 alert(code_id);
 				if (code_id == "") {
 					 $(".errup").empty();
 					 $(".errup").text("请输入卡券号");

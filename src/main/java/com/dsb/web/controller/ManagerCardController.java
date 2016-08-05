@@ -60,16 +60,14 @@ public class ManagerCardController {
 				UsedMethod.log("json=" + json, 1);
 				// 获取某张卡券的所有信息
 				str = manageCardService.queryCardInfo(json.toString());
+				receiveJson = new JSONObject(str);
 				// 获取卡券当前状态
 				String status = null;// 储存卡券状态
-				str = receiveJson.getString("card");
-				json = new JSONObject(str);
+				json = receiveJson.getJSONObject("card");
 				if (json.getString("card_type").equals("GROUPON")) {
 					// 团购券类型
-					str = json.getString("groupon");
-					json = new JSONObject(str);
-					str = json.getString("base_info");
-					json = new JSONObject(str);
+					json = json.getJSONObject("groupon");
+					json = json.getJSONObject("base_info");
 					status = json.getString("status");
 				} else {
 					// 其他卡券类型
