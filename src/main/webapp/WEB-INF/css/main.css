@@ -105,12 +105,12 @@ header img{
 
 
 .smaview{
-	width: 400px;
-	height: 80px;
-	font-size: 20px;
+	width: 300px;
+	height: 60px;
+	font-size: 18px;
 	color: #FFFFFF;
 	line-height: 60px;
-	background-color: rgb(208,208,208);
+	background-color: rgb(60,140,251);
 	font-family: "Helvetica","STHeitiSC-Light","Arial",sans-serif;
 	text-align: center;
 	position: fixed;
