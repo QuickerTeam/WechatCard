@@ -86,6 +86,10 @@
 			event.preventDefault();
 			var i = $(this).attr("id").split("card")[1]; // 获取这张卡片在卡片列表中的序号
 			var cardId = card[i].card_id;
+			$(".cancleCard").removeClass("cancleCard");
+			$(".icon-ok-sign").remove();
+			$(this).addClass("cancleCard");
+			$("<i class='icon-ok-sign'></i>").appendTo($(this).children('p'));
 			$.ajax({
 				url: '/WechatCard/DistributeCard/OneCard',
 				type: 'post',
