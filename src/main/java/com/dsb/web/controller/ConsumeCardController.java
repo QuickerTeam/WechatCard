@@ -25,14 +25,14 @@ public class ConsumeCardController {
 	public Object consumeCard(HttpServletRequest request) {
 		CardCode code = new CardCode();
 		code.setCode(request.getParameter("code"));
-		// code.setCode("107290732758");
 		json = new JSONObject(code);
 		// 检测是否未使用以及是否输入有误
 		str = checkCardService.queryCardStage(json.toString());
+		UsedMethod.log("str="+str, 1);
+		UsedMethod.log("code="+code.getCode(), 1);
 		json = new JSONObject(str);
 		if (json.getBoolean("status")) {
 			code.setCode(request.getParameter("code"));
-			// code.setCode("107290732758");
 			json = new JSONObject(code);
 			// 核销卡券
 			checkCardService.consumeCard(json.toString());

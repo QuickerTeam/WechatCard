@@ -75,7 +75,7 @@ public class UsedMethod {
 		{// 表示固定日期区间
 			date_info.setType("DATE_TYPE_FIX_TIME_RANGE");
 			date_info.setBegin_timestamp(request.getParameter("begin_timestamp"));
-			date_info.setEnd_timestamp(request.getParameter("end_time"));
+			date_info.setEnd_timestamp(request.getParameter("end_timestamp"));
 		// // 将时间转化成1970年开始按秒计时
 		// SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 		// String beginTime = "20160804";

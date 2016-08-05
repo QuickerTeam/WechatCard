@@ -43,6 +43,9 @@ public class DistributeCardController {
 		// 每次获得的卡券数量
 		batchCard.setOffset(0);
 		batchCard.setCount(50);
+		batchCard.getStatus_list().clear();// 清除数组里面的数据再使用
+		batchCard.getStatus_list().add("CARD_STATUS_VERIFY_OK");// 只显示审核通过以及待审核的卡券
+		batchCard.getStatus_list().add("CARD_STATUS_NOT_VERIFY");
 		json = new JSONObject(batchCard);// 将批量查询bean传给服务器
 		UsedMethod.log("json=" + json, 1);
 		UsedMethod.log("StaticConstant.accessToken="
