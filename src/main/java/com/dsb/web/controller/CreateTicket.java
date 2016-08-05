@@ -120,14 +120,14 @@ public class CreateTicket {
 		base_info.setLogo_url(logo_url);
 		// 向微信发出创建卡券申请
 		groupTicketJson = new JSONObject(groupTicket);
+		UsedMethod.log(groupTicketJson.toString(), 1);
 		json = new JSONObject(cardCreateService.createCard(groupTicketJson
 				.toString()));
-
 		if (json.getBoolean("status")) {// 创建成功 System.out.println("创建卡券成功");
 			UsedMethod.log("card_id=" + json.getString("card_id"), 2);
 			response.setCode(true);
 		} else {
-			UsedMethod.log("创建卡券失败 errcode=" + json.getInt("errcode"), 2);
+			UsedMethod.log("创建卡券失败 errcode=" + json.getString("errmsg"), 2);
 			response.setCode(false);
 		}
 		return response;
