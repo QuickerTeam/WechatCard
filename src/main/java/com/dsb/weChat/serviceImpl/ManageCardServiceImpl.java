@@ -1,11 +1,10 @@
 package com.dsb.weChat.serviceImpl;
 
-import org.json.JSONObject;
-
 import com.dsb.utils.StaticConstant;
 import com.dsb.weChat.service.ManageCardService;
 import com.dsb.weChat.util.http.AccessUtil;
 import com.dsb.weChat.util.http.HttpUtil;
+import org.json.JSONObject;
 
 /**
  * Created by Max on 2016/7/28.
@@ -139,8 +138,7 @@ public class ManageCardServiceImpl implements ManageCardService {
 	/**
 	 * 删除卡券接口
 	 * 
-	 * @param cardJson
-	 *            封装了card id的json
+	 * @param cardJson 封装了card id的json
 	 * @return 完成情况
 	 */
 	@Override

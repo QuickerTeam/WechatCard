@@ -1,27 +1,21 @@
 package com.dsb.web.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.dsb.domain.BatchCard;
-import com.dsb.domain.CardId;
-import com.dsb.domain.Response2Web;
-import com.dsb.domain.ShowQRCode;
-import com.dsb.domain.SimpleCardInfo;
+import com.dsb.domain.*;
 import com.dsb.utils.StaticConstant;
 import com.dsb.utils.UsedMethod;
 import com.dsb.weChat.service.DistributeCardService;
 import com.dsb.weChat.service.ManageCardService;
 import com.dsb.weChat.serviceImpl.DistributeCardServiceImpl;
 import com.dsb.weChat.serviceImpl.ManageCardServiceImpl;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 @RequestMapping(value = "/DistributeCard")
