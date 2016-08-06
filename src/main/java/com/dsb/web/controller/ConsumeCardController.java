@@ -1,17 +1,16 @@
 package com.dsb.web.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.json.JSONObject;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.dsb.domain.CardCode;
 import com.dsb.domain.Response2Web;
 import com.dsb.utils.UsedMethod;
 import com.dsb.weChat.service.CheckCardService;
 import com.dsb.weChat.serviceImpl.CheckCardServiceImpl;
+import org.json.JSONObject;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class ConsumeCardController {

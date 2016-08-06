@@ -4,7 +4,6 @@ import com.dsb.utils.StaticConstant;
 import com.dsb.weChat.service.CreateCardService;
 import com.dsb.weChat.util.http.AccessUtil;
 import com.dsb.weChat.util.http.HttpUtil;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;

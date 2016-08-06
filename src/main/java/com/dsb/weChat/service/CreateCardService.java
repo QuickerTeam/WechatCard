@@ -1,7 +1,6 @@
 package com.dsb.weChat.service;
 
 import java.io.File;
-import java.io.InputStream;
 
 /**
  * Created by Max on 2016/7/27.

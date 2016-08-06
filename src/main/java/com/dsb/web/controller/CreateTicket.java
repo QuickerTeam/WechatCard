@@ -1,11 +1,11 @@
 package com.dsb.web.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.dsb.domain.GroupTicket;
+import com.dsb.domain.Response2Web;
+import com.dsb.utils.StaticConstant;
+import com.dsb.utils.UsedMethod;
+import com.dsb.weChat.service.CreateCardService;
+import com.dsb.weChat.serviceImpl.CreateCardServiceImpl;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +13,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.dsb.domain.GroupTicket;
-import com.dsb.domain.Response2Web;
-import com.dsb.utils.StaticConstant;
-import com.dsb.utils.UsedMethod;
-import com.dsb.weChat.service.CreateCardService;
-import com.dsb.weChat.serviceImpl.CreateCardServiceImpl;
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * 创建券

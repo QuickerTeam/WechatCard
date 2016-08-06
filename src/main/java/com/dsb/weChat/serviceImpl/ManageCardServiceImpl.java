@@ -6,9 +6,6 @@ import com.dsb.weChat.util.http.AccessUtil;
 import com.dsb.weChat.util.http.HttpUtil;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * Created by Max on 2016/7/28.
  */
