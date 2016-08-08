@@ -1,22 +1,5 @@
 package com.dsb.weChat.util.http;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.nio.charset.Charset;
-import java.security.GeneralSecurityException;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.SSLException;
-import javax.net.ssl.SSLSession;
-import javax.net.ssl.SSLSocket;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -40,7 +23,22 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-import com.dsb.utils.UsedMethod;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocket;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.security.GeneralSecurityException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Max on 2016/7/27. 作用：向微信服务器发起 GET/POST 请求
@@ -78,13 +76,13 @@ public class HttpUtil {
 
 	/**
 	 * 发送GET HTTPS请求，参数以Map K-V 的形式传递进来
-	 * 
-	 * @param url
-	 * @param params
+	 * @param url 请求的接口地址
+	 * @param params  请求参数
 	 * @return
 	 */
 	public static String doGetSSL(String url, Map<String, String> params) {
 		String apiUrl = url;
+		CloseableHttpResponse response = null;
 		CloseableHttpClient httpClient = HttpClients.custom()
 				.setSSLSocketFactory(createSSLConnSocketFactory())
 				.setConnectionManager(connMgr)
@@ -100,31 +98,44 @@ public class HttpUtil {
 			i++;
 		}
 		apiUrl += param;
+
 		String result = null;
 		try {
+			apiUrl = URLEncoder.encode(apiUrl,"UTF-8");
 			HttpGet get = new HttpGet(apiUrl);
-			CloseableHttpResponse response = httpClient.execute(get);
+
+			response = httpClient.execute(get);
 
 			int statusCode = response.getStatusLine().getStatusCode();
-			UsedMethod.log("微信服务器返回的状态码为：" + statusCode,1);
+			System.out.println("微信服务器返回的状态码为：" + statusCode);
 
 			HttpEntity entity = response.getEntity();
 			if (entity != null) {
 				InputStream in = entity.getContent();
 				result = IOUtils.toString(in, "UTF-8");
 			} else {
-				UsedMethod.log("响应的response对象为空！",1);
+				System.out.println("响应的response对象为空！");
 			}
+			response.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			return null;
+		} finally {
+			if (response != null) {
+				try {
+					httpClient.close();
+					EntityUtils.consume(response.getEntity());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("响应的response对象为空！");
+			}
 		}
 		return result;
 	}
 
 	/**
 	 * 发送POST HTTPS请求，参数以Map K-V 的形式传递进来
-	 * 
 	 * @param url
 	 * @param params
 	 * @return
@@ -168,7 +179,7 @@ public class HttpUtil {
 					e.printStackTrace();
 				}
 			} else {
-				UsedMethod.log("响应的response对象为空！",1);
+				System.out.println("响应的response对象为空！");
 			}
 		}
 		return httpStr;
@@ -176,11 +187,8 @@ public class HttpUtil {
 
 	/**
 	 * 发送POST HTTPS 请求
-	 * 
-	 * @param url
-	 *            请求地址
-	 * @param json
-	 *            以json数据格式传输
+	 * @param url 请求地址
+	 * @param json 以json数据格式传输
 	 * @return 服务器返回数数据
 	 */
 	public static String doPostSSL(String url, String json) {
@@ -188,37 +196,46 @@ public class HttpUtil {
 				.setSSLSocketFactory(createSSLConnSocketFactory())
 				.setConnectionManager(connMgr)
 				.setDefaultRequestConfig(requestConfig).build();
-
+		CloseableHttpResponse response = null;
 		HttpPost post = new HttpPost(url);
 		try {
-			StringEntity stringEntity = new StringEntity(json, "UTF-8");
-			// 如果微信传过来的是全部问号，将下面这行代码取消注释
+			StringEntity stringEntity = new StringEntity(json,"UTF-8");
 			stringEntity.setContentEncoding("UTF-8");
 			post.setEntity(stringEntity);
-			CloseableHttpResponse response = httpClient.execute(post);
+			response = httpClient.execute(post);
 			HttpEntity httpEntity = response.getEntity();
 			String returnJson = IOUtils.toString(httpEntity.getContent(),
 					"UTF-8");
-			UsedMethod.log("doPostSSL(String url, String json)接口获取到的json信息为:"
-					+ returnJson, 1);
+			System.out
+					.println("doPostSSL(String url, String json)接口获取到的json信息为:"
+							+ returnJson);
 			return returnJson;
 		} catch (UnsupportedEncodingException e) {
-			UsedMethod.log("doPostSSL(String url, String json)异常",1);
+			System.out.println("doPostSSL(String url, String json)异常");
 			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
-			UsedMethod.log("doPostSSL(String url, String json)异常",1);
+			System.out.println("doPostSSL(String url, String json)异常");
 			e.printStackTrace();
 			return null;
+		}finally {
+			if (response != null) {
+				try {
+					httpClient.close();
+					EntityUtils.consume(response.getEntity());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("响应的response对象为空！");
+			}
 		}
 	}
 
 	/**
 	 * 
-	 * @param file
-	 *            上传的文件
-	 * @param url
-	 *            请求的地址
+	 * @param file 上传的文件
+	 * @param url 请求的地址
 	 * @return 返回上传图片logo的url
 	 */
 	public static String doPostSSL(File file, String url) {
@@ -226,6 +243,7 @@ public class HttpUtil {
 				.setSSLSocketFactory(createSSLConnSocketFactory())
 				.setConnectionManager(connMgr)
 				.setDefaultRequestConfig(requestConfig).build();
+		CloseableHttpResponse response = null;
 		try {
 			HttpPost post = new HttpPost(url);
 			FileBody pic = new FileBody(file);
@@ -235,20 +253,31 @@ public class HttpUtil {
 			multipartEntity.addPart("picName", comment);
 			post.setEntity(multipartEntity);
 
-			CloseableHttpResponse response = httpClient.execute(post);
+			response = httpClient.execute(post);
 
 			int statusCode = response.getStatusLine().getStatusCode();
 
-			UsedMethod.log("上传图片接口被调用，微信服务器返回的code码为:" + statusCode, 1);
+			System.out.println("上传图片接口被调用，微信服务器返回的code码为:" + statusCode);
 
 			HttpEntity entity = response.getEntity();
 			String json = IOUtils.toString(entity.getContent(), "UTF-8");
-			UsedMethod.log("从微信服务器获得的json为：" + json,1);
+			System.out.println("从微信服务器获得的json为：" + json);
 			EntityUtils.consume(entity);
 			return json;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		} finally {
+			if (response != null) {
+				try {
+					httpClient.close();
+					EntityUtils.consume(response.getEntity());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			} else {
+				System.out.println("响应的response对象为空！");
+			}
 		}
 	}
 
