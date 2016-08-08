@@ -101,11 +101,8 @@ public class HttpUtil {
 
 		String result = null;
 		try {
-			apiUrl = URLEncoder.encode(apiUrl,"UTF-8");
 			HttpGet get = new HttpGet(apiUrl);
-
 			response = httpClient.execute(get);
-
 			int statusCode = response.getStatusLine().getStatusCode();
 			System.out.println("微信服务器返回的状态码为：" + statusCode);
 
@@ -122,7 +119,7 @@ public class HttpUtil {
 		} finally {
 			if (response != null) {
 				try {
-					httpClient.close();
+					//httpClient.close();
 					EntityUtils.consume(response.getEntity());
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -221,7 +218,7 @@ public class HttpUtil {
 		}finally {
 			if (response != null) {
 				try {
-					httpClient.close();
+					//httpClient.close();
 					EntityUtils.consume(response.getEntity());
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -270,7 +267,7 @@ public class HttpUtil {
 		} finally {
 			if (response != null) {
 				try {
-					httpClient.close();
+					//httpClient.close();
 					EntityUtils.consume(response.getEntity());
 				} catch (IOException e) {
 					e.printStackTrace();
