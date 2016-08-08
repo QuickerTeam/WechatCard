@@ -1,11 +1,10 @@
 package com.dsb.utils;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.json.JSONObject;
-
 import com.dsb.domain.GroupTicket;
 import com.dsb.domain.SimpleCardInfo;
+import org.json.JSONObject;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 一些常用的方法
