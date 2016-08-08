@@ -66,8 +66,7 @@ public class ManagerCardController {
 				json = receiveJson.getJSONObject("card");
 				if (json.getString("card_type").equals("GROUPON")) {
 					// 团购券类型
-					json = json.getJSONObject("groupon");
-					json = json.getJSONObject("base_info");
+					json = json.getJSONObject("groupon").getJSONObject("base_info");
 					status = json.getString("status");
 				} else {
 					// 其他卡券类型
@@ -78,6 +77,7 @@ public class ManagerCardController {
 				}
 				UsedMethod.log(status, 1);
 				UsedMethod.log("----" + i + "----", 1);
+				UsedMethod.log("url="+json.getString("logo_url"), 1);
 			}
 			response.setCode(true);
 			response.setMsg(new JSONArray(cardList).toString());

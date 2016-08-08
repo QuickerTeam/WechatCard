@@ -48,13 +48,12 @@ public class CreateTicket {
 		logoFile = new File(filePath);
 		try {
 			multipartFile.transferTo(logoFile);
-			System.out.println(filePath);
+			UsedMethod.log(filePath, 1);
 			response.setCode(true);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			response.setCode(false);
 			e.printStackTrace();
-			System.out.println("error");
 		}
 		return response;
 	}
@@ -127,7 +126,7 @@ public class CreateTicket {
 			UsedMethod.log("card_id=" + json.getString("card_id"), 2);
 			response.setCode(true);
 		} else {
-			UsedMethod.log("创建卡券失败 errcode=" + json.getString("errmsg"), 2);
+			//UsedMethod.log("创建卡券失败 errcode=" + json.getString("errmsg"), 2);
 			response.setCode(false);
 		}
 		return response;

@@ -40,6 +40,8 @@ import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
+import com.dsb.utils.UsedMethod;
+
 /**
  * Created by Max on 2016/7/27. 作用：向微信服务器发起 GET/POST 请求
  */
@@ -104,14 +106,14 @@ public class HttpUtil {
 			CloseableHttpResponse response = httpClient.execute(get);
 
 			int statusCode = response.getStatusLine().getStatusCode();
-			System.out.println("微信服务器返回的状态码为：" + statusCode);
+			UsedMethod.log("微信服务器返回的状态码为：" + statusCode,1);
 
 			HttpEntity entity = response.getEntity();
 			if (entity != null) {
 				InputStream in = entity.getContent();
 				result = IOUtils.toString(in, "UTF-8");
 			} else {
-				System.out.println("响应的response对象为空！");
+				UsedMethod.log("响应的response对象为空！",1);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -166,7 +168,7 @@ public class HttpUtil {
 					e.printStackTrace();
 				}
 			} else {
-				System.out.println("响应的response对象为空！");
+				UsedMethod.log("响应的response对象为空！",1);
 			}
 		}
 		return httpStr;
@@ -189,24 +191,23 @@ public class HttpUtil {
 
 		HttpPost post = new HttpPost(url);
 		try {
-			StringEntity stringEntity = new StringEntity(json,"UTF-8");
-			//如果微信传过来的是全部问号，将下面这行代码取消注释
-			//stringEntity.setContentEncoding("UTF-8");
+			StringEntity stringEntity = new StringEntity(json, "UTF-8");
+			// 如果微信传过来的是全部问号，将下面这行代码取消注释
+			stringEntity.setContentEncoding("UTF-8");
 			post.setEntity(stringEntity);
 			CloseableHttpResponse response = httpClient.execute(post);
 			HttpEntity httpEntity = response.getEntity();
 			String returnJson = IOUtils.toString(httpEntity.getContent(),
 					"UTF-8");
-			System.out
-					.println("doPostSSL(String url, String json)接口获取到的json信息为:"
-							+ returnJson);
+			UsedMethod.log("doPostSSL(String url, String json)接口获取到的json信息为:"
+					+ returnJson, 1);
 			return returnJson;
 		} catch (UnsupportedEncodingException e) {
-			System.out.println("doPostSSL(String url, String json)异常");
+			UsedMethod.log("doPostSSL(String url, String json)异常",1);
 			e.printStackTrace();
 			return null;
 		} catch (IOException e) {
-			System.out.println("doPostSSL(String url, String json)异常");
+			UsedMethod.log("doPostSSL(String url, String json)异常",1);
 			e.printStackTrace();
 			return null;
 		}
@@ -238,11 +239,11 @@ public class HttpUtil {
 
 			int statusCode = response.getStatusLine().getStatusCode();
 
-			System.out.println("上传图片接口被调用，微信服务器返回的code码为:" + statusCode);
+			UsedMethod.log("上传图片接口被调用，微信服务器返回的code码为:" + statusCode, 1);
 
 			HttpEntity entity = response.getEntity();
 			String json = IOUtils.toString(entity.getContent(), "UTF-8");
-			System.out.println("从微信服务器获得的json为：" + json);
+			UsedMethod.log("从微信服务器获得的json为：" + json,1);
 			EntityUtils.consume(entity);
 			return json;
 		} catch (Exception e) {

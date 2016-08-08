@@ -1,6 +1,8 @@
 package com.dsb.weChat.util.http;
 
 import com.dsb.utils.StaticConstant;
+import com.dsb.utils.UsedMethod;
+
 import org.json.JSONObject;
 
 import javax.annotation.PostConstruct;
@@ -51,7 +53,7 @@ public class AccessUtil {
         JSONObject jsonObject = new JSONObject(json);
         String access_token = (String) jsonObject.get("access_token");
         StaticConstant.accessToken = access_token;
-        System.out.println("获得的access_token为: " + access_token);
+        UsedMethod.log("获得的access_token为: " + access_token,1);
         return access_token;
     }
 

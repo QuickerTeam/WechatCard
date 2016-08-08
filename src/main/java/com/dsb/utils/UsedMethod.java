@@ -111,7 +111,7 @@ public class UsedMethod {
 				simpleCardInfo.setCard_type("GROUPON");
 				base_info = card.getJSONObject("groupon").getJSONObject(
 						"base_info");
-				System.out.println(base_info);
+				UsedMethod.log(base_info,1);
 			} else {
 				// 其他的券再写else if
 			}
@@ -120,8 +120,7 @@ public class UsedMethod {
 			simpleCardInfo.setTitle(base_info.getString("title"));
 		} catch (Exception e) {
 			// TODO: handle exception
-			System.out
-					.println("UsedMethod中write2SimpleCardInfo方法出错，未能将数据写入卡券对象中");
+			UsedMethod.log("UsedMethod中write2SimpleCardInfo方法出错，未能将数据写入卡券对象中",1);
 			return false;
 		}
 		return true;
@@ -137,7 +136,7 @@ public class UsedMethod {
 	 *            输出的级别
 	 */
 	public static void log(Object obj, int grade) {
-		int i = 0;// 当i大于grade时obj才会被输出
+		int i = 2;// 当i大于grade时obj才会被输出
 		if (grade > i)
 			System.out.println(obj);
 	}

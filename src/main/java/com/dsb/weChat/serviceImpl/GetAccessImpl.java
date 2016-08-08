@@ -3,6 +3,7 @@ package com.dsb.weChat.serviceImpl;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.dsb.utils.UsedMethod;
 import com.dsb.weChat.service.GetAccess;
 import com.dsb.weChat.util.http.HttpUtil;
 
@@ -27,7 +28,7 @@ public class GetAccessImpl implements GetAccess{
         params.put("appid",appId);
         params.put("secret",secret);
         String json = HttpUtil.doGetSSL(url,params);
-        System.out.println("获取到的access_token为： " + json);
+        UsedMethod.log("获取到的access_token为： " + json,1);
         return json;
     }
 }
